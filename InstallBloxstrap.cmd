@@ -14,7 +14,7 @@ wget https://download.visualstudio.microsoft.com/download/pr/1146f414-17c7-4184-
 run windowsdesktop-runtime-6.0.20-win-x64.exe
 pause
 echo Start Installing Bloxstrap
-wget https://github.com/pizzaboxer/bloxstrap/releases/download/v2.5.0/Bloxstrap-v2.5.0.exe
+wget https://github.com/pizzaboxer/bloxstrap/releases/download/v2.5.2/Bloxstrap-v2.5.2.exe
 run Bloxstrap-v2.5.0.exe
 cd C:\
 mkdir BloxstrapTemp
