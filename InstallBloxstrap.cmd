@@ -28,7 +28,7 @@ echo making Space In Free more a littile bit
 cd C:\
 cd Bloxstrap
 rm windowsdesktop-runtime-6.0.20-win-x64.exe
-rm Bloxstrap-v2.5.0.exe
+rm Bloxstrap-v2.5.2.exe
 cd C:\
 rmdir Bloxstrap
 
