@@ -86,7 +86,7 @@ fi
 # install "wine" if missing.
 if ! $distro_check wine > /dev/null ;
 then
-  sudo $distro_dpkg --add-architecture i386 && sudo $distro_mkdir -pm755 /etc/apt/keyrings && sudo $distro_wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key && sudo apt update && sudo apt install --install-recommends winehq-stable;
+  sudo dpkg --add-architecture i386 && sudo mkdir -pm755 /etc/apt/keyrings && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key && sudo $distro_update && sudo $distro_install --install-recommends winehq-stable;
 fi
 
 # install "unzip" if missing.
