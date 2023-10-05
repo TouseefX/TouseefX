@@ -184,12 +184,19 @@ then
 	api="$api, \"FFlagGraphicsGLTextureReduction\": true"
 fi
 
-echo ""
+echo""
+
+read -p "Do you want Install Vulkan? (y/n)?"
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	sudo $distro_install mesa-vulkan-drivers
+fi
+
 
 read -p "Do you want to unlock FPS (y/n)?"
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-	api="$api, \"DFIntTaskSchedulerTargetFps\": 300"
+	api="$api, \"DFIntTaskSchedulerTargetFps\": 9999"
 fi
 
 
@@ -258,6 +265,7 @@ then
 distro_guess="Debian"
 distro_check="dpkg -l"
 distro_install="apt install"
+distro_update="apt update"
 fi
 
 which yum >/dev/null 2>&1
@@ -266,6 +274,7 @@ then
 distro_guess="Fedora"
 distro_check="rpm -q"
 distro_install="yum install"
+distro_update="dnf update && dnf upgrade"
 fi
 
 which zypper >/dev/null 2>&1
@@ -274,6 +283,7 @@ then
 distro_guess="OpenSUSE"
 distro_check="zypper search -i"
 distro_install="zypper install"
+distro_update="zypper update"
 fi
 
 which pacman >/dev/null 2>&1
@@ -282,6 +292,7 @@ then
 distro_guess="Arch"
 distro_check="pacman -Qs"
 distro_install="pacman -S"
+distro_update="pacman -Syu"
 fi
 
 if test -z $distro_guess;
