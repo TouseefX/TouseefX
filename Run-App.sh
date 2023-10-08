@@ -1,3 +1,3 @@
 cd /opt/
 cd TLDesktop
-java -jar Minecraft.jar
+java -jar jar
