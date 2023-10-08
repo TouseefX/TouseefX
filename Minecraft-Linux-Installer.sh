@@ -2,7 +2,7 @@
  
 echo "Which Minecraft DO You Need? Must Paste Sudo su to run this script correctly and for TLaucherDesktop install TLauncher then exit then exit sudo su by typing exit then install TLaucherDesktop"
  
-select os in SKLaucherForLow TLaucher TLaucherDesktop
+select os in SKLaucherForLow TLaucher TLaucherDesktop InstallJava
 do
 case $os in
   "SKLaucherForLow"|"SKLaucherForLow")
@@ -35,7 +35,11 @@ case $os in
      wget https://tlauncher.org/jar
      sudo mv jar TL.jar
      wget https://raw.githubusercontent.com/TouseefX/TouseefX/main/Run-App.sh
-     
+     ;;
+     "InstallJava"|"InstallJava")
+     echo "Starting to Install Java
+     sleep 5
+     sudo apt update && sudo apt upgrade && wget https://github.com/adoptium/temurin18-binaries/releases/download/jdk-18.0.2.1%2B1/OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && tar -xvf OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && sudo mv jdk-18.0.2.1+1/ /opt/ && cd /opt/ && sudo update-alternatives --install /usr/bin/java java /opt/jdk-18.0.2.1+1/bin/java 500 && sudo update-alternatives --config java && java --version && cd
    ;;
 *)
 echo "Invalid entry."
