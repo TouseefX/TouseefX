@@ -1,8 +1,8 @@
 #!/bin/bash 
  
-echo "Which Minecraft DO You Need? Must Paste Sudo su to run this script correctly"
+echo "Which Minecraft DO You Need? Must Paste Sudo su to run this script correctly and for TLaucherDesktop install TLauncher then exit then exit sudo su by typing exit then install TLaucherDesktop"
  
-select os in SKLaucherForLow TLaucher
+select os in SKLaucherForLow TLaucher TLaucherDesktop
 do
 case $os in
   "SKLaucherForLow"|"SKLaucherForLow")
@@ -18,24 +18,24 @@ case $os in
      sleep 3
      sudo apt install wget
      sudo apt update
-     wget https://tlauncher.org/jar
-     cd $HOME
-     mkdir TXRunner
-     cd /opt/
-     cd TLDesktop
-     sudo mv jar ~/TXRunner
-     cd ~/TXRunner
-     sudo mv jar TL.jar
-     echo "Creating Desktop For TL"
+     echo "Creating Desktop For TL (Then choose TLaucherDesktop)"
      sleep 5
-     wget https://raw.githubusercontent.com/TouseefX/TouseefX/main/Run-App.sh
-     sudo mv Run-App.sh ~/TXRunner
      wget https://tlauncher.org/fav-pe-icon-512.png
      wget https://raw.githubusercontent.com/TouseefX/TouseefX/main/TL.desktop
      sudo mv /opt/TLDesktop/TL.desktop /usr/share/applications/
      wget https://raw.githubusercontent.com/TouseefX/TouseefX/main/TL.desktop
      sudo mv /opt/TLDesktop/TL.desktop ~/.local/share/applications/
      ehco "Creating Desktop File Done"
+     ;;
+     "TLaucherDesktop"|"TLaucherDesktop")
+     echo "Starting"
+     cd $HOME
+     mkdir TXRunner
+     cd ~/TXRunner
+     wget https://tlauncher.org/jar
+     sudo mv jar TL.jar
+     wget https://raw.githubusercontent.com/TouseefX/TouseefX/main/Run-App.sh
+     
    ;;
 *)
 echo "Invalid entry."
