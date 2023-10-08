@@ -1,6 +1,6 @@
 #!/bin/bash 
  
-echo "Which Minecraft DO You Need?"
+echo "Which Minecraft DO You Need? also paste sudo su and then run this script"
  
 select os in SKLaucherForLow TLaucher
 do
