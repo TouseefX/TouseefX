@@ -16,3 +16,18 @@ The script prompts the user for their preferred graphics API, such as Vulkan, Op
 Finally, the script gives the option to install or uninstall DXVK, a set of libraries that provide support for DirectX in Wine. If the user chooses to install DXVK, the script downloads and runs the DXVK setup script.
 
 Once the setup is complete, the script informs the user and returns to the main menu.
+
+
+# About Minecraft Linux Installer
+The given code is a Bash script that provides a menu-based interface for installing Minecraft launchers and Java.
+
+Here's a breakdown of the script:
+
+The script starts by displaying a message asking the user to paste "sudo su" to run the script with root privileges.
+It then uses the 'select' statement to present the user with a menu of options to choose from: "SKLaucherForLow", "TLaucher", "TLaucherDesktop", and "InstallJava".
+Depending on the user's choice, the script executes the corresponding block of code.
+If the user selects "SKLaucherForLow" or "TLaucherForLow", the script simply displays a message saying that it is coming soon.
+If the user selects "TLaucher", the script proceeds to install the TLaucher launcher by first installing the 'rename' package and creating a directory '/opt/TLDesktop'. It then downloads the TLaucher desktop icon and a desktop file, placing them in the appropriate locations.
+If the user selects "TLaucherDesktop", the script creates a directory '~/TXRunner', downloads the TL.jar file from the TLauncher website, and downloads a script called 'Run-App.sh'.
+If the user selects "InstallJava", the script proceeds to install Java by first updating the system packages, downloading the OpenJDK 18.0.2.1+1 package, extracting it, moving it to '/opt/', configuring it as the default Java version, and displaying the installed Java version.
+In summary, this script provides a menu-driven interface to download and install various Minecraft launchers and Java on a Linux system. Each menu option corresponds to a specific action, such as installing a launcher or updating Java.
