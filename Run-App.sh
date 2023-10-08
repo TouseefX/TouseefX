@@ -1,4 +1,3 @@
-sudo su
-cd /opt/
-cd TLDesktop
+cd $HOME
+cd TXRunner
 java -jar TL.jar
