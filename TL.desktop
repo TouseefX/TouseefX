@@ -4,5 +4,5 @@ Version=1.0
 Type=Application
 Terminal=false
 Exec=/opt/TLDesktop/Run-App.sh
-Name=Name of Application
+Name=TLauncher
 Icon=/opt/TLDesktop/fav-pe-icon-512.png
