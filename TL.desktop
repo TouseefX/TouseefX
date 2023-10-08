@@ -3,6 +3,6 @@ Encoding=UTF-8
 Version=1.0
 Type=Application
 Terminal=false
-Exec=~/TXRunner/App-Run.sh
+Exec=/home/TXRunner/App-Run.sh
 Name=TLauncher
 Icon=/opt/TLDesktop/fav-pe-icon-512.png
