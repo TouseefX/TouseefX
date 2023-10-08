@@ -31,3 +31,24 @@ If the user selects "TLaucher", the script proceeds to install the TLaucher laun
 If the user selects "TLaucherDesktop", the script creates a directory '~/TXRunner', downloads the TL.jar file from the TLauncher website, and downloads a script called 'Run-App.sh'.
 If the user selects "InstallJava", the script proceeds to install Java by first updating the system packages, downloading the OpenJDK 18.0.2.1+1 package, extracting it, moving it to '/opt/', configuring it as the default Java version, and displaying the installed Java version.
 In summary, this script provides a menu-driven interface to download and install various Minecraft launchers and Java on a Linux system. Each menu option corresponds to a specific action, such as installing a launcher or updating Java.
+
+
+
+
+
+
+
+.......................................
+
+
+
+
+
+
+
+# About TouseefX And This Github Repository
+The GitHub Rrepository Uses VS Code And App Maker An GameMaker Studio To Create App And Script. Most Script At All,
+
+
+TouseefX Popalar Was Low And Lost Is Account And YT and Started Again, Frist We Started With Coreboot Repository Then This One For An Reason..
+And TouseefX WIll be nerver On Discord, The Discord Owner Hates TouseefX, Of TouseefX Hater Killing Servers Unit He Leaves.. But We Are On Guiled And Youtube. https://www.youtube.com/channel/UCkb6rBmHWBU05Wt9HiEJo7g.. So If u have Any Scripts Idea That Tells Us
