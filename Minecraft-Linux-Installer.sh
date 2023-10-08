@@ -28,8 +28,8 @@ case $os in
      ehco "Creating Desktop File Done"
      ;;
      "TLaucherDesktop"|"TLaucherDesktop")
-     echo "Starting"
-     cd $HOME
+     echo "Starting" 
+     cd /home
      mkdir TXRunner
      cd ~/TXRunner
      wget https://tlauncher.org/jar
@@ -37,7 +37,7 @@ case $os in
      wget https://raw.githubusercontent.com/TouseefX/TouseefX/main/Run-App.sh
      ;;
      "InstallJava"|"InstallJava")
-     echo "Starting to Install Java
+     echo "Starting to Install Java"
      sleep 5
      sudo apt update && sudo apt upgrade && wget https://github.com/adoptium/temurin18-binaries/releases/download/jdk-18.0.2.1%2B1/OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && tar -xvf OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && sudo mv jdk-18.0.2.1+1/ /opt/ && cd /opt/ && sudo update-alternatives --install /usr/bin/java java /opt/jdk-18.0.2.1+1/bin/java 500 && sudo update-alternatives --config java && java --version && cd
    ;;
