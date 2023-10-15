@@ -19,29 +19,43 @@ Once the setup is complete, the script informs the user and returns to the main 
 
 
 # About Minecraft Linux Installer
-The given code is a Bash script that provides a menu-based interface for installing Minecraft launchers and Java.
+The given code snippet is a bash script that installs and sets up a launcher called SKLauncher for Minecraft on a Linux operating system.
 
-Here's a breakdown of the script:
+Here is a breakdown of the code:
 
-The script starts by displaying a message asking the user to paste "sudo su" to run the script with root privileges.
-It then uses the 'select' statement to present the user with a menu of options to choose from: "SKLaucherForLow", "TLaucher", "TLaucherDesktop", and "InstallJava".
-Depending on the user's choice, the script executes the corresponding block of code.
-If the user selects "SKLaucherForLow" or "TLaucherForLow", the script simply displays a message saying that it is coming soon.
-If the user selects "TLaucher", the script proceeds to install the TLaucher launcher by first installing the 'rename' package and creating a directory '/opt/TLDesktop'. It then downloads the TLaucher desktop icon and a desktop file, placing them in the appropriate locations.
-If the user selects "TLaucherDesktop", the script creates a directory '~/TXRunner', downloads the TL.jar file from the TLauncher website, and downloads a script called 'Run-App.sh'.
-If the user selects "InstallJava", the script proceeds to install Java by first updating the system packages, downloading the OpenJDK 18.0.2.1+1 package, extracting it, moving it to '/opt/', configuring it as the default Java version, and displaying the installed Java version.
-In summary, this script provides a menu-driven interface to download and install various Minecraft launchers and Java on a Linux system. Each menu option corresponds to a specific action, such as installing a launcher or updating Java.
+The script begins by checking if the CPU supports AVX instructions. If it doesn't, a warning message is displayed, informing the user that Minecraft may not work properly.
 
+Next, the script checks if the glibc version is 2.31 or newer. If it is not, an error message is displayed, stating that the system is unsupported, and the script exits.
 
+The function full_setup is defined. This function performs the following tasks:
 
+a. Installs necessary packages like wget, unzip, git, and tar using the package manager specific to the Linux distribution.
 
+b. Creates a directory named .MinecraftInstaller in the user's home directory.
 
+c. Checks if Java 18 is installed. If not, it installs OpenJDK 18.
 
+d. Downloads the SK.jar file, which is the launcher for Minecraft, and saves it in the .MinecraftInstaller directory.
 
-.......................................
+e. Downloads the icon file for SKLauncher and saves it in the .MinecraftInstaller directory.
 
+f. Creates a desktop entry file named SKLauncher.desktop in the .local/share/applications directory, which allows the launcher to be executed from the desktop environment.
 
+g. Makes the SKLauncher.desktop file executable.
 
+h. Displays a success message once the setup is complete.
+
+The main_menu function is defined. This function presents a menu to the user with two options:
+
+a. "Install SKLauncher": This option calls the full_setup function to install and set up SKLauncher for Minecraft.
+
+b. "Exit": This option exits the script.
+
+The script determines the Linux distribution by checking the availability of package managers like apt, yum, zypper, and pacman. If none of them are available, an error message is displayed, and the script aborts.
+
+The main menu is displayed to the user, prompting them to make a selection. The script reads the user's input and executes the corresponding option.
+
+Overall, this script automates the installation and setup process for SKLauncher, providing an easy way for users to launch and play Minecraft on their Linux systems.
 
 
 
