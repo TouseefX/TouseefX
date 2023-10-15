@@ -35,11 +35,11 @@ cd $HOME
 mdkir .MinecraftInstaller
 
 # install "java" if missing.
-if ! $distro_check java > /dev/null ;
+if ! $distro_check openjdk-18-jdk > /dev/null ;
 then
   echo -e "${Red} Java Not Found Installing Java 18."
   sleep 3 
-   wget https://github.com/adoptium/temurin18-binaries/releases/download/jdk-18.0.2.1%2B1/OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && tar -xvf OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && sudo mv jdk-18.0.2.1+1/ /opt/ && cd /opt/ && sudo update-alternatives --install /usr/bin/java java /opt/jdk-18.0.2.1+1/bin/java 500 && sudo update-alternatives --config java && java --version && cd;
+   sudo $distro_install openjdk-18-jdk && wget https://github.com/adoptium/temurin18-binaries/releases/download/jdk-18.0.2.1%2B1/OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && tar -xvf OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && sudo mv jdk-18.0.2.1+1/ /opt/ && cd /opt/ && sudo update-alternatives --install /usr/bin/java java /opt/jdk-18.0.2.1+1/bin/java 500 && sudo update-alternatives --config java && java --version && cd;
 fi
 
 cd $HOME
