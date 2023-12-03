@@ -1,5 +1,6 @@
 echo off
-echo You Must Run in Admin
+echo if u get an error you must run in admin
+net session
 Cd C:\Windows\System32
 curl -o wget.exe https://eternallybored.org/misc/wget/1.21.4/64/wget.exe
 cd C:\Users\Public\Downloads
