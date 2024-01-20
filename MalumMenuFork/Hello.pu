@@ -1,1 +1,8 @@
-
+if local ven = create.id
+{
+  print("I am Sorry Does Not Works")
+  if local printis error exec
+  local printis noerror exec
+  print("Custom Launage Works");
+  local ifexit = true
+}
