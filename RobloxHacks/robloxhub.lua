@@ -48,7 +48,7 @@ Instances.ChatBypass.Text = "Fe ChatBypass"
 Instances.ChatBypass.TextSize = 14
 Instances.ChatBypass.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 Instances.ChatBypass.MouseButton1Down:Connect(function()
-	loadstring(game:HttpGet("https://pastes.io/raw/lstrrfipqq"))();
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Clickgameplay/no-tag-script/main/.NoTagScript"))()
 end)
 
 Instances.MoreUNC.Name = "MoreUNC"
