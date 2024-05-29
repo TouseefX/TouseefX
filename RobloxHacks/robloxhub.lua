@@ -2,22 +2,35 @@
 
 local Instances = {
 	Main = Instance.new("ScreenGui"),
+	Drag = Instance.new("Frame"),
 	MainGUI = Instance.new("Frame"),
 	Nameless = Instance.new("TextButton"),
 	ChatBypass = Instance.new("TextButton"),
 	MoreUNC = Instance.new("TextButton"),
+	FeSound = Instance.new("TextButton"),
 	Title = Instance.new("TextLabel"),
+	RC7 = Instance.new("TextButton"),
+	Add_Require = Instance.new("TextButton"),
+	CoolKid = Instance.new("TextButton"),
 }
 
 Instances.Main.Name = "Main"
 Instances.Main.Parent = game.Players.LocalPlayer.PlayerGui
 Instances.Main.ResetOnSpawn = false
 
+Instances.Drag.Name = "Drag"
+Instances.Drag.Parent = Instances.Main
+Instances.Drag.Size = UDim2.new(0, 492, 0, 16)
+Instances.Drag.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Instances.Drag.Position = UDim2.new(0.300727606, 0, 0.282747597, 0)
+Instances.Drag.BorderSizePixel = 0
+Instances.Drag.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
 Instances.MainGUI.Name = "MainGUI"
-Instances.MainGUI.Parent = Instances.Main
+Instances.MainGUI.Parent = Instances.Drag
 Instances.MainGUI.Size = UDim2.new(0, 492, 0, 271)
 Instances.MainGUI.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Instances.MainGUI.Position = UDim2.new(0.300727576, 0, 0.282747597, 0)
+Instances.MainGUI.Position = UDim2.new(-8.54740283e-05, 0, 0.970247269, 0)
 Instances.MainGUI.BorderSizePixel = 0
 Instances.MainGUI.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
 
@@ -25,7 +38,7 @@ Instances.Nameless.Name = "Nameless"
 Instances.Nameless.Parent = Instances.MainGUI
 Instances.Nameless.Size = UDim2.new(0, 162, 0, 23)
 Instances.Nameless.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Instances.Nameless.Position = UDim2.new(0.024390243, 0, 0.457564563, 0)
+Instances.Nameless.Position = UDim2.new(0.024390243, 0, 0.151291519, 0)
 Instances.Nameless.BorderSizePixel = 0
 Instances.Nameless.BackgroundColor3 = Color3.fromRGB(170, 85, 1)
 Instances.Nameless.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -40,7 +53,7 @@ Instances.ChatBypass.Name = "ChatBypass"
 Instances.ChatBypass.Parent = Instances.MainGUI
 Instances.ChatBypass.Size = UDim2.new(0, 151, 0, 23)
 Instances.ChatBypass.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Instances.ChatBypass.Position = UDim2.new(0.376016259, 0, 0.457564563, 0)
+Instances.ChatBypass.Position = UDim2.new(0.390243888, 0, 0.151291519, 0)
 Instances.ChatBypass.BorderSizePixel = 0
 Instances.ChatBypass.BackgroundColor3 = Color3.fromRGB(170, 85, 0)
 Instances.ChatBypass.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -55,7 +68,7 @@ Instances.MoreUNC.Name = "MoreUNC"
 Instances.MoreUNC.Parent = Instances.MainGUI
 Instances.MoreUNC.Size = UDim2.new(0, 141, 0, 23)
 Instances.MoreUNC.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Instances.MoreUNC.Position = UDim2.new(0.697154462, 0, 0.457564563, 0)
+Instances.MoreUNC.Position = UDim2.new(0.713414609, 0, 0.151291519, 0)
 Instances.MoreUNC.BorderSizePixel = 0
 Instances.MoreUNC.BackgroundColor3 = Color3.fromRGB(170, 85, 1)
 Instances.MoreUNC.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -66,10 +79,26 @@ Instances.MoreUNC.MouseButton1Down:Connect(function()
 	loadstring(game:HttpGet('https://pastebin.com/raw/JPw0jeLZ'))()
 end)
 
+Instances.FeSound.Name = "FeSound"
+Instances.FeSound.Parent = Instances.MainGUI
+Instances.FeSound.Size = UDim2.new(0, 162, 0, 23)
+Instances.FeSound.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Instances.FeSound.Position = UDim2.new(0.024390243, 0, 0.33948338, 0)
+Instances.FeSound.BorderSizePixel = 0
+Instances.FeSound.BackgroundColor3 = Color3.fromRGB(170, 85, 1)
+Instances.FeSound.TextColor3 = Color3.fromRGB(0, 0, 0)
+Instances.FeSound.Text = "Fe Sound Annoying"
+Instances.FeSound.TextSize = 14
+Instances.FeSound.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+Instances.FeSound.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet(('https://pastebin.com/raw/egMM7sEC'),true))()
+end)
+
 Instances.Title.Name = "Title"
 Instances.Title.Parent = Instances.MainGUI
 Instances.Title.Size = UDim2.new(0, 492, 0, 16)
 Instances.Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Instances.Title.Position = UDim2.new(0, 0, -0.0590405911, 0)
 Instances.Title.BorderSizePixel = 0
 Instances.Title.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 Instances.Title.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -77,10 +106,54 @@ Instances.Title.Text = "Touseef's ScriptHub"
 Instances.Title.TextSize = 14
 Instances.Title.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 
+Instances.RC7.Name = "RC7"
+Instances.RC7.Parent = Instances.MainGUI
+Instances.RC7.Size = UDim2.new(0, 151, 0, 23)
+Instances.RC7.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Instances.RC7.Position = UDim2.new(0.390243888, 0, 0.33948338, 0)
+Instances.RC7.BorderSizePixel = 0
+Instances.RC7.BackgroundColor3 = Color3.fromRGB(170, 85, 0)
+Instances.RC7.TextColor3 = Color3.fromRGB(0, 0, 0)
+Instances.RC7.Text = "RC7 Fe Bypass"
+Instances.RC7.TextSize = 14
+Instances.RC7.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+Instances.RC7.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CoreGui/Scripts/main/RC7"))()
+end)
+
+Instances.Add_Require.Name = "Add Require"
+Instances.Add_Require.Parent = Instances.MainGUI
+Instances.Add_Require.Size = UDim2.new(0, 141, 0, 23)
+Instances.Add_Require.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Instances.Add_Require.Position = UDim2.new(0.713414609, 0, 0.33948338, 0)
+Instances.Add_Require.BorderSizePixel = 0
+Instances.Add_Require.BackgroundColor3 = Color3.fromRGB(170, 85, 1)
+Instances.Add_Require.TextColor3 = Color3.fromRGB(0, 0, 0)
+Instances.Add_Require.Text = "Add Require Function"
+Instances.Add_Require.TextSize = 14
+Instances.Add_Require.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+Instances.Add_Require.MouseButton1Down:Connect(function()
+	getgenv().require = function(scr) if typeof(scr) ~= 'Instance' or scr.ClassName ~= 'ModuleScript' then error'attempt to require a non-ModuleScript' end if CheckRL(scr) then error'attempt to require a core ModuleScript' end local oIdentity = syn.get_thread_identity() syn.set_thread_identity(2) local g, res = pcall(Req, scr) syn.set_thread_identity(oIdentity) if not g then error(res) end return res end
+end)
+
+Instances.CoolKid.Name = "CoolKid"
+Instances.CoolKid.Parent = Instances.MainGUI
+Instances.CoolKid.Size = UDim2.new(0, 141, 0, 23)
+Instances.CoolKid.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Instances.CoolKid.Position = UDim2.new(0.357723564, 0, 0.690036893, 0)
+Instances.CoolKid.BorderSizePixel = 0
+Instances.CoolKid.BackgroundColor3 = Color3.fromRGB(170, 85, 1)
+Instances.CoolKid.TextColor3 = Color3.fromRGB(0, 0, 0)
+Instances.CoolKid.Text = "C00lkidd GUI FE"
+Instances.CoolKid.TextSize = 14
+Instances.CoolKid.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+Instances.CoolKid.MouseButton1Down:Connect(function()
+	loadstring(game:GetObjects("rbxassetid://9827584846")[1].Source)()
+end)
 
 local UserInputService = game:GetService("UserInputService")
 
-local gui = Instances.MainGUI
+local gui = Instances.Drag
 
 local dragging
 local dragInput
