@@ -62,7 +62,7 @@ Instances.ChatBypass.Position = UDim2.new(0.390243888, 0, 0.151291519, 0)
 Instances.ChatBypass.BorderSizePixel = 0
 Instances.ChatBypass.BackgroundColor3 = Color3.fromRGB(170, 85, 0)
 Instances.ChatBypass.TextColor3 = Color3.fromRGB(0, 0, 0)
-Instances.ChatBypass.Text = "Fe ChatBypass"
+Instances.ChatBypass.Text = "Fe ChatBypass(WAS NO ANTI LOGGING)"
 Instances.ChatBypass.TextSize = 14
 Instances.ChatBypass.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 Instances.ChatBypass.MouseButton1Down:Connect(function()
