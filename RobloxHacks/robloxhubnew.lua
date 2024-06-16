@@ -54,7 +54,7 @@ Instances.Nameless.MouseButton1Down:Connect(function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/FD2Team/Nameless-Admin-No-Byfron-Kick/main/Source",true))()
 end)
 
-Instances.ChatBypass.Name = "ChatBypass"
+Instances.ChatBypass.Name = "ChatBypass (WITHOUT ANTI CHAT LOGGING)"
 Instances.ChatBypass.Parent = Instances.MainGUI
 Instances.ChatBypass.Size = UDim2.new(0, 151, 0, 23)
 Instances.ChatBypass.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -66,7 +66,7 @@ Instances.ChatBypass.Text = "Fe ChatBypass"
 Instances.ChatBypass.TextSize = 14
 Instances.ChatBypass.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 Instances.ChatBypass.MouseButton1Down:Connect(function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/Clickgameplay/no-tag-script/main/.NoTagScript"))()
+	loadstring(game:HttpGet("https://github.com/MrSuno/Filtering-Disabled/blob/main/main.lua?raw=true"))()
 end)
 
 Instances.MoreUNC.Name = "MoreUNC"
