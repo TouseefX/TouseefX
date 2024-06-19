@@ -1,5 +1,3 @@
--- Now Opened
-
 print("Creating Frames And GUI")
 
 local NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
@@ -2871,7 +2869,7 @@ FeGamepass.Position = UDim2.new(0.651315808, 0, 0.0922147781, 0)
 FeGamepass.BorderSizePixel = 0
 FeGamepass.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
 FeGamepass.TextColor3 = Color3.fromRGB(0, 0, 0)
-FeGamepass.Text = "FE Spam Oof Sound"
+FeGamepass.Text = "FE Gamepass Giver"
 FeGamepass.TextSize = 14
 FeGamepass.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FeGamepass.MouseButton1Down:Connect(function()
