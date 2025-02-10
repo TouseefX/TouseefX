@@ -1,5 +1,5 @@
 #!/bin/bash
-# new update affer 2 years
+# new update affer a long time
 #text colours
 Green='\033[1;32m'
 Red='\033[1;31m'
@@ -29,7 +29,7 @@ sudo $distro_install wget
 sudo $distro_install unzip
 sudo $distro_install git
 sudo $distro_install tar
-echo -e "${Green} Starting."
+echo -e "${Green} Starting.${Reset}"
 sleep 2
 cd $HOME
 mdkir .MinecraftInstaller
@@ -37,7 +37,7 @@ mdkir .MinecraftInstaller
 # install "java" if missing.
 if ! $distro_check openjdk-21-jdk > /dev/null ;
 then
-  echo -e "${Red} Java Not Found Installing Java 18."
+  echo -e "${Red} Java Not Found Installing Java 21.${Reset}"
   sleep 3 
    sudo $distro_install openjdk-21-jdk && wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && tar -xvf OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gzOpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && sudo mv jdk-21.0.6+7 /opt/ && cd /opt/ && sudo update-alternatives --install /usr/bin/java java /opt/jdk-21.0.6+7/bin/java 500 && clear && echo choose adoptium java (jdk-21.0.6+7 in opt) && sudo update-alternatives --config java && java --version && cd;
 fi
@@ -50,7 +50,7 @@ echo " "
 echo -e "[Desktop Entry]\nVersion=1.0\nName=SKLauncher\nExec=java -jar SK.jar \nType=Application\nIcon=$HOME/.MinecraftInstaller/SKicon.png\nTerminal=false\n" > "$HOME/.local/share/applications/SKLauncher.desktop"
 chmod +x "$HOME/.local/share/applications/SKLauncher.desktop"
 clear
-Echo -e "${Green} Setup Done"
+Echo -e "${Green} Setup Done${Reset}"
 sleep 3
 
 }
@@ -71,22 +71,6 @@ then
 distro_guess="Debian"
 distro_check="dpkg -l"
 distro_install="apt install"
-fi
-
-which yum >/dev/null 2>&1
-if [ $? -eq 0 ]
-then
-distro_guess="Fedora"
-distro_check="rpm -q"
-distro_install="yum install"
-fi
-
-which zypper >/dev/null 2>&1
-if [ $? -eq 0 ]
-then
-distro_guess="OpenSUSE"
-distro_check="zypper search -i"
-distro_install="zypper install"
 fi
 
 which pacman >/dev/null 2>&1
@@ -134,5 +118,3 @@ done
 }
 
 main_menu
-
-
