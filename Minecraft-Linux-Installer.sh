@@ -35,7 +35,7 @@ cd $HOME
 mdkir .MinecraftInstaller
 
 # install "java" if missing.
-if ! $distro_check openjdk-18-jdk > /dev/null ;
+if ! $distro_check openjdk-21-jdk > /dev/null ;
 then
   echo -e "${Red} Java Not Found Installing Java 18."
   sleep 3 
