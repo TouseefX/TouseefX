@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# new update affer 2 years
 #text colours
 Green='\033[1;32m'
 Red='\033[1;31m'
@@ -39,11 +39,11 @@ if ! $distro_check openjdk-18-jdk > /dev/null ;
 then
   echo -e "${Red} Java Not Found Installing Java 18."
   sleep 3 
-   sudo $distro_install openjdk-18-jdk && wget https://github.com/adoptium/temurin18-binaries/releases/download/jdk-18.0.2.1%2B1/OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && tar -xvf OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gz && sudo mv jdk-18.0.2.1+1/ /opt/ && cd /opt/ && sudo update-alternatives --install /usr/bin/java java /opt/jdk-18.0.2.1+1/bin/java 500 && sudo update-alternatives --config java && java --version && cd;
+   sudo $distro_install openjdk-21-jdk && wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && tar -xvf OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gzOpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && sudo mv jdk-21.0.6+7 /opt/ && cd /opt/ && sudo update-alternatives --install /usr/bin/java java /opt/jdk-21.0.6+7/bin/java 500 && clear && echo choose adoptium java (jdk-21.0.6+7 in opt) && sudo update-alternatives --config java && java --version && cd;
 fi
 
 cd $HOME
-wget https://github.com/TouseefX/TouseefX/raw/main/SK.jar -O "$HOME/SK.jar"
+wget https://github.com/TouseefX/TouseefX/raw/refs/heads/main/SKlauncher-3.2.10.jar -O "$HOME/SK.jar"
 cd .MinecraftInstaller
 wget https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-oKBN_VeJyWQbqPU3nX1DxOchUcYy4sPTY0a9c_6c_Q&s -O "$HOME/.MinecraftInstaller/SK.icon.png"
 echo " "
@@ -134,6 +134,5 @@ done
 }
 
 main_menu
-
 
 
