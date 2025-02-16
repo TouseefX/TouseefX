@@ -32,6 +32,7 @@ sudo $distro_install tar
 echo -e "${Green} Starting.${Reset}"
 sleep 2
 cd $HOME
+sleep 1
 mdkir .MinecraftInstaller
 
 # install "java" if missing.
@@ -39,7 +40,8 @@ if ! $distro_check openjdk-21-jdk > /dev/null ;
 then
   echo -e "${Red} Java Not Found Installing Java 21.${Reset}"
   sleep 3 
-   sudo $distro_install openjdk-21-jdk && wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && tar -xvf OpenJDK18U-jdk_x64_linux_hotspot_18.0.2.1_1.tar.gzOpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && sudo mv jdk-21.0.6+7 /opt/ && cd /opt/ && sudo update-alternatives --install /usr/bin/java java /opt/jdk-21.0.6+7/bin/java 500 && clear && echo choose adoptium java (jdk-21.0.6+7 in opt) && sudo update-alternatives --config java && java --version && cd;
+   sudo $distro_install openjdk-21-jdk 
+   wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && tar -xvf OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && sudo mv jdk-21.0.6+7 /opt/ && cd /opt/ && sudo update-alternatives --install /usr/bin/java java /opt/jdk-21.0.6+7/bin/java 500 && clear && echo choose adoptium java (jdk-21.0.6+7 in opt) && sudo update-alternatives --config java && java --version && cd;
 fi
 
 cd $HOME
@@ -118,3 +120,5 @@ done
 }
 
 main_menu
+
+
