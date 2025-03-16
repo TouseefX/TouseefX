@@ -1,27 +1,45 @@
 -- load using loadstring loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\34\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\84\111\117\115\101\101\102\88\47\84\111\117\115\101\101\102\88\47\109\97\105\110\47\82\111\98\108\111\120\72\97\99\107\115\47\77\111\114\101\84\111\117\115\101\101\102\88\72\117\98\46\108\117\97\34\44\116\114\117\101\41\41\40\41")()
 
-print("Creating Frames And GUI")
+local StarterGui = game:GetService("StarterGui")
+local showNotification = true
 
-local NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
+print("Creating Frames And GUI")
+function Notifyy(tl, t, d) 
+	if showNotification == true then
+		StarterGui:SetCore("SendNotification", {
+			Title = tl;
+			Text = t;
+			Duration = d;
+			Icon = "http://www.roblox.com/asset/?id=";
+		})
+	end
+end
+
+Notifyy("TouseefX Loader", "Creating Functions and GUI", 3)
+
+-- local NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
 local MainGUI = Instance.new("ScreenGui")
 local Open = Instance.new("Frame")
 local Open_2 = Instance.new("TextButton")
 local Main_2 = Instance.new("Frame")
 local TextLabel = Instance.new("TextLabel")
 local ScrollingFrame = Instance.new("ScrollingFrame")
-local FeNoobAll = Instance.new("TextButton")
+local Steve = Instance.new("TextButton")
 local FeAnimR6 = Instance.new("TextButton")
-local FeChatB = Instance.new("TextButton")
-local FeTelekineses = Instance.new("TextButton")
+local FeB = Instance.new("TextButton")
+local FFE = Instance.new("TextButton")
 local FB = Instance.new("TextButton")
-local FeGamepass = Instance.new("TextButton")
+local FeAudio = Instance.new("TextButton")
 local Close = Instance.new("TextButton")
 
 print("Created")
 print("Loading Frames,GUI")
+Notifyy("TouseefX Loader", "Created, Starting Loading some scripts and gui cofings", 3)
+-- trun off this thing ngl
+local showNotification = false
 
 MainGUI.Name = "MainGUI"
-MainGUI.Parent = game.CoreGui
+MainGUI.Parent = game.CoreGui -- seeking into an undetected Gui
 
 
 Open.Name = "Open"
@@ -49,7 +67,7 @@ Open_2.MouseButton1Down:Connect(function()
 	Main_2.Visible = true
 	wait(1)
 	Open.Visible = false
-        NotifyModule:Notify("Opened!", 2)
+        Notify("Opened!", 2)
 end)
 
 print("Open Frame Loaded")
@@ -84,22 +102,23 @@ ScrollingFrame.BorderSizePixel = 0
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(141, 141, 141)
 ScrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
 
-FeNoobAll.Name = "FeNoobAll"
-FeNoobAll.Parent = ScrollingFrame
-FeNoobAll.Size = UDim2.new(0, 137, 0, 23)
-FeNoobAll.BorderColor3 = Color3.fromRGB(0, 0, 0)
-FeNoobAll.Position = UDim2.new(0.0504385978, 0, 0.0440616868, 0)
-FeNoobAll.BorderSizePixel = 0
-FeNoobAll.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
-FeNoobAll.TextColor3 = Color3.fromRGB(0, 0, 0)
-FeNoobAll.Text = "Fe Noob All"
-FeNoobAll.TextSize = 14
-FeNoobAll.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-FeNoobAll.MouseButton1Down:Connect(function()
-	NotifyModule:Notify("Fe Noob All Loaded Fling Everyone Now:)", 5)
-	loadstring(game:HttpGet(('https://pastebin.ai/raw/1priqwpcnv'),true))()
+Steve.Name = "Steve"
+Steve.Parent = ScrollingFrame
+Steve.Size = UDim2.new(0, 137, 0, 23)
+Steve.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Steve.Position = UDim2.new(0.0504385978, 0, 0.0440616868, 0)
+Steve.BorderSizePixel = 0
+Steve.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
+Steve.TextColor3 = Color3.fromRGB(0, 0, 0)
+Steve.Text = "Fe Steve"
+Steve.TextSize = 14
+Steve.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+Steve.MouseButton1Down:Connect(function()
+	NotifyModule:Notify("does not work on some games", 5)
+	loadstring(game:HttpGet(('https://pastebin.com/raw/2NNDTLjL'),true))()
         wait(4)
-        NotifyModule:Notify("Script By jxserr", 5)
+        Notify("Script By Depr1", 5)
+        Notify("Script Link by Delros12", 5)
 end)
 
 FeAnimR6.Name = "FeAnimR6"
@@ -114,7 +133,7 @@ FeAnimR6.Text = "Fe Animtion R6"
 FeAnimR6.TextSize = 14
 FeAnimR6.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FeAnimR6.MouseButton1Down:Connect(function()
-        NotifyModule:Notify("This Script is Huge Gonna Cook In", 3)
+    Notify("This Script is Huge Gonna Cook In", 3)
 	local Energize = Instance.new("ScreenGui")
 	local MainFrame = Instance.new("Frame")
 	local GuiBottomFrame = Instance.new("Frame")
@@ -1779,288 +1798,241 @@ FeAnimR6.MouseButton1Down:Connect(function()
 	end)
 end)
 	
-FeChatB.Name = "FeChatB"
-FeChatB.Parent = ScrollingFrame
-FeChatB.Size = UDim2.new(0, 137, 0, 23)
-FeChatB.BorderColor3 = Color3.fromRGB(0, 0, 0)
-FeChatB.Position = UDim2.new(0.0504385978, 0, 0.0932036042, 0)
-FeChatB.BorderSizePixel = 0
-FeChatB.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
-FeChatB.TextColor3 = Color3.fromRGB(0, 0, 0)
-FeChatB.Text = "Fe Chat Bypass"
-FeChatB.TextSize = 14
-FeChatB.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-FeChatB.MouseButton1Down:Connect(function()
-	repeat task.wait() until game:IsLoaded()
-        NotifyModule:Notify("This FE Chat Bypass Was No Anti Chat Logging So Be Careful", 10)
-	local TCS = game:GetService("TextChatService")
-	local CoreGui = game:GetService("CoreGui")
-	local RStorage = game:GetService("ReplicatedStorage")
-	local Players = game:GetService("Players")
-	local TweenService = game:GetService("TweenService")
-	local HttpService = game:GetService("HttpService")
-	local UserInputService = game:GetService("UserInputService")
-
-	local LocalPlayer = Players.LocalPlayer
-	local PlayerGui = LocalPlayer.PlayerGui
-
-	local isLegacy = TCS.ChatVersion == Enum.ChatVersion.LegacyChatService
-	local ChatBar = CoreGui:FindFirstChild("TextBoxContainer", true) or PlayerGui:FindFirstChild("Chat"):FindFirstChild("ChatBar", true)
-	ChatBar = ChatBar:FindFirstChild("TextBox") or ChatBar
-
-	local Keywords = {
-		--phrases
-		{"lil nigga", "li⁥ӏn⁥і⁥ggа"},
-		{"you fucking retard", "yo⁥⁥⁥⁥⁥⁥uf⁥⁥⁥⁥⁥⁥⁥⁥⁥u⁥⁥⁥⁥⁥⁥⁥⁥⁥c⁥⁥⁥⁥⁥⁥⁥⁥⁥k⁥⁥i⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥n⁥gr⁥⁥⁥⁥⁥⁥e⁥⁥t⁥⁥⁥⁥⁥⁥ar⁥⁥⁥⁥⁥⁥d"},
-		{"you fucking nigger", "yоufu⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥сk⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥іn⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥gn⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥і⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥ggе⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥r"},
-		{"fucking nigger", "fu⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥сk⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥іn⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥gn⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥і⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥ggе⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥r"},
-
-		--only work in sentence (sometimes)
-		{"fucking", "fu⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥сk⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥іn⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥g"},
-		{"nigger", "n⁥⁥⁥⁥⁥і⁥⁥⁥⁥ɡ⁥⁥⁥⁥ɡ⁥⁥⁥⁥е⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥r"}, -- changed in v2.01
-		{"faggot", "f⁥⁥⁥⁥⁥⁥⁥⁥а⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥ɡɡ⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥o⁥⁥⁥⁥⁥⁥⁥⁥t"},
-		{"nigga", "n⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥і⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥ggа"},
-		{"retard", "r⁥⁥⁥⁥⁥⁥e⁥⁥t⁥⁥⁥⁥⁥⁥ar⁥⁥⁥⁥⁥⁥d"},
-		{"child porn", "ch⁥⁥⁥⁥⁥⁥⁥⁥⁥iӏdpо⁥⁥⁥⁥⁥⁥⁥⁥⁥rn"},
-		{"snapchat", "ѕnарсһаt"},
-		{"snap", "ѕnар"},
-		{"instagram", "іnѕtаgrаm"},
-		{"insta", "іnѕtа"},
-
-		--yay
-		{"fuck", "F⁥⁥⁥⁥⁥U⁥⁥⁥⁥⁥СΚ"}, -- changed in v2
-		{"up", "u⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥p"},
-		{"shut", "s⁥⁥⁥⁥⁥⁥⁥⁥һu⁥⁥⁥⁥⁥⁥⁥⁥t"},
-		{"butt", "butt"},
-		{"dirty", "dіrtу"},
-		{"rape", "⁥⁥⁥⁥⁥r⁥⁥⁥⁥⁥а⁥⁥⁥⁥⁥р⁥⁥⁥⁥⁥е⁥⁥⁥⁥⁥"},
-		{"sex", "⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥е⁥⁥⁥⁥⁥х"}, -- changed in v2
-		{"whore", "⁥⁥⁥⁥⁥w⁥⁥⁥⁥⁥һ⁥⁥⁥⁥⁥o⁥⁥⁥⁥⁥r⁥⁥⁥⁥⁥e⁥⁥⁥⁥⁥"},
-		{"slut", "⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥ӏ⁥⁥⁥⁥⁥u⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥"},
-		{"pornhub", "⁥⁥⁥⁥⁥ро⁥⁥⁥⁥⁥r⁥⁥⁥⁥⁥n⁥⁥⁥⁥⁥һ⁥⁥⁥⁥⁥u⁥⁥⁥⁥⁥b⁥⁥⁥⁥⁥"},
-		{"cock", "cо⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥сk"}, -- changed in v2
-		{"pussy", "⁥⁥⁥⁥⁥р⁥⁥⁥⁥⁥u⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥у⁥⁥⁥⁥⁥"},
-		{"naked", "⁥⁥⁥⁥⁥n⁥⁥⁥⁥⁥а⁥⁥⁥⁥⁥k⁥⁥⁥⁥⁥е⁥⁥⁥⁥⁥d⁥⁥⁥⁥⁥"},
-		{"titties", "⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥і⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥і⁥⁥⁥⁥⁥е⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥"},
-		{"titty", "⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥і⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥y⁥⁥⁥⁥⁥"},
-		{"tits", "⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥і⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥s⁥⁥⁥⁥⁥"},
-		{"cum", "⁥⁥⁥⁥⁥с⁥⁥⁥⁥⁥u⁥⁥⁥⁥⁥m⁥⁥⁥⁥⁥"},
-		{"kkk", "⁥⁥⁥⁥⁥К⁥⁥⁥⁥⁥К⁥⁥⁥⁥⁥К⁥⁥⁥⁥⁥"},
-		{"rizz", "r⁥⁥⁥⁥⁥i⁥⁥⁥⁥⁥z⁥⁥⁥⁥⁥z"},
-		{"ass", "⁥⁥⁥⁥⁥а⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥"},
-		{"vagina", "⁥⁥⁥⁥⁥v⁥⁥⁥⁥⁥а⁥⁥⁥⁥⁥g⁥⁥⁥⁥⁥і⁥⁥⁥⁥⁥n⁥⁥⁥⁥⁥а⁥⁥⁥⁥⁥"},
-		{"nudes", "⁥⁥⁥⁥⁥n⁥⁥⁥⁥⁥u⁥⁥⁥⁥⁥d⁥⁥⁥⁥⁥е⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥"},
-		{"hoe", "⁥⁥⁥⁥⁥һ⁥⁥⁥⁥⁥о⁥⁥⁥⁥⁥e"},
-		{"blowjob", "⁥⁥⁥⁥b⁥⁥⁥⁥ӏ⁥⁥⁥⁥о⁥⁥⁥⁥w⁥⁥⁥⁥ј⁥⁥⁥⁥o⁥⁥⁥⁥b⁥⁥⁥⁥"},
-		{"femboy", "fеmbоу"},
-		{"love", "⁥⁥⁥⁥⁥ӏ⁥⁥⁥⁥⁥о⁥⁥⁥⁥⁥v⁥⁥⁥⁥⁥е⁥⁥⁥⁥⁥"},
-		{"kiss", "⁥⁥⁥⁥⁥k⁥⁥⁥⁥⁥і⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥"},
-		{"discord", "dіѕсоrd"},
-		{"porn", "⁥⁥⁥⁥⁥ро⁥⁥⁥⁥⁥r⁥⁥⁥⁥⁥n⁥⁥⁥⁥⁥"},
-		{"damn", "dаmn"},
-		{"anal", "аnаl"},
-		{"zoophile", "zоорһіӏе"},
-		{"lmao", "LМАО"},
-		{"lmfao", "LМFАО"},
-		{"george", "gеоrgе"},
-		{"floyd", "flоуd"},
-		{"sexual", "⁥⁥⁥⁥⁥ѕ⁥⁥⁥⁥⁥е⁥⁥⁥⁥⁥х⁥⁥⁥⁥⁥ual"},
-		{"tiktok", "tіktоk"},
-		{"twerk", "twеrk"},
-		{"gay", "⁥⁥⁥⁥⁥g⁥⁥⁥⁥⁥а⁥⁥⁥⁥⁥у⁥⁥⁥⁥⁥"},
-		{"black", "bӏасk"},
-		{"suck", "ѕuсk"},
-		{"heil", "һеіӏ"},
-		{"nazi", "n⁥⁥⁥⁥⁥a⁥⁥⁥⁥⁥z⁥⁥⁥⁥i"},
-		{"sperm", "ѕре⁥⁥⁥⁥⁥⁥⁥⁥rm"}, -- changed in v2
-		{"hate", "һаtе"},
-		{"balls", "bаӏӏѕ"},
-		{"shit", "s⁥⁥⁥⁥⁥⁥⁥⁥һit"},
-		{"bitch", "bi⁥⁥⁥⁥⁥⁥⁥⁥tсһ"},
-		{"kill", "kіll"},
-		{"yourself", "уоurѕеlf"},
-		{"%.com", ".⁥⁥⁥⁥⁥с⁥⁥⁥⁥о⁥⁥⁥⁥⁥⁥m"},
-		{"bastard", "bаѕtаrd"},
-		{"panties", "раntіеѕ"},
-		{"meth", "mеth"},
-		{"weed", "wееd"},
-		{"cunt", "с⁥⁥⁥⁥⁥unt"},
-		{"penis", "реnіѕ"},
-		{"pedo", "ре⁥⁥⁥⁥⁥⁥⁥⁥d⁥⁥⁥⁥⁥⁥⁥⁥о"},
-		{"masturbate", "mаѕturbаtе"},
-		{"moan", "mоаn"},
-		{"kink", "kіnk"},
-		{"fetish", "fеtіѕh"},
-		{"horny", "hоrnу"},
-		{"booty", "b⁥⁥⁥оо⁥⁥⁥t⁥⁥⁥у"},
-		{"horny", "h⁥⁥⁥⁥⁥⁥⁥⁥оrnу"},
-		{"commit", "соmmіt"},
-
-		--suno's credit
-		{"fap", "fаp"},
-		{"hentai", "һentаі"},
-		{"rule34", "ruӏe34"},
-		{"r34", "⁥⁥⁥⁥⁥r⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥3⁥⁥⁥⁥⁥4"},
-		{"xxx", "⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥xx⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥x⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥"},
-		{"suicide", "⁥ѕuі⁥сіdе"},
-		{"pp", "рр"},
-		{"dick", "⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥d⁥⁥⁥⁥⁥і⁥⁥⁥⁥с⁥⁥⁥⁥⁥⁥⁥⁥k⁥⁥⁥⁥⁥"},
-		{"crack", "сrасk"},
-		{"heroin", "hеrоin"},
-		{"boob", "b⁥⁥⁥оо⁥⁥⁥b"},
-		{"boobies", "b⁥⁥⁥оо⁥⁥⁥b⁥⁥⁥іеѕ"},
-		{"rapist", "⁥⁥⁥⁥⁥⁥⁥⁥rа⁥⁥⁥⁥⁥⁥⁥⁥p⁥іѕt"},
-		{"cocaine", "c⁥о⁥⁥⁥⁥⁥⁥⁥⁥⁥ca⁥іnе"},
-		{"do you have", "dо yоu h⁥аv⁥⁥⁥⁥⁥е⁥⁥⁥⁥"},
-		{"hole", "hоl⁥е⁥⁥⁥⁥"},
-		{"cocksucker", "cо⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥сksuck⁥еr"},
-		{"twat", "twаt"},
-		{"wanker", "wаnk⁥еr"},
-		{"anus", "аnu⁥ѕ⁥⁥⁥⁥"},
-		{"beaner", "⁥⁥⁥b⁥е⁥⁥⁥⁥⁥⁥аn⁥еr⁥⁥⁥⁥⁥⁥"},
-		{"coon", "cо⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥о⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥n"},
-		{"dildo", "dіld⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥о⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥"},
-		{"hump", "h⁥⁥⁥⁥⁥u⁥⁥⁥⁥⁥mp"},
-		{"jizz", "⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥j⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥izz⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥"},
-		{" ho ", " h⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥о⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥ "},
-		{"pregnant", "р⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥rе⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥gnа⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥nt"},
-		{"impregnat", "іmрrеgnаt"},
-		{"kunt", "⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥kun⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥t⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥"},
-		{"queef", "qu⁥е⁥⁥⁥⁥⁥⁥е⁥⁥⁥⁥⁥f"},
-		{"tard", "tаrd"},
-		{"sexy", "⁥⁥⁥⁥⁥⁥⁥⁥⁥sехy⁥"},
-		{"slutty", "⁥ѕӏuttу"},
-		{"dumbass", "d⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥um⁥⁥⁥⁥⁥b⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥а⁥ѕ⁥ѕ"},
-		{"moron", "m⁥оr⁥оn"},
-		{"xxx", "⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥xx⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥x⁥⁥⁥⁥⁥⁥⁥⁥⁥⁥"},
-		{"fat", "fаt"},
-		{"die", "⁥⁥⁥⁥⁥dі⁥⁥⁥⁥⁥е"},
-
-		--new
-		{"abortion", "аbоrtіоn"},
-		{"jew", "јеw"},
-		{"futa", "futа"},
-		{"twink", "twіnk"},
-		{"alcohol", "аlсоhоl"},
-		{"schlong", "ѕсhlоng"},
-		{"child predator", "ch⁥⁥⁥⁥⁥⁥⁥⁥⁥iӏdрrеdаtо⁥⁥⁥⁥⁥r"},
-		{"fag", "f⁥⁥⁥⁥⁥⁥⁥⁥а⁥⁥⁥⁥⁥⁥⁥⁥ɡ"}, --rarely works
-		{"molest", "mоlеѕt"},
-		{"condom", "со⁥⁥⁥⁥⁥nd⁥⁥⁥⁥⁥о⁥⁥⁥⁥⁥m"},
-		{"virgin", "νіrgіn"},
-		{"torture", "tоrturе"},
-
-		--custom
-		{"example", "example"},
-
-		--dont delete
-		{" ", ""},
-	}
-
---[[
-    need to fix:
-    lmao, lmfao, discord
-
-    need to add:
-    damn, slave
-]]
-
-	local Gen = function(Message)
-		for _, info in Keywords do
-			local real = info[1]
-			local bypass = info[2]
-			Message = Message:gsub(real, bypass)
-		end
-		return Message
-	end
-
-	local Chat = function(Message)
-		if isLegacy then
-			local ChatRemote = RStorage:FindFirstChild("SayMessageRequest", true)
-			ChatRemote:FireServer(Message, "All")
-		else
-			local Channel = TCS.TextChannels.RBXGeneral
-			Channel:SendAsync(Message)
-		end
-	end
-
-	local Fake = function(Message)
-		if isLegacy then
-			Players:Chat(Message)
-		else
-			local Channel = TCS.TextChannels.RBXGeneral
-			--Channel:SendAsync(("/e %s"):format(Message))
-			-- ^^^ its too annoying
-		end
-	end
-
-	local chars = {}
-	for i=97,122 do chars[#chars+1]=string.char(i) end
-	for i=65,90 do chars[#chars+1]=string.char(i) end
-
-	local RNG = function(length)
-		local str = ""
-		for i = 1, length do
-			str = str .. chars[math.random(#chars)]
-		end
-		return str
-	end
-
-	local ResetFilter = function()
-		for i = 1, 10 do
-			local GUID = RNG(i)
-			local Filler = "i love asians so much"
-			local Reset = ("%s %s"):format(GUID, Filler)
-			task.spawn(function()
-				Fake(Reset)
-			end)
-		end
-	end
-
-	local Connection = Instance.new("BindableFunction")
-
-	for _, c in getconnections(ChatBar.FocusLost) do
-		c:Disconnect()
-	end
-
-	ChatBar.FocusLost:Connect(function(enterPressed)
-		if enterPressed then
-			Connection:Invoke(ChatBar.Text)
-			ChatBar.Text = ""
-		end
-	end)
-
-	Connection.OnInvoke = function(Message)
-		Message = Gen(Message)
-		Chat(Message)
-		ResetFilter()
-	end
-
-	UserInputService.InputBegan:Connect(function(Input, GPE)
-		if GPE or Input.KeyCode ~= Enum.KeyCode.Zero then return end
-
-		NotifyModule:Notify("copied invite link to clipboard", 1)
-		setclipboard("https://discord.com/invite/FRsmP9knVc")
-	end)
-
-	NotifyModule:Notify("heartasian's bypass v2 loaded ► press 0 to join discord for more exclusive scripts", 5)
-
+FeB.Name = "FeB"
+FeB.Parent = ScrollingFrame
+FeB.Size = UDim2.new(0, 137, 0, 23)
+FeB.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FeB.Position = UDim2.new(0.0504385978, 0, 0.0932036042, 0)
+FeB.BorderSizePixel = 0
+FeB.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
+FeB.TextColor3 = Color3.fromRGB(0, 0, 0)
+FeB.Text = "Fe Bypass (HarkedReScripted)"
+FeB.TextSize = 14
+FeB.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+FeB.MouseButton1Down:Connect(function()
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/JulesV2/sigma-sigma-boy/refs/heads/main/break%20in%202%20harked.lua"))()
 end)
 
-FeTelekineses.Name = "FeTelekineses"
-FeTelekineses.Parent = ScrollingFrame
-FeTelekineses.Size = UDim2.new(0, 137, 0, 23)
-FeTelekineses.BorderColor3 = Color3.fromRGB(0, 0, 0)
-FeTelekineses.Position = UDim2.new(0.651315808, 0, 0.0445480719, 0)
-FeTelekineses.BorderSizePixel = 0
-FeTelekineses.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
-FeTelekineses.TextColor3 = Color3.fromRGB(0, 0, 0)
-FeTelekineses.Text = "Fe Telekineses"
-FeTelekineses.TextSize = 14
-FeTelekineses.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-FeTelekineses.MouseButton1Down:Connect(function()
-        NotifyModule:Notify("Script By The Owner Of SAZXHUB", 5)
-	loadstring(game:HttpGet(('https://raw.githubusercontent.com/SAZXHUB/Control-update/main/README.md'),true))()
+FFE.Name = "ForsakenEmotes"
+FFE.Parent = ScrollingFrame
+FFE.Size = UDim2.new(0, 137, 0, 23)
+FFE.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FFE.Position = UDim2.new(0.651315808, 0, 0.0445480719, 0)
+FFE.BorderSizePixel = 0
+FFE.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
+FFE.TextColor3 = Color3.fromRGB(0, 0, 0)
+FFE.Text = "Forsaken Emotes"
+FFE.TextSize = 14
+FFE.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+FFE.MouseButton1Down:Connect(function()
+
+Notify("If Emotes don't work press stop emote then play again", 1)
+Notify("Warning: If you use shucks on both public and private you get banned", 2)
+Notify("Use an alt for shucks on private anti kick works on private", 2)
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
+local head = character:WaitForChild("Head")
+local camera = Workspace.CurrentCamera
+
+local originalCameraSubject = camera.CameraSubject
+local cameraFollowing = false
+
+local defaultWalkSpeed = humanoid.WalkSpeed
+local defaultJumpPower = humanoid.JumpPower
+
+local function startFollowingHead()
+    if not cameraFollowing then
+        cameraFollowing = true
+        camera.CameraSubject = head
+    end
+end
+
+local function stopFollowingHead()
+    cameraFollowing = false
+    camera.CameraSubject = originalCameraSubject
+end
+
+local function disableMovement()
+    humanoid.WalkSpeed = 0
+    humanoid.JumpPower = 0
+    humanoid:SetStateEnabled(Enum.HumanoidStateType.Running, false)
+    humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, false)
+end
+
+local function enableMovement()
+    humanoid.WalkSpeed = defaultWalkSpeed
+    humanoid.JumpPower = defaultJumpPower
+    humanoid:SetStateEnabled(Enum.HumanoidStateType.Running, true)
+    humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, true)
+end
+
+local animations = {
+    Subterfuge = "rbxassetid://87482480949358",
+    MissTheQuiet = "rbxassetid://100986631322204",
+    Shucks = "rbxassetid://74238051754912",
+    HakariDance = "rbxassetid://138019937280193",
+    SillyBilly = "rbxassetid://107464355830477"
+}
+
+local sounds = {
+    Subterfuge = "rbxassetid://132297506693854",
+    MissTheQuiet = "rbxassetid://131936418953291",
+    Shucks = "rbxassetid://123236721947419",
+    HakariDance = "rbxassetid://87166578676888",
+    SillyBilly = "rbxassetid://77601084987544"
+}
+
+local animationObjects = {}
+local soundObjects = {}
+
+for name, id in pairs(animations) do
+    local anim = Instance.new("Animation")
+    anim.AnimationId = id
+    animationObjects[name] = anim
+end
+
+for name, id in pairs(sounds) do
+    local sound = Instance.new("Sound", head) -- 📌 Parent to "Head" so others can hear
+    sound.SoundId = id
+    sound.Volume = 2
+    sound.Looped = false
+    sound.RollOffMode = Enum.RollOffMode.Linear
+    sound.MaxDistance = 50 -- 🎶 Sets range where others can hear
+    soundObjects[name] = sound
+end
+
+local activeAnimationTrack
+local activeSound
+
+local function playAnimation(animationName)
+    if animator then
+        if activeAnimationTrack then
+            activeAnimationTrack:Stop()
+        end
+        if activeSound then
+            activeSound:Stop()
+        end
+
+        disableMovement()
+        startFollowingHead()
+
+        activeAnimationTrack = animator:LoadAnimation(animationObjects[animationName])
+        activeAnimationTrack:Play()
+        
+        activeSound = soundObjects[animationName]
+        activeSound:Play()
+
+        activeAnimationTrack.Stopped:Connect(function()
+            enableMovement()
+            stopFollowingHead()
+        end)
+    end
+end
+
+local function stopAnimation()
+    if activeAnimationTrack then
+        activeAnimationTrack:Stop()
+    end
+    if activeSound then
+        activeSound:Stop()
+    end
+    enableMovement()
+    stopFollowingHead()
+end
+
+local function createButton(parent, text, position, color, onClick)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0.8, 0, 0.12, 0)
+    button.Position = position
+    button.Text = text
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.BackgroundColor3 = color
+    button.Font = Enum.Font.GothamBold
+    button.TextSize = 16
+    button.Parent = parent
+
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.CornerRadius = UDim.new(0, 5)
+    buttonCorner.Parent = button
+
+    button.MouseButton1Click:Connect(onClick)
+
+    return button
+end
+
+-- 📌 Smaller GUI
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+local mainFrame = Instance.new("Frame", screenGui)
+mainFrame.Size = UDim2.new(0, 200, 0, 280)
+mainFrame.Position = UDim2.new(0.5, -100, 0.5, -140)
+mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+mainFrame.BackgroundTransparency = 0.2
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
+
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 10)
+uiCorner.Parent = mainFrame
+
+-- Close Button
+local closeButton = Instance.new("TextButton", mainFrame)
+closeButton.Size = UDim2.new(0, 25, 0, 25)
+closeButton.Position = UDim2.new(1, -30, 0, 5)
+closeButton.Text = "X"
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+closeButton.Font = Enum.Font.GothamBold
+closeButton.TextSize = 16
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 5)
+closeCorner.Parent = closeButton
+
+closeButton.MouseButton1Click:Connect(function()
+    mainFrame.Visible = false
+end)
+
+-- Create Buttons
+createButton(mainFrame, "Subterfuge", UDim2.new(0.1, 0, 0.1, 0), Color3.fromRGB(30, 60, 90), function()
+    playAnimation("Subterfuge")
+end)
+
+createButton(mainFrame, "Miss The Quiet", UDim2.new(0.1, 0, 0.24, 0), Color3.fromRGB(0, 0, 255), function()
+    playAnimation("MissTheQuiet")
+end)
+
+createButton(mainFrame, "Shucks", UDim2.new(0.1, 0, 0.38, 0), Color3.fromRGB(255, 165, 0), function()
+    playAnimation("Shucks")
+end)
+
+createButton(mainFrame, "Hakari Dance", UDim2.new(0.1, 0, 0.52, 0), Color3.fromRGB(57, 255, 20), function()
+    playAnimation("HakariDance")
+end)
+
+createButton(mainFrame, "Silly Billy", UDim2.new(0.1, 0, 0.66, 0), Color3.fromRGB(255, 105, 180), function()
+    playAnimation("SillyBilly")
+end)
+
+createButton(mainFrame, "Stop Emote", UDim2.new(0.1, 0, 0.80, 0), Color3.fromRGB(255, 50, 50), stopAnimation)
+
+-- 🎉 Restored "Made by: Ice" Label
+local creditLabel = Instance.new("TextLabel", mainFrame)
+creditLabel.Size = UDim2.new(0.8, 0, 0.08, 0)
+creditLabel.Position = UDim2.new(0.1, 0, 0.92, 0)
+creditLabel.Text = "Made by: Ice"
+creditLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+creditLabel.BackgroundTransparency = 1
+creditLabel.Font = Enum.Font.GothamBold
+creditLabel.TextSize = 14
+creditLabel.TextXAlignment = Enum.TextXAlignment.Center
+
 end)
 
 FB.Name = "FB"
@@ -2075,15 +2047,15 @@ FB.Text = "Fe Bypass (Backdoor)"
 FB.TextSize = 14
 FB.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FB.MouseButton1Down:Connect(function()
-        NotifyModule:Notify("This Script Has Private", 2)
+        Notify("This Script Has Private", 2)
         wait(1)
-        NotifyModule:Notify("But XXX Scripts Team Found it", 2)
+        Notify("But XXX Scripts Team Found it", 2)
         wait(1)
-        NotifyModule:Notify("This Script Scans More BackDoor then Others One Executing Now", 3)
+        Notify("This Script Scans Tools using cars model", 3)
 	local StarterGui = game:GetService("StarterGui")
 	local showNotification = true
 
-	function Notify(tl, t, d) 
+	function Notifyy(tl, t, d) 
 		if showNotification == true then
 			StarterGui:SetCore("SendNotification", {
 				Title = tl;
@@ -2125,7 +2097,7 @@ FB.MouseButton1Down:Connect(function()
 	local names = {"Delete", "Deletar", "Remove", "Destroy", "Clean", "Clear","Bullet", "Bala", "Shoot", "Shot", "Fire", "Segway", "Handless", "Sword", "Attack"}
 	if char then
 		blurefct(20)
-		Notify("Vulnerability Checker", "Looking up for remotes, may take a while.", 3)
+		Notifyy("Vulnerability Checker", "Looking up for remotes, may take a while.", 3)
 		for _, service in pairs(checkIn) do
 			for i,v in pairs(game:GetService(service):GetDescendants()) do
 				for _, str in pairs(names) do
@@ -2150,7 +2122,7 @@ FB.MouseButton1Down:Connect(function()
 	end
 
 	if sent == false then
-		Notify("Vulnerability Checker", "This game is not vulnerable/supported.", 5)
+		Notifyy("Vulnerability Checker", "This game is not vulnerable/supported.", 5)
 		blurefct(0)
 	end
 
@@ -2188,7 +2160,7 @@ FB.MouseButton1Down:Connect(function()
 	end
 	if enable == true then
 		blurefct(0)
-		Notify("Destructed Hex", "Made by Luq and Luca", 10)
+		Notifyy("Destructed Hex", "Made by Luq and Luca", 10)
 		local destruct = Instance.new("ScreenGui")
 		local main = Instance.new("Frame")
 		local TextLabel = Instance.new("TextLabel")
@@ -2571,12 +2543,12 @@ FB.MouseButton1Down:Connect(function()
 		game:GetService("Players").PlayerAdded:Connect(function(plr)
 			for i,v in pairs(bannedPlayers) do
 				if plr.Name == v then
-					Notify("Banned User", plr.Name .. " Tried to join the game", 5)
+					Notifyy("Banned User", plr.Name .. " Tried to join the game", 5)
 					work(plr)
 				end
 			end
 			if serverlock == true then
-				Notify("Join Attempt", plr.Name .. " Tried to join the game but the server is locked", 5)
+				Notifyy("Join Attempt", plr.Name .. " Tried to join the game but the server is locked", 5)
 				work(plr)
 			end
 			if sdown == true then
@@ -2778,12 +2750,12 @@ FB.MouseButton1Down:Connect(function()
 		slock.MouseButton1Click:Connect(function()
 			if toggle == false then
 				slock.Text = "UnSlock"
-				Notify("Server Locked", "Nobody can join the server", 5)
+				Notifyy("Server Locked", "Nobody can join the server", 5)
 				serverlock = true
 				toggle = true
 			elseif toggle == true then
 				slock.Text = "Slock"
-				Notify("Server Unlocked", "Anyone can join the server", 5)
+				Notifyy("Server Unlocked", "Anyone can join the server", 5)
 				serverlock = false
 				toggle = false
 			end
@@ -2805,7 +2777,7 @@ FB.MouseButton1Down:Connect(function()
 
 		shutdown.MouseButton1Click:Connect(function()
 			sdown = true
-			Notify("Shutdown", "Shutdowning server..", 5)
+			Notifyy("Shutdown", "Shutdowning server..", 5)
 			for i, v in pairs(game:GetService("Players"):GetPlayers()) do
 				spawn(function()
 					if v.Name ~= LocalPlayer.Name then
@@ -2863,20 +2835,20 @@ FB.MouseButton1Down:Connect(function()
 
 end)
 
-FeGamepass.Name = "FeGamepass"
-FeGamepass.Parent = ScrollingFrame
-FeGamepass.Size = UDim2.new(0, 137, 0, 23)
-FeGamepass.BorderColor3 = Color3.fromRGB(0, 0, 0)
-FeGamepass.Position = UDim2.new(0.651315808, 0, 0.0922147781, 0)
-FeGamepass.BorderSizePixel = 0
-FeGamepass.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
-FeGamepass.TextColor3 = Color3.fromRGB(0, 0, 0)
-FeGamepass.Text = "FE Gamepass Giver"
-FeGamepass.TextSize = 14
-FeGamepass.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-FeGamepass.MouseButton1Down:Connect(function()
-	NotifyModule:Notify("Fe GamePass Loaded Sometimes does not work", 5)
-	loadstring(game:HttpGet("https://gist.githubusercontent.com/dark-modz/6982de484735e730494b2d5a10fd6a2a/raw/a92563b0cd6a63683341a09f54baccea5349ed69/feGamepassV2",true))()
+FeAudio.Name = "FeAudio"
+FeAudio.Parent = ScrollingFrame
+FeAudio.Size = UDim2.new(0, 137, 0, 23)
+FeAudio.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FeAudio.Position = UDim2.new(0.651315808, 0, 0.0922147781, 0)
+FeAudio.BorderSizePixel = 0
+FeAudio.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
+FeAudio.TextColor3 = Color3.fromRGB(0, 0, 0)
+FeAudio.Text = "FE Audio Player (brookhaven)"
+FeAudio.TextSize = 14
+FeAudio.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+FeAudio.MouseButton1Down:Connect(function()
+	Notify("Only works on brookhavenand some games i guess", 5)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/ameicaa0/brookhaven/refs/heads/main/brookhaven%20script.txt"))()
 end)
 
 Close.Name = "Close"
@@ -2894,7 +2866,7 @@ Close.MouseButton1Down:Connect(function()
 	Open.Visible = true
 	wait(1)
 	Main_2.Visible = false
-        NotifyModule:Notify("Closed!", 2)
+        Notify("Closed!", 2)
 end)
 
 print("Main Frame Loaded")
@@ -2940,5 +2912,131 @@ UserInputService.InputChanged:Connect(function(input)
 	end
 end)
 
+--[=[
+ d888b  db    db d888888b      .d888b.      db      db    db  .d8b.  
+88' Y8b 88    88   `88'        VP  `8D      88      88    88 d8' `8b 
+88      88    88    88            odD'      88      88    88 88ooo88 
+88  ooo 88    88    88          .88'        88      88    88 88~~~88 
+88. ~8~ 88b  d88   .88.        j88.         88booo. 88b  d88 88   88 
+ Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER
+]=]
+
+-- Instances: 7 | Scripts: 1 | Modules: 0
+local G2L = {};
+
+-- StarterGui.Notifications
+G2L["1"] = Instance.new("ScreenGui", game:GetService("CoreGui"));
+G2L["1"]["Name"] = [[Notifications]];
+G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+G2L["1"]["ResetOnSpawn"] = false;
+G2L["1"]["DisplayOrder"] = 999999;
+
+-- StarterGui.Notifications.LocalScript
+G2L["2"] = Instance.new("LocalScript", G2L["1"]);
+
+
+-- StarterGui.Notifications.LocalScript.Template
+G2L["3"] = Instance.new("Frame", G2L["2"]);
+G2L["3"]["BorderSizePixel"] = 0;
+G2L["3"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["3"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["3"]["BackgroundTransparency"] = 0.5;
+G2L["3"]["Size"] = UDim2.new(0.13699999451637268, 0, 0.025, 0);
+G2L["3"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["3"]["Position"] = UDim2.new(0.5, 0, 0.8847006559371948, 0);
+G2L["3"]["Name"] = [[Template]];
+
+-- StarterGui.Notifications.LocalScript.Template.UICorner
+G2L["4"] = Instance.new("UICorner", G2L["3"]);
+G2L["4"]["CornerRadius"] = UDim.new(1, 0);
+
+-- StarterGui.Notifications.LocalScript.Template.Label
+G2L["5"] = Instance.new("TextLabel", G2L["3"]);
+G2L["5"]["BorderSizePixel"] = 0;
+G2L["5"]["RichText"] = true;
+G2L["5"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["5"]["FontFace"] = Font.new([[rbxasset://fonts/families/Ubuntu.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["5"]["TextSize"] = 14;
+G2L["5"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["5"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["5"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["5"]["Text"] = [[example]];
+G2L["5"]["Name"] = [[Label]];
+G2L["5"]["BackgroundTransparency"] = 1;
+
+-- StarterGui.Notifications.LocalScript.Template.Label.UIPadding
+G2L["6"] = Instance.new("UIPadding", G2L["5"]);
+G2L["6"]["PaddingTop"] = UDim.new(0.20000000298023224, 0);
+G2L["6"]["PaddingRight"] = UDim.new(0.20000000298023224, 0);
+G2L["6"]["PaddingBottom"] = UDim.new(0.20000000298023224, 0);
+G2L["6"]["PaddingLeft"] = UDim.new(0.20000000298023224, 0);
+
+-- StarterGui.Notifications.LocalScript.Template.Label.UITextSizeConstraint
+G2L["7"] = Instance.new("UITextSizeConstraint", G2L["5"]);
+G2L["7"]["MaxTextSize"] = 18;
+
+-- StarterGui.Notifications.LocalScript
+local function C_2()
+local script = G2L["2"];
+	local TweenService = game:GetService("TweenService")
+	local TextService = game:GetService("TextService")
+	local Active = 0
+	local Notifications = {}
+	
+	local Library = {}
+	
+	function Library:Notify(Text: string, Time: number)
+		local PrePosition = UDim2.new(0.5, 0, 1.1, 0)
+		local PostPosition = UDim2.new(0.5, 0, 0.885 - (Active / 15), 0)
+		Active += 1
+	
+		local Template = script.Template:Clone()
+		Template.Parent = script.Parent
+		Template.Label.Text = Text
+		Template.Position = PrePosition
+	
+		local textSize = TextService:GetTextSize(Text, Template.Label.TextSize, Template.Label.Font, Vector2.new(10000, Template.Label.AbsoluteSize.Y))
+		local parentWidth = Template.Parent.AbsoluteSize.X
+		local newScaleX = ((textSize.X + 20) / parentWidth)
+	
+		Template.Size = UDim2.new(newScaleX, 0, Template.Size.Y.Scale, 0)
+	
+		table.insert(Notifications, Template)
+	
+		local Post = TweenService:Create(Template, TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = PostPosition})
+		local Pre = TweenService:Create(Template, TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = PrePosition})
+	
+		task.spawn(function()
+			Post:Play()
+			Post.Completed:Wait()
+			task.wait(Time)
+			Pre:Play()
+			for i, v in ipairs(Notifications) do
+				if v == Template then
+					table.remove(Notifications, i)
+					break
+				end
+			end
+			Active -= 1
+			self:UpdatePositions()
+			Pre.Completed:Wait()
+			Template:Destroy()
+		end)
+	end
+	
+	function Library:UpdatePositions()
+		for i, notification in ipairs(Notifications) do
+			local NewPosition = UDim2.new(0.5, 0, 0.885 - ((i - 1) / 15), 0)
+			local Tween = TweenService:Create(notification, TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = NewPosition})
+			Tween:Play()
+		end
+	end
+  
+	return Library;
+end;
+local Library = C_2();
+
+return Library, G2L["1"];
+
 print("Loaded")
-NotifyModule:Notify("Thanks For Using More TouseefX Script Hub!:)", 5)
+C_2:Notify("Loaded Thanks For Using More TouseefX Script Hub!:)", 5)
