@@ -1946,6 +1946,19 @@ local function stopAnimation()
     stopFollowingHead()
 end
 
+-- Anti-Kick Script
+    local plr = game:GetService("Players").LocalPlayer
+    getgenv().Anti = true -- Re-Execute if you change it
+
+    local Anti
+    Anti = hookmetamethod(game, "__namecall", function(self, ...)
+        if self == plr and getnamecallmethod():lower() == "kick" and getgenv().Anti then
+            return warn("[ANTI-KICK] Client Tried To Call Kick Function On LocalPlayer")
+        end
+        return Anti(self, ...)
+    end)
+end)
+
 local function createButton(parent, text, position, color, onClick)
     local button = Instance.new("TextButton")
     button.Size = UDim2.new(0.8, 0, 0.12, 0)
