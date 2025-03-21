@@ -4,7 +4,7 @@ local StarterGui = game:GetService("StarterGui")
 local showNotification = true
 
 print("Creating Frames And GUI")
-function Notifyy(tl, t, d) 
+function NotifyModule:Notifyy(tl, t, d) 
 	if showNotification == true then
 		StarterGui:SetCore("SendNotification", {
 			Title = tl;
@@ -15,9 +15,9 @@ function Notifyy(tl, t, d)
 	end
 end
 
-Notifyy("TouseefX Loader", "Creating Functions and GUI", 3)
+NotifyModule:Notifyy("TouseefX Loader", "Creating Functions and GUI", 3)
 
--- local NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
+local NotifyModule:NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
 local MainGUI = Instance.new("ScreenGui")
 local Open = Instance.new("Frame")
 local Open_2 = Instance.new("TextButton")
@@ -34,7 +34,7 @@ local Close = Instance.new("TextButton")
 
 print("Created")
 print("Loading Frames,GUI")
-Notifyy("TouseefX Loader", "Created, Starting Loading some scripts and gui cofings", 3)
+NotifyModule:Notifyy("TouseefX Loader", "Created, Starting Loading some scripts and gui cofings", 3)
 -- trun off this thing ngl
 local showNotification = false
 
@@ -67,7 +67,7 @@ Open_2.MouseButton1Down:Connect(function()
 	Main_2.Visible = true
 	wait(1)
 	Open.Visible = false
-        Notify("Opened!", 2)
+        NotifyModule:Notify("Opened!", 2)
 end)
 
 print("Open Frame Loaded")
@@ -114,11 +114,11 @@ Steve.Text = "Fe Steve"
 Steve.TextSize = 14
 Steve.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 Steve.MouseButton1Down:Connect(function()
-	NotifyModule:Notify("does not work on some games", 5)
+	NotifyModule:NotifyModule:NotifyModule:Notify("does not work on some games", 5)
 	loadstring(game:HttpGet(('https://pastebin.com/raw/2NNDTLjL'),true))()
         wait(4)
-        Notify("Script By Depr1", 5)
-        Notify("Script Link by Delros12", 5)
+        NotifyModule:Notify("Script By Depr1", 5)
+        NotifyModule:Notify("Script Link by Delros12", 5)
 end)
 
 FeAnimR6.Name = "FeAnimR6"
@@ -133,7 +133,7 @@ FeAnimR6.Text = "Fe Animtion R6"
 FeAnimR6.TextSize = 14
 FeAnimR6.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FeAnimR6.MouseButton1Down:Connect(function()
-    Notify("This Script is Huge Gonna Cook In", 3)
+    NotifyModule:Notify("This Script is Huge Gonna Cook In", 3)
 	local Energize = Instance.new("ScreenGui")
 	local MainFrame = Instance.new("Frame")
 	local GuiBottomFrame = Instance.new("Frame")
@@ -1826,138 +1826,209 @@ FFE.TextSize = 14
 FFE.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FFE.MouseButton1Down:Connect(function()
 
-Notify("If Emotes don't work press stop emote then play again", 1)
-Notify("Warning: If you use shucks on both public and private you get banned", 2)
-Notify("Use an alt for shucks on private anti kick works on private", 2)
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local Workspace = game:GetService("Workspace")
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
 
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
-local head = character:WaitForChild("Head")
-local camera = Workspace.CurrentCamera
+-- some large scripts o think 
+local function updateEmotesSub()
+    local emotesValue = player.PlayerData.Equipped.Emotes.Value
+    local emotesList = {}
 
-local originalCameraSubject = camera.CameraSubject
-local cameraFollowing = false
-
-local defaultWalkSpeed = humanoid.WalkSpeed
-local defaultJumpPower = humanoid.JumpPower
-
-local function startFollowingHead()
-    if not cameraFollowing then
-        cameraFollowing = true
-        camera.CameraSubject = head
+    for value in string.gmatch(emotesValue, "[^|]+") do
+        table.insert(emotesList, value)
     end
+
+    if #emotesList >= 6 then
+        emotesList[6] = "_Subterfuge"
+    end
+    
+    player.PlayerData.Equipped.Emotes.Value = table.concat(emotesList, "|")
 end
 
-local function stopFollowingHead()
-    cameraFollowing = false
-    camera.CameraSubject = originalCameraSubject
+local function updateEmotesSilly()
+    local emotesValue = player.PlayerData.Equipped.Emotes.Value
+    local emotesList = {}
+
+    for value in string.gmatch(emotesValue, "[^|]+") do
+        table.insert(emotesList, value)
+    end
+
+    if #emotesList >= 6 then
+        emotesList[6] = "_SillyBilly"
+    end
+
+    player.PlayerData.Equipped.Emotes.Value = table.concat(emotesList, "|")
 end
 
-local function disableMovement()
-    humanoid.WalkSpeed = 0
-    humanoid.JumpPower = 0
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Running, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, false)
+local function updateEmotesMiss()
+    local emotesValue = player.PlayerData.Equipped.Emotes.Value
+    local emotesList = {}
+
+    for value in string.gmatch(emotesValue, "[^|]+") do
+        table.insert(emotesList, value)
+    end
+
+    if #emotesList >= 6 then
+        emotesList[6] = "_MissTheQuiet"
+    end
+
+    player.PlayerData.Equipped.Emotes.Value = table.concat(emotesList, "|")
 end
+-- this is where it starts
+local function Subterfuge()
+    updateEmotesSub()
+    -- freeze your robloz character
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.PlatformStand = true
+    humanoid:Move(Vector3.zero)
 
-local function enableMovement()
-    humanoid.WalkSpeed = defaultWalkSpeed
-    humanoid.JumpPower = defaultJumpPower
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Running, true)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, true)
-end
+    local bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+    bodyVelocity.Velocity = Vector3.zero
+    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
+    -- getting some emotes stuffs
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._Subterfuge) --the script had been chanced his name in new update
+    emoteScript.Created({Character = character})
 
-local animations = {
-    Subterfuge = "rbxassetid://87482480949358",
-    MissTheQuiet = "rbxassetid://100986631322204",
-    Shucks = "rbxassetid://74238051754912",
-    HakariDance = "rbxassetid://138019937280193",
-    SillyBilly = "rbxassetid://107464355830477"
-}
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://87482480949358"
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack:Play()
 
-local sounds = {
-    Subterfuge = "rbxassetid://132297506693854",
-    MissTheQuiet = "rbxassetid://131936418953291",
-    Shucks = "rbxassetid://123236721947419",
-    HakariDance = "rbxassetid://87166578676888",
-    SillyBilly = "rbxassetid://77601084987544"
-}
-
-local animationObjects = {}
-local soundObjects = {}
-
-for name, id in pairs(animations) do
-    local anim = Instance.new("Animation")
-    anim.AnimationId = id
-    animationObjects[name] = anim
-end
-
-for name, id in pairs(sounds) do
-    local sound = Instance.new("Sound", head) -- 📌 Parent to "Head" so others can hear
-    sound.SoundId = id
-    sound.Volume = 2
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://132297506693854"
+    sound.Parent = character:WaitForChild("HumanoidRootPart")
+    sound.Volume = 5
     sound.Looped = false
-    sound.RollOffMode = Enum.RollOffMode.Linear
-    sound.MaxDistance = 50 -- 🎶 Sets range where others can hear
-    soundObjects[name] = sound
-end
+    sound:Play()
 
-local activeAnimationTrack
-local activeSound
-
-local function playAnimation(animationName)
-    if animator then
-        if activeAnimationTrack then
-            activeAnimationTrack:Stop()
+    local args = {
+        [1] = "PlayEmote",
+        [2] = "Animations",
+        [3] = "_Subterfuge"
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+    -- the emote script is broken so hands can't disappear
+    game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 99)
+    -- unfreeze because something happend
+    animationTrack.Stopped:Connect(function()
+        humanoid.PlatformStand = false
+        if bodyVelocity and bodyVelocity.Parent then
+            bodyVelocity:Destroy()
         end
-        if activeSound then
-            activeSound:Stop()
-        end
-
-        disableMovement()
-        startFollowingHead()
-
-        activeAnimationTrack = animator:LoadAnimation(animationObjects[animationName])
-        activeAnimationTrack:Play()
-        
-        activeSound = soundObjects[animationName]
-        activeSound:Play()
-
-        activeAnimationTrack.Stopped:Connect(function()
-            enableMovement()
-            stopFollowingHead()
-        end)
-    end
-end
-
-local function stopAnimation()
-    if activeAnimationTrack then
-        activeAnimationTrack:Stop()
-    end
-    if activeSound then
-        activeSound:Stop()
-    end
-    enableMovement()
-    stopFollowingHead()
-end
-
--- Anti-Kick Script
-    local plr = game:GetService("Players").LocalPlayer
-    getgenv().Anti = true -- Re-Execute if you change it
-
-    local Anti
-    Anti = hookmetamethod(game, "__namecall", function(self, ...)
-        if self == plr and getnamecallmethod():lower() == "kick" and getgenv().Anti then
-            return warn("[ANTI-KICK] Client Tried To Call Kick Function On LocalPlayer")
-        end
-        return Anti(self, ...)
     end)
-end)
+end
+
+local function SillyBilly()
+    updateEmotesSilly()
+    -- freeze your robloz character
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.PlatformStand = true
+    humanoid:Move(Vector3.zero)
+
+    local bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+    bodyVelocity.Velocity = Vector3.zero
+    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
+    -- getting some emotes stuffs
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly) --the script had been chanced his name in new update
+    emoteScript.Created({Character = character})
+
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://107464355830477"
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack:Play()
+
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://77601084987544"
+    sound.Parent = character:WaitForChild("HumanoidRootPart")
+    sound.Volume = 1
+    sound.Looped = false
+    sound:Play()
+
+    local args = {
+        [1] = "PlayEmote",
+        [2] = "Animations",
+        [3] = "_SillyBilly"
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+    -- the emote script is broken so hands can't disappear
+    game:GetService("Debris"):AddItem(character:FindFirstChild("SillyBillyMicrophone"), 44)
+    -- unfreeze because something happend
+    animationTrack.Stopped:Connect(function()
+        humanoid.PlatformStand = false
+        if bodyVelocity and bodyVelocity.Parent then
+            bodyVelocity:Destroy()
+        end
+    end)
+end
+
+local function MissQuiet()
+    updateEmotesMiss()
+    -- freeze your robloz character
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.PlatformStand = true
+    humanoid:Move(Vector3.zero)
+
+    local bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+    bodyVelocity.Velocity = Vector3.zero
+    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
+    -- getting some emotes stuffs
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._MissTheQuiet) --the script had been chanced his name in new update
+    emoteScript.Created({Character = character})
+
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://100986631322204"
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack:Play()
+
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://131936418953291"
+    sound.Parent = character:WaitForChild("HumanoidRootPart")
+    sound.Volume = 1
+    sound.Looped = false
+    sound:Play()
+
+    local args = {
+        [1] = "PlayEmote",
+        [2] = "Animations",
+        [3] = "_MissTheQuiet"
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+    -- the emote script is broken so hands can't disappear
+    game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 400)
+    game:GetService("Debris"):AddItem(character:FindFirstChild("EmoteHat"), 400)
+    game:GetService("Debris"):AddItem(character:FindFirstChild("EmoteLighting"), 400)
+    -- unfreeze because something happend
+    animationTrack.Stopped:Connect(function()
+        humanoid.PlatformStand = false
+        if bodyVelocity and bodyVelocity.Parent then
+            bodyVelocity:Destroy()
+        end
+    end)
+end
+
+-- choose one delete
+-- Subterfuge()
+-- SillyBilly()
+-- MissQuiet()
+
+-- FunÃƒÂ§ÃƒÂ£o para lidar com o inÃƒÂ­cio do personagem
+local function onCharacterAdded(character)
+    wait(0.1)
+    -- Em caso de a funÃƒÂ§ÃƒÂ£o de input ser chamada antes do personagem aparecer
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Se o personagem jÃƒÂ¡ existe, chama a funÃƒÂ§ÃƒÂ£o
+if player.Character then
+    onCharacterAdded(player.Character)
+end
 
 local function createButton(parent, text, position, color, onClick)
     local button = Instance.new("TextButton")
@@ -1979,8 +2050,10 @@ local function createButton(parent, text, position, color, onClick)
     return button
 end
 
--- 📌 Smaller GUI
-local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+local Playersgui = game:GetService("Players")
+local playergui = Playersgui.LocalPlayer
+-- Ã°Å¸â€œÅ’ Smaller GUI
+local screenGui = Instance.new("ScreenGui", playergui:WaitForChild("PlayerGui"))
 local mainFrame = Instance.new("Frame", screenGui)
 mainFrame.Size = UDim2.new(0, 200, 0, 280)
 mainFrame.Position = UDim2.new(0.5, -100, 0.5, -140)
@@ -2014,37 +2087,27 @@ end)
 
 -- Create Buttons
 createButton(mainFrame, "Subterfuge", UDim2.new(0.1, 0, 0.1, 0), Color3.fromRGB(30, 60, 90), function()
-    playAnimation("Subterfuge")
+    Subterfuge()
 end)
 
 createButton(mainFrame, "Miss The Quiet", UDim2.new(0.1, 0, 0.24, 0), Color3.fromRGB(0, 0, 255), function()
-    playAnimation("MissTheQuiet")
+    MissQuiet()
 end)
 
-createButton(mainFrame, "Shucks", UDim2.new(0.1, 0, 0.38, 0), Color3.fromRGB(255, 165, 0), function()
-    playAnimation("Shucks")
+createButton(mainFrame, "Silly Billy", UDim2.new(0.1, 0, 0.38, 0), Color3.fromRGB(255, 105, 180), function()
+    SillyBilly()
 end)
 
-createButton(mainFrame, "Hakari Dance", UDim2.new(0.1, 0, 0.52, 0), Color3.fromRGB(57, 255, 20), function()
-    playAnimation("HakariDance")
-end)
-
-createButton(mainFrame, "Silly Billy", UDim2.new(0.1, 0, 0.66, 0), Color3.fromRGB(255, 105, 180), function()
-    playAnimation("SillyBilly")
-end)
-
-createButton(mainFrame, "Stop Emote", UDim2.new(0.1, 0, 0.80, 0), Color3.fromRGB(255, 50, 50), stopAnimation)
-
--- 🎉 Restored "Made by: Ice" Label
+-- Ã°Å¸Å½â€° Restored "Made by: Ice" Label
 local creditLabel = Instance.new("TextLabel", mainFrame)
 creditLabel.Size = UDim2.new(0.8, 0, 0.08, 0)
 creditLabel.Position = UDim2.new(0.1, 0, 0.92, 0)
-creditLabel.Text = "Made by: Ice"
+creditLabel.Text = "Credits In Script page info"
 creditLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 creditLabel.BackgroundTransparency = 1
 creditLabel.Font = Enum.Font.GothamBold
 creditLabel.TextSize = 14
-creditLabel.TextXAlignment = Enum.TextXAlignment.Center
+creditLabel.TextXAlignment = Enum.TextXAlignment.Centert = Enum.TextXAlignment.Center
 
 end)
 
@@ -2060,15 +2123,15 @@ FB.Text = "Fe Bypass (Backdoor)"
 FB.TextSize = 14
 FB.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FB.MouseButton1Down:Connect(function()
-        Notify("This Script Has Private", 2)
+        NotifyModule:Notify("This Script Has Private", 2)
         wait(1)
-        Notify("But XXX Scripts Team Found it", 2)
+        NotifyModule:Notify("But XXX Scripts Team Found it", 2)
         wait(1)
-        Notify("This Script Scans Tools using cars model", 3)
+        NotifyModule:Notify("This Script Scans Tools using cars model", 3)
 	local StarterGui = game:GetService("StarterGui")
 	local showNotification = true
 
-	function Notifyy(tl, t, d) 
+	function NotifyModule:Notifyy(tl, t, d) 
 		if showNotification == true then
 			StarterGui:SetCore("SendNotification", {
 				Title = tl;
@@ -2110,7 +2173,7 @@ FB.MouseButton1Down:Connect(function()
 	local names = {"Delete", "Deletar", "Remove", "Destroy", "Clean", "Clear","Bullet", "Bala", "Shoot", "Shot", "Fire", "Segway", "Handless", "Sword", "Attack"}
 	if char then
 		blurefct(20)
-		Notifyy("Vulnerability Checker", "Looking up for remotes, may take a while.", 3)
+		NotifyModule:Notifyy("Vulnerability Checker", "Looking up for remotes, may take a while.", 3)
 		for _, service in pairs(checkIn) do
 			for i,v in pairs(game:GetService(service):GetDescendants()) do
 				for _, str in pairs(names) do
@@ -2135,7 +2198,7 @@ FB.MouseButton1Down:Connect(function()
 	end
 
 	if sent == false then
-		Notifyy("Vulnerability Checker", "This game is not vulnerable/supported.", 5)
+		NotifyModule:Notifyy("Vulnerability Checker", "This game is not vulnerable/supported.", 5)
 		blurefct(0)
 	end
 
@@ -2173,7 +2236,7 @@ FB.MouseButton1Down:Connect(function()
 	end
 	if enable == true then
 		blurefct(0)
-		Notifyy("Destructed Hex", "Made by Luq and Luca", 10)
+		NotifyModule:Notifyy("Destructed Hex", "Made by Luq and Luca", 10)
 		local destruct = Instance.new("ScreenGui")
 		local main = Instance.new("Frame")
 		local TextLabel = Instance.new("TextLabel")
@@ -2556,12 +2619,12 @@ FB.MouseButton1Down:Connect(function()
 		game:GetService("Players").PlayerAdded:Connect(function(plr)
 			for i,v in pairs(bannedPlayers) do
 				if plr.Name == v then
-					Notifyy("Banned User", plr.Name .. " Tried to join the game", 5)
+					NotifyModule:Notifyy("Banned User", plr.Name .. " Tried to join the game", 5)
 					work(plr)
 				end
 			end
 			if serverlock == true then
-				Notifyy("Join Attempt", plr.Name .. " Tried to join the game but the server is locked", 5)
+				NotifyModule:Notifyy("Join Attempt", plr.Name .. " Tried to join the game but the server is locked", 5)
 				work(plr)
 			end
 			if sdown == true then
@@ -2699,7 +2762,7 @@ FB.MouseButton1Down:Connect(function()
 					if not table.find(bannedPlayers, v.Name) then
 						plr = game:GetService("Players")[v]
 						table.insert(bannedPlayers, plr.Name)
-						Notify("Banned", plr.Name .. " Will not be able to join the server", 5)
+						NotifyModule:Notify("Banned", plr.Name .. " Will not be able to join the server", 5)
 						work(plr)
 					end
 				end)
@@ -2710,7 +2773,7 @@ FB.MouseButton1Down:Connect(function()
 			for i,v in pairs(GetBannedPlayer(player.Text)) do
 				spawn(function()
 					table.remove(bannedPlayers, table.find(bannedPlayers, v))
-					Notify("UnBanned", v .." Is now able to join the server", 5)
+					NotifyModule:Notify("UnBanned", v .." Is now able to join the server", 5)
 				end)
 			end
 		end)
@@ -2763,12 +2826,12 @@ FB.MouseButton1Down:Connect(function()
 		slock.MouseButton1Click:Connect(function()
 			if toggle == false then
 				slock.Text = "UnSlock"
-				Notifyy("Server Locked", "Nobody can join the server", 5)
+				NotifyModule:Notifyy("Server Locked", "Nobody can join the server", 5)
 				serverlock = true
 				toggle = true
 			elseif toggle == true then
 				slock.Text = "Slock"
-				Notifyy("Server Unlocked", "Anyone can join the server", 5)
+				NotifyModule:Notifyy("Server Unlocked", "Anyone can join the server", 5)
 				serverlock = false
 				toggle = false
 			end
@@ -2790,7 +2853,7 @@ FB.MouseButton1Down:Connect(function()
 
 		shutdown.MouseButton1Click:Connect(function()
 			sdown = true
-			Notifyy("Shutdown", "Shutdowning server..", 5)
+			NotifyModule:Notifyy("Shutdown", "Shutdowning server..", 5)
 			for i, v in pairs(game:GetService("Players"):GetPlayers()) do
 				spawn(function()
 					if v.Name ~= LocalPlayer.Name then
@@ -2860,7 +2923,7 @@ FeAudio.Text = "FE Audio Player (brookhaven)"
 FeAudio.TextSize = 14
 FeAudio.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FeAudio.MouseButton1Down:Connect(function()
-	Notify("Only works on brookhavenand some games i guess", 5)
+	NotifyModule:Notify("Only works on brookhavenand some games i guess", 5)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/ameicaa0/brookhaven/refs/heads/main/brookhaven%20script.txt"))()
 end)
 
@@ -2879,7 +2942,7 @@ Close.MouseButton1Down:Connect(function()
 	Open.Visible = true
 	wait(1)
 	Main_2.Visible = false
-        Notify("Closed!", 2)
+        NotifyModule:Notify("Closed!", 2)
 end)
 
 print("Main Frame Loaded")
@@ -2925,131 +2988,5 @@ UserInputService.InputChanged:Connect(function(input)
 	end
 end)
 
---[=[
- d888b  db    db d888888b      .d888b.      db      db    db  .d8b.  
-88' Y8b 88    88   `88'        VP  `8D      88      88    88 d8' `8b 
-88      88    88    88            odD'      88      88    88 88ooo88 
-88  ooo 88    88    88          .88'        88      88    88 88~~~88 
-88. ~8~ 88b  d88   .88.        j88.         88booo. 88b  d88 88   88 
- Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER
-]=]
-
--- Instances: 7 | Scripts: 1 | Modules: 0
-local G2L = {};
-
--- StarterGui.Notifications
-G2L["1"] = Instance.new("ScreenGui", game:GetService("CoreGui"));
-G2L["1"]["Name"] = [[Notifications]];
-G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
-G2L["1"]["ResetOnSpawn"] = false;
-G2L["1"]["DisplayOrder"] = 999999;
-
--- StarterGui.Notifications.LocalScript
-G2L["2"] = Instance.new("LocalScript", G2L["1"]);
-
-
--- StarterGui.Notifications.LocalScript.Template
-G2L["3"] = Instance.new("Frame", G2L["2"]);
-G2L["3"]["BorderSizePixel"] = 0;
-G2L["3"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["3"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["3"]["BackgroundTransparency"] = 0.5;
-G2L["3"]["Size"] = UDim2.new(0.13699999451637268, 0, 0.025, 0);
-G2L["3"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["3"]["Position"] = UDim2.new(0.5, 0, 0.8847006559371948, 0);
-G2L["3"]["Name"] = [[Template]];
-
--- StarterGui.Notifications.LocalScript.Template.UICorner
-G2L["4"] = Instance.new("UICorner", G2L["3"]);
-G2L["4"]["CornerRadius"] = UDim.new(1, 0);
-
--- StarterGui.Notifications.LocalScript.Template.Label
-G2L["5"] = Instance.new("TextLabel", G2L["3"]);
-G2L["5"]["BorderSizePixel"] = 0;
-G2L["5"]["RichText"] = true;
-G2L["5"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["5"]["FontFace"] = Font.new([[rbxasset://fonts/families/Ubuntu.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
-G2L["5"]["TextSize"] = 14;
-G2L["5"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["5"]["Size"] = UDim2.new(1, 0, 1, 0);
-G2L["5"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["5"]["Text"] = [[example]];
-G2L["5"]["Name"] = [[Label]];
-G2L["5"]["BackgroundTransparency"] = 1;
-
--- StarterGui.Notifications.LocalScript.Template.Label.UIPadding
-G2L["6"] = Instance.new("UIPadding", G2L["5"]);
-G2L["6"]["PaddingTop"] = UDim.new(0.20000000298023224, 0);
-G2L["6"]["PaddingRight"] = UDim.new(0.20000000298023224, 0);
-G2L["6"]["PaddingBottom"] = UDim.new(0.20000000298023224, 0);
-G2L["6"]["PaddingLeft"] = UDim.new(0.20000000298023224, 0);
-
--- StarterGui.Notifications.LocalScript.Template.Label.UITextSizeConstraint
-G2L["7"] = Instance.new("UITextSizeConstraint", G2L["5"]);
-G2L["7"]["MaxTextSize"] = 18;
-
--- StarterGui.Notifications.LocalScript
-local function C_2()
-local script = G2L["2"];
-	local TweenService = game:GetService("TweenService")
-	local TextService = game:GetService("TextService")
-	local Active = 0
-	local Notifications = {}
-	
-	local Library = {}
-	
-	function Library:Notify(Text: string, Time: number)
-		local PrePosition = UDim2.new(0.5, 0, 1.1, 0)
-		local PostPosition = UDim2.new(0.5, 0, 0.885 - (Active / 15), 0)
-		Active += 1
-	
-		local Template = script.Template:Clone()
-		Template.Parent = script.Parent
-		Template.Label.Text = Text
-		Template.Position = PrePosition
-	
-		local textSize = TextService:GetTextSize(Text, Template.Label.TextSize, Template.Label.Font, Vector2.new(10000, Template.Label.AbsoluteSize.Y))
-		local parentWidth = Template.Parent.AbsoluteSize.X
-		local newScaleX = ((textSize.X + 20) / parentWidth)
-	
-		Template.Size = UDim2.new(newScaleX, 0, Template.Size.Y.Scale, 0)
-	
-		table.insert(Notifications, Template)
-	
-		local Post = TweenService:Create(Template, TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = PostPosition})
-		local Pre = TweenService:Create(Template, TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = PrePosition})
-	
-		task.spawn(function()
-			Post:Play()
-			Post.Completed:Wait()
-			task.wait(Time)
-			Pre:Play()
-			for i, v in ipairs(Notifications) do
-				if v == Template then
-					table.remove(Notifications, i)
-					break
-				end
-			end
-			Active -= 1
-			self:UpdatePositions()
-			Pre.Completed:Wait()
-			Template:Destroy()
-		end)
-	end
-	
-	function Library:UpdatePositions()
-		for i, notification in ipairs(Notifications) do
-			local NewPosition = UDim2.new(0.5, 0, 0.885 - ((i - 1) / 15), 0)
-			local Tween = TweenService:Create(notification, TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = NewPosition})
-			Tween:Play()
-		end
-	end
-  
-	return Library;
-end;
-local Library = C_2();
-
-return Library, G2L["1"];
-
 print("Loaded")
-C_2:Notify("Loaded Thanks For Using More TouseefX Script Hub!:)", 5)
+NotifyModule:Notify("Loaded Thanks For Using More TouseefX Script Hub!:)", 5)
