@@ -124,12 +124,6 @@ local function StopAnimation()
     end
     
     stopFollowingHead()
-    -- unplay tick tock emote
-    local args = {
-        [1] = "PlayEmote",
-        [2] = "Animations"
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
     -- Find and destroy some hands
     local Hands = character:FindFirstChild("PlayerEmoteHand")
     if Hands then
@@ -146,7 +140,7 @@ local function StopAnimation()
         SillyMic:Destroy()
     end
 
-    local MissHat = character:FindFirstChild("EmoteHatAsset")
+    local MissHat = character:FindFirstChild("EmoteHatAssets")
     if MissHat then
         MissHat:Destroy()
     end
@@ -161,6 +155,16 @@ local function StopAnimation()
     if sound then
         sound:Stop()
         sound:Destroy()
+    end
+end
+
+local function sern()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    
+    local sem = character.HumanoidRootPart:FindFirstChild("PlayerEmoteSFX")
+    if sem then
+       character.HumanoidRootPart.PlayerEmoteSFX:Stop() -- stop tick tock music for you only
     end
 end
 
@@ -185,7 +189,7 @@ local function Subterfuge()
     animation.AnimationId = "rbxassetid://87482480949358"
     local animationTrack = humanoid:LoadAnimation(animation)
     animationTrack:Play()
-    -- character.HumanoidRootPart.PlayerEmoteSFX:Stop() -- stop tick tock music for you only
+    sern()
     local sound = Instance.new("Sound")
     sound.SoundId = "rbxassetid://132297506693854"
     sound.Parent = character:WaitForChild("HumanoidRootPart")
@@ -342,7 +346,7 @@ local function MissQuiet()
     animation.AnimationId = "rbxassetid://100986631322204"
     local animationTrack = humanoid:LoadAnimation(animation)
     animationTrack:Play()
-
+    sern()
     local sound = Instance.new("Sound")
     sound.SoundId = "rbxassetid://131936418953291"
     sound.Parent = character:WaitForChild("HumanoidRootPart")
