@@ -145,7 +145,7 @@ local function StopAnimation()
         SillyMic:Destroy()
     end
 
-    local MissHat = character:FindFirstChild("EmoteHat")
+    local MissHat = character:FindFirstChild("EmoteHatAssets")
     if MissHat then
         MissHat:Destroy()
     end
