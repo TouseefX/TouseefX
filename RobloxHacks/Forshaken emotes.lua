@@ -129,6 +129,7 @@ local function StopAnimation()
         [1] = "PlayEmote",
         [2] = "Animations"
     }
+    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
     -- Find and destroy some hands
     local Hands = character:FindFirstChild("PlayerEmoteHand")
     if Hands then
