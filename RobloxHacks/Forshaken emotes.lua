@@ -346,8 +346,8 @@ local function Tick()
     bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
     bodyVelocity.Velocity = Vector3.zero
     bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
-    -- emote script is gone and deleted so we use miss the quiet script
-    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._MissTheQuiet) --the script had been chanced his name in new update
+    -- emote script is gone and deleted so we use subtetfuge script
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._Subterfuge) --the script had been chanced his name in new update
     emoteScript.Created({Character = character})
     
     local animation = Instance.new("Animation")
@@ -366,11 +366,36 @@ local function Tick()
     sound:Play()
     
     game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
+end
+
+local function LC()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.PlatformStand = true
+    humanoid:Move(Vector3.zero)
+
+    local bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+    bodyVelocity.Velocity = Vector3.zero
+    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
+    -- emote script is gone and deleted so we use SillyBilly script
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly) --the script had been chanced his name in new update
+    emoteScript.Created({Character = character})
     
-    local MissHat = character:FindFirstChild("EmoteHatAsset")
-    if MissHat then
-        MissHat:Destroy()
-    end
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://89926565466406"
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack.Looped = true
+    animationTrack:Play()
+
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://87037127480984"
+    sound.Parent = character:WaitForChild("HumanoidRootPart")
+    sound.Volume = 1
+    sound.Looped = true
+    sound.RollOffMode = Enum.RollOffMode.Linear
+    sound.MaxDistance = 50
+    sound:Play()
 end
 -- emotes script functions stops here
 -- this was the old way to play emotes
@@ -459,6 +484,10 @@ end)
 
 createButton(mainFrame, "Tick Tock", UDim2.new(0.1, 0, 0.52, 0), Color3.fromRGB(255, 105, 180), function()
     Tick()
+end)
+
+createButton(mainFrame, "Company Groove", UDim2.new(0.1, 0, 0.66, 0), Color3.fromRGB(255, 105, 180), function()
+    LC()
 end)
 
 createButton(mainFrame, "Stop Emote", UDim2.new(0.1, 0, 0.80, 0), Color3.fromRGB(255, 50, 50), function()
