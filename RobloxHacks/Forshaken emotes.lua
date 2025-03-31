@@ -364,7 +364,7 @@ local function Tick()
     sound.RollOffMode = Enum.RollOffMode.Linear
     sound.MaxDistance = 50
     sound:Play()
-    
+    startFollowingHead()
     game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
 end
 
@@ -396,6 +396,8 @@ local function LC()
     sound.RollOffMode = Enum.RollOffMode.Linear
     sound.MaxDistance = 50
     sound:Play()
+    
+    startFollowingHead()
 end
 -- emotes script functions stops here
 -- this was the old way to play emotes
