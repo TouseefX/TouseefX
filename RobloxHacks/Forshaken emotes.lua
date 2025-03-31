@@ -386,13 +386,8 @@ local function LC()
     bodyVelocity.Velocity = Vector3.zero
     bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
     -- if emote script is gone and deleted so we use SillyBilly in case
-    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes.ThePhone) --the script had been chanced his name in new update
-    if emoteScript then
-       emoteScript.Created({Character = character})
-    else
-       local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly)
-       emoteScript.Created({Character = character})
-    end
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly)
+    emoteScript.Created({Character = character})
     
     local animation = Instance.new("Animation")
     animation.AnimationId = "rbxassetid://112887456905366"
