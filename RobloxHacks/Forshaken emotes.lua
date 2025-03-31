@@ -1,4 +1,4 @@
--- use tick tock emote and stopanims to make the hands fe and play deleted emotes
+-- use sukan emote and stopanims to make the hands fe and play deleted emotes
 local player = game.Players.LocalPlayer
 local playerGui = player.PlayerGui
 local NotifyModule:NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
@@ -140,6 +140,11 @@ local function StopAnimation()
     local MissHat = character:FindFirstChild("EmoteHatAsset")
     if MissHat then
         MissHat:Destroy()
+    end
+    
+    local Phone = character:FindFirstChild("Phone")
+    if Phone then
+       Phone:Destroy()
     end
     -- Find and stop/destroy animation and sound
     for i,v in pairs(animator:GetPlayingAnimationTracks()) do					
@@ -369,6 +374,8 @@ local function Tick()
 end
 
 local function LC()
+    updateEmotes("ThePhone")
+    
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     humanoid.PlatformStand = true
@@ -378,9 +385,14 @@ local function LC()
     bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
     bodyVelocity.Velocity = Vector3.zero
     bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
-    -- emote script is gone and deleted so we use SillyBilly script
-    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly) --the script had been chanced his name in new update
-    emoteScript.Created({Character = character})
+    -- if emote script is gone and deleted so we use SillyBilly in case
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes.ThePhone) --the script had been chanced his name in new update
+    if emoteScript then
+       emoteScript.Created({Character = character})
+    else
+       local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly)
+       emoteScript.Created({Character = character})
+    end
     
     local animation = Instance.new("Animation")
     animation.AnimationId = "rbxassetid://112887456905366"
@@ -397,6 +409,15 @@ local function LC()
     sound.MaxDistance = 50
     sound:Play()
     
+    local args = {
+        [1] = "PlayEmote",
+        [2] = "Animations",
+        [3] = "ThePhone"
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+    
+    game:GetService("Debris"):AddItem(character:FindFirstChild("Phone"), 240)
+    
     startFollowingHead()
     
     local SillyMic = character:FindFirstChild("SillyBillyMicrophone")
@@ -409,7 +430,8 @@ end
 -- Subterfuge()
 -- SillyBilly()
 -- MissQuiet()
--- Sillyofit()
+-- Tick()
+-- LC()
 -- gui was born so um bye bye see you later
 local function onCharacterAdded(character)
     wait(0.1)
