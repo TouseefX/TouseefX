@@ -374,8 +374,6 @@ local function Tick()
 end
 
 local function LC()
-    updateEmotes("ThePhone")
-    
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     humanoid.PlatformStand = true
