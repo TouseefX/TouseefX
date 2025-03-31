@@ -357,7 +357,7 @@ local function Tick()
     animationTrack:Play()
     sern()
     local sound = Instance.new("Sound")
-    sound.SoundId = "rbxassetid://79383274437776"
+    sound.SoundId = "rbxassetid://104213462628762"
     sound.Parent = character:WaitForChild("HumanoidRootPart")
     sound.Volume = 1
     sound.Looped = true
@@ -383,13 +383,13 @@ local function LC()
     emoteScript.Created({Character = character})
     
     local animation = Instance.new("Animation")
-    animation.AnimationId = "rbxassetid://89926565466406"
+    animation.AnimationId = "rbxassetid://112887456905366"
     local animationTrack = humanoid:LoadAnimation(animation)
     animationTrack.Looped = true
     animationTrack:Play()
 
     local sound = Instance.new("Sound")
-    sound.SoundId = "rbxassetid://87037127480984"
+    sound.SoundId = "rbxassetid://107281579144976"
     sound.Parent = character:WaitForChild("HumanoidRootPart")
     sound.Volume = 1
     sound.Looped = true
@@ -398,6 +398,11 @@ local function LC()
     sound:Play()
     
     startFollowingHead()
+    
+    local SillyMic = character:FindFirstChild("SillyBillyMicrophone")
+    if SillyMic then
+       SillyMic:Destroy()
+    end
 end
 -- emotes script functions stops here
 -- this was the old way to play emotes
@@ -488,7 +493,7 @@ createButton(mainFrame, "Tick Tock", UDim2.new(0.1, 0, 0.52, 0), Color3.fromRGB(
     Tick()
 end)
 
-createButton(mainFrame, "Company Groove", UDim2.new(0.1, 0, 0.66, 0), Color3.fromRGB(255, 105, 180), function()
+createButton(mainFrame, "Pick Up The Phone", UDim2.new(0.1, 0, 0.66, 0), Color3.fromRGB(255, 105, 180), function()
     LC()
 end)
 
