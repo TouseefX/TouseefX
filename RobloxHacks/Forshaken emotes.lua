@@ -352,8 +352,14 @@ local function Tick()
     bodyVelocity.Velocity = Vector3.zero
     bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
     -- emote script is gone and deleted so we use subtetfuge script
-    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._Subterfuge) --the script had been chanced his name in new update
-    emoteScript.Created({Character = character})
+    local emoteScript = game:GetService("ReplicatedStorage").Assets.Emotes:FindFirstChild("ThePhone")
+    if emoteScript then
+        local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes.ThePhone) 
+        emoteScript.Created({Character = character})
+    else
+        local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly)
+        emoteScript.Created({Character = character})
+    end
     
     local animation = Instance.new("Animation")
     animation.AnimationId = "rbxassetid://118204083671442"
