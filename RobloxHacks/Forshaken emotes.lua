@@ -352,14 +352,8 @@ local function Tick()
     bodyVelocity.Velocity = Vector3.zero
     bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
     -- emote script is gone and deleted so we use subtetfuge script
-    local emoteScript = game:GetService("ReplicatedStorage").Assets.Emotes:FindFirstChild("ThePhone")
-    if emoteScript then
-        local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes.ThePhone) 
-        emoteScript.Created({Character = character})
-    else
-        local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly)
-        emoteScript.Created({Character = character})
-    end
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._Subterfuge) --the script had been chanced his name in new update
+    emoteScript.Created({Character = character})
     
     local animation = Instance.new("Animation")
     animation.AnimationId = "rbxassetid://118204083671442"
@@ -379,7 +373,7 @@ local function Tick()
     game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
 end
 
-local function LC()
+local function Pick()
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     humanoid.PlatformStand = true
@@ -390,8 +384,14 @@ local function LC()
     bodyVelocity.Velocity = Vector3.zero
     bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
     -- if emote script is gone and deleted so we use SillyBilly in case
-    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly)
-    emoteScript.Created({Character = character})
+    local emoteScript = game:GetService("ReplicatedStorage").Assets.Emotes:FindFirstChild("ThePhone")
+    if emoteScript then
+        local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes.ThePhone) 
+        emoteScript.Created({Character = character})
+    else
+        local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly)
+        emoteScript.Created({Character = character})
+    end
     
     local animation = Instance.new("Animation")
     animation.AnimationId = "rbxassetid://112887456905366"
@@ -515,7 +515,7 @@ createButton(mainFrame, "Tick Tock", UDim2.new(0.1, 0, 0.52, 0), Color3.fromRGB(
 end)
 
 createButton(mainFrame, "Pick Up The Phone", UDim2.new(0.1, 0, 0.66, 0), Color3.fromRGB(255, 105, 180), function()
-    LC()
+    Pick()
 end)
 
 createButton(mainFrame, "Stop Emote", UDim2.new(0.1, 0, 0.80, 0), Color3.fromRGB(255, 50, 50), function()
