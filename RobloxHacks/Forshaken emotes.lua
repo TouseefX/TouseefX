@@ -170,10 +170,6 @@ local function sern()
     end
 end
 
-local function nothingness()
-    print("not needed")
-end
-
 -- this is for emotes function scripts
 local function Subterfuge()
     updateEmotes("_Subterfuge")
@@ -232,7 +228,7 @@ local function Subterfuge()
     end)
 end
 
-local function SillyBilly(id) -- id for soundid because there are 2 verisons of silly billy
+local function SillyBilly()
     updateEmotes("_SillyBilly")
     -- freeze your robloz character
     local character = player.Character or player.CharacterAdded:Wait()
@@ -254,7 +250,7 @@ local function SillyBilly(id) -- id for soundid because there are 2 verisons of 
     animationTrack:Play()
 
     local sound = Instance.new("Sound")
-    sound.SoundId = id
+    sound.SoundId = "rbxassetid://77601084987544"
     sound.Parent = character:WaitForChild("HumanoidRootPart")
     sound.Volume = 1
     sound.Looped = false
@@ -279,6 +275,67 @@ local function SillyBilly(id) -- id for soundid because there are 2 verisons of 
             bodyVelocity:Destroy()
         end
     end)
+end
+
+local function Sillyofit()
+    updateEmotes("_SillyBilly")
+    -- freeze your robloz character
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.PlatformStand = true
+    humanoid:Move(Vector3.zero)
+
+    local bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+    bodyVelocity.Velocity = Vector3.zero
+    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
+    -- getting some emotes stuffs
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly) --the script had been chanced his name in new update
+    emoteScript.Created({Character = character})
+
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://107464355830477"
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack:Play()
+
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://120176009143091"
+    sound.Parent = character:WaitForChild("HumanoidRootPart")
+    sound.Volume = 1
+    sound.Looped = false
+    sound.RollOffMode = Enum.RollOffMode.Linear
+    sound.MaxDistance = 50
+    sound:Play()
+
+    local args = {
+        [1] = "PlayEmote",
+        [2] = "Animations",
+        [3] = "_SillyBilly"
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+    
+    startFollowingHead()
+    game:GetService("Debris"):AddItem(character:FindFirstChild("SillyBillyMicrophone"), 44)
+    -- unfreeze because something happend
+    animationTrack.Stopped:Connect(function()
+        stopFollowingHead()
+        humanoid.PlatformStand = false
+        if bodyVelocity and bodyVelocity.Parent then
+            bodyVelocity:Destroy()
+        end
+    end)
+end
+
+local functions = {
+  SillyBilly,
+  Sillyofit,
+  -- Add other functions here if you want
+}
+
+local function chooseAndRunRandomFunction()
+  local randomIndex = math.random(1, #functions)
+  local randomFunction = functions[randomIndex]
+  randomFunction()
 end
 
 local function MissQuiet()
@@ -341,7 +398,7 @@ local function MissQuiet()
     end)
 end
 
-local function Tick()
+local function NewTick()
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     humanoid.PlatformStand = true
@@ -371,6 +428,50 @@ local function Tick()
     sound:Play()
     startFollowingHead()
     game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
+end
+
+local function OldTick()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.PlatformStand = true
+    humanoid:Move(Vector3.zero)
+
+    local bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+    bodyVelocity.Velocity = Vector3.zero
+    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
+    -- emote script is gone and deleted so we use subtetfuge script
+    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._Subterfuge) --the script had been chanced his name in new update
+    emoteScript.Created({Character = character})
+    
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://118204083671442"
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack.Looped = true
+    animationTrack:Play()
+    sern()
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://79383274437776"
+    sound.Parent = character:WaitForChild("HumanoidRootPart")
+    sound.Volume = 1
+    sound.Looped = true
+    sound.RollOffMode = Enum.RollOffMode.Linear
+    sound.MaxDistance = 50
+    sound:Play()
+    startFollowingHead()
+    game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
+end
+
+local ticks = {
+  NewTick,
+  OldTick,
+  -- Add other functions here if you want
+}
+
+local function Tick()
+  local randomIndex = math.random(1, #ticks)
+  local randomFunction = ticks[randomIndex]
+  randomFunction()
 end
 
 local function Pick()
@@ -425,13 +526,6 @@ local function Pick()
     end
 end
 -- emotes script functions stops here
--- this was the old way to play emotes
--- Subterfuge()
--- SillyBilly()
--- MissQuiet()
--- Tick()
--- LC()
--- gui was born so um bye bye see you later
 local function onCharacterAdded(character)
     wait(0.1)
 end
@@ -507,7 +601,7 @@ createButton(mainFrame, "Miss The Quiet", UDim2.new(0.1, 0, 0.24, 0), Color3.fro
 end)
 
 createButton(mainFrame, "Silly Billy", UDim2.new(0.1, 0, 0.38, 0), Color3.fromRGB(255, 105, 180), function()
-    SillyBilly("rbxassetid://77601084987544")
+    chooseAndRunRandomFunction()
 end)
 
 createButton(mainFrame, "Tick Tock", UDim2.new(0.1, 0, 0.52, 0), Color3.fromRGB(255, 105, 180), function()
