@@ -326,16 +326,27 @@ local function Sillyofit()
     end)
 end
 
-local functions = {
-  SillyBilly,
-  Sillyofit,
-  -- Add other functions here if you want
+local weightedFunctions = {
+    {func = SillyBilly, weight = 90}, -- 90% chance
+    {func = Sillyofit, weight = 10}, -- 10% chance
 }
 
-local function chooseAndRunRandomFunction()
-  local randomIndex = math.random(1, #functions)
-  local randomFunction = functions[randomIndex]
-  randomFunction()
+local function SillyOfBilly()
+    local totalWeight = 0
+    for _, funcData in ipairs(weightedFunctions) do
+        totalWeight = totalWeight + funcData.weight
+    end
+
+    local randomWeight = math.random(1, totalWeight)
+    local cumulativeWeight = 0
+
+    for _, funcData in ipairs(weightedFunctions) do
+        cumulativeWeight = cumulativeWeight + funcData.weight
+        if randomWeight <= cumulativeWeight then
+            funcData.func()
+            return
+        end
+    end
 end
 
 local function MissQuiet()
@@ -601,7 +612,7 @@ createButton(mainFrame, "Miss The Quiet", UDim2.new(0.1, 0, 0.24, 0), Color3.fro
 end)
 
 createButton(mainFrame, "Silly Billy", UDim2.new(0.1, 0, 0.38, 0), Color3.fromRGB(255, 105, 180), function()
-    chooseAndRunRandomFunction()
+    SillyOfBilly()
 end)
 
 createButton(mainFrame, "Tick Tock", UDim2.new(0.1, 0, 0.52, 0), Color3.fromRGB(255, 105, 180), function()
