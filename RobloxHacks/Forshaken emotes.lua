@@ -108,12 +108,112 @@ local function SubSing()
     NotifyModule:Notify("ARE YOU?", 0.562)
 end
 
+local function MissLyrics()
+    wait(31)
+    NotifyModule:Notify("Would you dare look over your shoulder?", 4.001)
+    task.wait(4.094)
+    NotifyModule:Notify("Do you fear what's coming round the bend", 3.903)
+    task.wait(4.093)
+    NotifyModule:Notify("Do you know what happens while you're growing older?", 4.016)
+    task.wait(4.094)
+    NotifyModule:Notify("Would you ever turn your back again?", 3.902)
+    task.wait(1.902)
+    NotifyModule:Notify("Does it stop your heart?", 1.908)
+    task.wait(2.087)
+    NotifyModule:Notify("Does your hair turn gray?", 1.912)
+    task.wait(4.093)
+    NotifyModule:Notify("Don't let me tell you now, it's gonna be okay, baby", 3.903)
+    task.wait(3.916)
+    NotifyModule:Notify("I Miss The Quiet", 3.92)
+    task.wait(4.003)
+    NotifyModule:Notify("I can't deny it", 3.913)
+    task.wait(4.002)
+    NotifyModule:Notify("Am I to fight it?", 3.902)
+    task.wait(3.916)
+    NotifyModule:Notify("Even after all is said and done, I only wanna stay", 3.925)
+    task.wait(3.902)
+    NotifyModule:Notify("The endless void couldn't fathom", 3.903)
+    task.wait(3.903)
+    NotifyModule:Notify("The fate I've wished upon a star", 3.903)
+    task.wait(3.985)
+    NotifyModule:Notify("In your vessel is also very undercoming", 3.916)
+    task.wait(3.916)
+    NotifyModule:Notify("I'll turn you All, INTO A MARTYR", 3.918)
+    task.wait(3.902)
+    NotifyModule:Notify("When you're brought to your knees, and there's Nowhere to Run", 3.902)
+    task.wait(3.902)
+    NotifyModule:Notify("Just let me tell you, baby, here it comes now", 3.916)
+    task.wait(3.916)
+    NotifyModule:Notify("I Miss The Quiet", 3.903)
+    task.wait(3.903)
+    NotifyModule:Notify("I can't deny it", 3.902)
+    task.wait(3.902)
+    NotifyModule:Notify("Am I to Fight it?", 3.902)
+    task.wait(3.902)
+    NotifyModule:Notify("OR BE DELIGHTEEEEEED?", 3.943)
+    task.wait(3.977)
+    NotifyModule:Notify("I Miss The Quiet, Yes I Do", 3.903)
+    task.wait(3.903)
+    NotifyModule:Notify("I CAN'T DENY IT, I KNOW IT'S TRUE, OH BABY", 3.902)
+    task.wait(3.902)
+    NotifyModule:Notify("I MISS THE QUIEEET", 4.049)
+    task.wait(4.049)
+    NotifyModule:Notify("Even after all is said and done, we've only just begun", 4.049)
+    task.wait(32.433)
+    NotifyModule:Notify("I MISS THE QUIEEET (NOOOOOO!)", 4.504)
+    task.wait(6.995)
+    NotifyModule:Notify("I can't DENY IT", 4.090)
+    task.wait(3.896)
+    NotifyModule:Notify("AM I TO FIGHT IT?", 3.849)
+    task.wait(3.854)
+    NotifyModule:Notify("OR BE DELIGHTEEEEEED?", 4.116)
+    task.wait(4.116)
+    NotifyModule:Notify("I MISS THE QUIEEET (NOOOOOO!)", 4.117)
+    task.wait(4.117)
+    NotifyModule:Notify("I CAN'T DENY IT (NOOOOOO!)", 3.555)
+    task.wait(3.555)
+    NotifyModule:Notify("AM I TO FIGHT IT? (NOOOOOO!)", 3.889)
+    task.wait(3.889)
+    NotifyModule:Notify("OR BE DELIGHTEEEEEED? (NOOOOOO!)", 2.068)
+    task.wait(1.938)
+    NotifyModule:Notify("I MISS THE QUIET (NOOOOOO!)", 1.572)
+    task.wait(2.179)
+    NotifyModule:Notify("Yes I do", 1.817)
+    task.wait(1.886)
+    NotifyModule:Notify("I CAN'T DENY IT (NOOOOOO!)", 1.765)
+    task.wait(2.143)
+    NotifyModule:Notify("YOU KNOW IT'S TRUE, OH BABY", 2.125)
+    task.wait(2.125)
+    NotifyModule:Notify("I MISS THE QUIEEET LITTLE (NOOOOOO!)", 1.898)
+    task.wait(2.002)
+    NotifyModule:Notify("THINGS I'D DO BEFORE I", 4.116)
+    task.wait(4.116)
+    NotifyModule:Notify("ENTERED ALL THE VIOLEEEENCE, DEFINING SILVER LINING", 4.397)
+    task.wait(3.606)
+    NotifyModule:Notify("I MISS THE QUIEEEEEEEEET", 3.194)
+    task.wait(3.076)
+    NotifyModule:Notify("YOU CAN'T DENY IT,  YOU KNOW IT'S TRUE, OH BABY", 4.076)
+    task.wait(4.076)
+    NotifyModule:Notify("I MISS THE QUIEEET (NOOOOOO!)", 4.077)
+    task.wait(6.001)
+    NotifyModule:Notify("Even after all is said and done, I'm only having fun", 2.353)
+    task.wait(2.353)
+    NotifyModule:Notify("I'm only having fun", 2.004)
+    task.wait(2.343)
+    NotifyModule:Notify("I'm only having fun", 1.39)
+    task.wait(2.343)
+    NotifyModule:Notify("I'm only having", 1.417)
+    task.wait(1.417)
+    NotifyModule:Notify("FUNNN", 1.417)
+end
+
+
 local function StopAnimation()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
-    
+    -- Unfreeze And Stop Head Following
     local BV = character.HumanoidRootPart:FindFirstChild("BodyVelocity")
     if BV then
         humanoid.PlatformStand = false
@@ -130,6 +230,16 @@ local function StopAnimation()
     local Hand = character:FindFirstChild("PlayerEmoteHand")
     if Hand then
         Hand:Destroy()
+    end
+    -- if used sukan emote
+    local THand = character:FindFirstChild("PlayerEmoteHand")
+    if THand then
+        THand:Destroy()
+    end
+    
+    local THand2 = character:FindFirstChild("PlayerEmoteHand")
+    if THand2 then
+        THand2:Destroy()
     end
     -- remove assets for these emotes don't worry about sillymic i killed silly billy ok?
     local SillyMic = character:FindFirstChild("SillyBillyMicrophone")
@@ -326,27 +436,15 @@ local function Sillyofit()
     end)
 end
 
-local weightedFunctions = {
-    {func = SillyBilly, weight = 90}, -- 90% chance
-    {func = Sillyofit, weight = 10}, -- 10% chance
+local Sillys = {
+  SillyBilly,
+  Sillyofit,
 }
 
 local function SillyOfBilly()
-    local totalWeight = 0
-    for _, funcData in ipairs(weightedFunctions) do
-        totalWeight = totalWeight + funcData.weight
-    end
-
-    local randomWeight = math.random(1, totalWeight)
-    local cumulativeWeight = 0
-
-    for _, funcData in ipairs(weightedFunctions) do
-        cumulativeWeight = cumulativeWeight + funcData.weight
-        if randomWeight <= cumulativeWeight then
-            funcData.func()
-            return
-        end
-    end
+  local randomIndex = math.random(1, #ticks)
+  local randomFunction = ticks[randomIndex]
+  randomFunction()
 end
 
 local function MissQuiet()
@@ -390,9 +488,7 @@ local function MissQuiet()
     game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
     game:GetService("Debris"):AddItem(character:FindFirstChild("EmoteHatAsset"), 240) -- lighting is in the hat now
     -- unfreeze because something happend.
-    NotifyModule:Notify("lyices soon because this is gonna be the longest script", 5)
-    wait(242) -- to fix the bug where animation still plays
-    animationTrack:Stop()
+    MissLyrics()
     animationTrack.Stopped:Connect(function()
         stopFollowingHead()
          if Hand then
@@ -476,7 +572,6 @@ end
 local ticks = {
   NewTick,
   OldTick,
-  -- Add other functions here if you want
 }
 
 local function Tick()
@@ -622,7 +717,7 @@ end)
 createButton(mainFrame, "Pick Up The Phone", UDim2.new(0.1, 0, 0.66, 0), Color3.fromRGB(255, 105, 180), function()
     Pick()
 end)
-
+-- Last Button
 createButton(mainFrame, "Stop Emote", UDim2.new(0.1, 0, 0.80, 0), Color3.fromRGB(255, 50, 50), function()
     StopAnimation()
 end)
