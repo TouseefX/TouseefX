@@ -202,8 +202,10 @@ local function MissLyrics()
     task.wait(2.343)
     NotifyModule:Notify("I'm only having fun", 1.39)
     task.wait(2.343)
+    NotifyModule:Notify("I'm only having fun", 1.417)
+    task.wait(2.417)
     NotifyModule:Notify("I'm only having", 1.417)
-    task.wait(1.417)
+    task.wait(2.417)
     NotifyModule:Notify("FUNNN", 1.417)
 end
 
@@ -442,8 +444,8 @@ local Sillys = {
 }
 
 local function SillyOfBilly()
-  local randomIndex = math.random(1, #ticks)
-  local randomFunction = ticks[randomIndex]
+  local randomIndex = math.random(1, #Sillys)
+  local randomFunction = Sillys[randomIndex]
   randomFunction()
 end
 
