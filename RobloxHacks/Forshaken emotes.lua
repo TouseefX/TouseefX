@@ -1,6 +1,7 @@
 -- use sukan emote and stopanims to make the hands fe and play deleted emotes
 local player = game.Players.LocalPlayer
 local playerGui = player.PlayerGui
+local Debris = game:GetService("Debris")
 local NotifyModule:NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
 -- some large scripts inside functionality
 local function updateEmotes(name)
@@ -107,9 +108,10 @@ local function SubSing()
     wait(1.940)
     NotifyModule:Notify("ARE YOU?", 0.562)
 end
-
+-- if you read this the Miss and Sub Lyics are made using AI (Gemini, Not ChatGPT because he is useless on this) 
+-- because its hard to match the timing of these the lyics so that why i used AI
 local function MissLyrics()
-    wait(31)
+    wait(31) -- this is the only human wait time
     NotifyModule:Notify("Would you dare look over your shoulder?", 4.001)
     task.wait(4.094)
     NotifyModule:Notify("Do you fear what's coming round the bend", 3.903)
@@ -122,7 +124,7 @@ local function MissLyrics()
     task.wait(2.087)
     NotifyModule:Notify("Does your hair turn gray?", 1.912)
     task.wait(4.093)
-    NotifyModule:Notify("Don't let me tell you now, it's gonna be okay, baby", 3.903)
+    NotifyModule:Notify("Don't let me tell you now, it's gonna be o-kay, baby", 3.903)
     task.wait(3.916)
     NotifyModule:Notify("I Miss The Quiet", 3.92)
     task.wait(4.003)
@@ -159,14 +161,14 @@ local function MissLyrics()
     NotifyModule:Notify("I MISS THE QUIEEET", 4.049)
     task.wait(4.049)
     NotifyModule:Notify("Even after all is said and done, we've only just begun", 4.049)
-    task.wait(32.433)
+    task.wait(32.433) -- the longest wait
     NotifyModule:Notify("I MISS THE QUIEEET (NOOOOOO!)", 4.504)
-    task.wait(6.995)
-    NotifyModule:Notify("I can't DENY IT", 4.090)
+    task.wait(6.999)
+    NotifyModule:Notify("I can't DENY IT (NOOOOOO!)", 4.090)
     task.wait(3.896)
-    NotifyModule:Notify("AM I TO FIGHT IT?", 3.849)
+    NotifyModule:Notify("AM I TO FIGHT IT? (NOOOOOO!)", 3.849)
     task.wait(3.854)
-    NotifyModule:Notify("OR BE DELIGHTEEEEEED?", 4.116)
+    NotifyModule:Notify("OR BE DELIGHTEEEEEED? (NOOOOOO!)", 4.116)
     task.wait(4.116)
     NotifyModule:Notify("I MISS THE QUIEEET (NOOOOOO!)", 4.117)
     task.wait(4.117)
@@ -190,25 +192,24 @@ local function MissLyrics()
     task.wait(4.116)
     NotifyModule:Notify("ENTERED ALL THE VIOLEEEENCE, DEFINING SILVER LINING", 4.397)
     task.wait(3.606)
-    NotifyModule:Notify("I MISS THE QUIEEEEEEEEET", 3.194)
+    NotifyModule:Notify("I MISS THE QUIEEEEEEEEET (NOOOOOO!)", 3.194)
     task.wait(3.076)
-    NotifyModule:Notify("YOU CAN'T DENY IT,  YOU KNOW IT'S TRUE, OH BABY", 4.076)
+    NotifyModule:Notify("YOU CAN'T DENY IT,  YOU KNOW IT'S TRUE, OH BABY (NOOOOOO!)", 4.076)
     task.wait(4.076)
     NotifyModule:Notify("I MISS THE QUIEEET (NOOOOOO!)", 4.077)
     task.wait(6.001)
     NotifyModule:Notify("Even after all is said and done, I'm only having fun", 2.353)
     task.wait(2.353)
-    NotifyModule:Notify("I'm only having fun", 2.004)
-    task.wait(2.343)
-    NotifyModule:Notify("I'm only having fun", 1.39)
-    task.wait(2.343)
-    NotifyModule:Notify("I'm only having fun", 1.417)
+    NotifyModule:Notify("I'm only having fun (No No No No)", 2.004)
+    task.wait(2.420)
+    NotifyModule:Notify("I'm only having fun (No No No No)", 1.39)
+    task.wait(2.420)
+    NotifyModule:Notify("I'm only having fun (No No No No)", 1.417)
     task.wait(2.417)
     NotifyModule:Notify("I'm only having", 1.417)
     task.wait(2.417)
     NotifyModule:Notify("FUNNN", 1.417)
 end
-
 
 local function StopAnimation()
     local player = game.Players.LocalPlayer
@@ -233,7 +234,7 @@ local function StopAnimation()
     if Hand then
         Hand:Destroy()
     end
-    -- if used sukan emote
+    -- if used sukan emote (people will see the hands but you cant)
     local THand = character:FindFirstChild("PlayerEmoteHand")
     if THand then
         THand:Destroy()
@@ -269,6 +270,12 @@ local function StopAnimation()
     if sound then
         sound:Stop()
         sound:Destroy()
+    end
+    -- if the sound trys to espace (this happens to me a lot)
+    local Youcanrunbutyoucanthide = character.HumanoidRootPart:FindFirstChild("Sound")
+    if Youcanrunbutyoucanthide then
+        Youcanrunbutyoucanthide:Stop()
+        Youcanrunbutyoucanthide:Destroy()
     end
 end
 
@@ -321,7 +328,7 @@ local function Subterfuge()
     game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
     -- the emote script is broken so hands can't disappear
     startFollowingHead()
-    game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 80)
+    Debris:AddItem(character:FindFirstChild("PlayerEmoteHand"), 80)
     SubSing()
     animationTrack.Stopped:Connect(function()
         stopFollowingHead()
@@ -378,7 +385,7 @@ local function SillyBilly()
     game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
     
     startFollowingHead()
-    game:GetService("Debris"):AddItem(character:FindFirstChild("SillyBillyMicrophone"), 44)
+    Debris:AddItem(character:FindFirstChild("SillyBillyMicrophone"), 44)
     -- unfreeze because something happend
     animationTrack.Stopped:Connect(function()
         stopFollowingHead()
@@ -427,7 +434,7 @@ local function Sillyofit()
     game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
     
     startFollowingHead()
-    game:GetService("Debris"):AddItem(character:FindFirstChild("SillyBillyMicrophone"), 44)
+    Debris:AddItem(character:FindFirstChild("SillyBillyMicrophone"), 44)
     -- unfreeze because something happend
     animationTrack.Stopped:Connect(function()
         stopFollowingHead()
@@ -441,6 +448,7 @@ end
 local Sillys = {
   SillyBilly,
   Sillyofit,
+  -- thick of it its good
 }
 
 local function SillyOfBilly()
@@ -487,8 +495,8 @@ local function MissQuiet()
     game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
     -- the emote script is broken so hands can't disappear
     startFollowingHead()
-    game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
-    game:GetService("Debris"):AddItem(character:FindFirstChild("EmoteHatAsset"), 240) -- lighting is in the hat now
+    Debris:AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
+    Debris:AddItem(character:FindFirstChild("EmoteHatAsset"), 240) -- lighting is in the hat now
     -- unfreeze because something happend.
     MissLyrics()
     animationTrack.Stopped:Connect(function()
@@ -536,7 +544,7 @@ local function NewTick()
     sound.MaxDistance = 50
     sound:Play()
     startFollowingHead()
-    game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
+    Debris:AddItem(character:FindFirstChild("PlayerEmoteHand"), 999)
 end
 
 local function OldTick()
@@ -568,12 +576,13 @@ local function OldTick()
     sound.MaxDistance = 50
     sound:Play()
     startFollowingHead()
-    game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 240)
+    Debris:AddItem(character:FindFirstChild("PlayerEmoteHand"), 999)
 end
 
 local ticks = {
   NewTick,
   OldTick,
+  -- I Miss The Old, Wait isn't this The White Hat Guy Line
 }
 
 local function Tick()
@@ -605,14 +614,14 @@ local function Pick()
     local animation = Instance.new("Animation")
     animation.AnimationId = "rbxassetid://112887456905366"
     local animationTrack = humanoid:LoadAnimation(animation)
-    animationTrack.Looped = true
+    animationTrack.Looped = false
     animationTrack:Play()
 
     local sound = Instance.new("Sound")
     sound.SoundId = "rbxassetid://107281579144976"
     sound.Parent = character:WaitForChild("HumanoidRootPart")
     sound.Volume = 1
-    sound.Looped = true
+    sound.Looped = false
     sound.RollOffMode = Enum.RollOffMode.Linear
     sound.MaxDistance = 50
     sound:Play()
@@ -624,14 +633,25 @@ local function Pick()
     }
     game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
     
-    game:GetService("Debris"):AddItem(character:FindFirstChild("Phone"), 240)
-    
+    Debris:AddItem(character:FindFirstChild("Phone"), 240)
     startFollowingHead()
     
     local SillyMic = character:FindFirstChild("SillyBillyMicrophone")
     if SillyMic then
        SillyMic:Destroy()
     end
+    
+    animationTrack.Stopped:Connect(function()
+        stopFollowingHead()
+         local Phone = character:FindFirstChild("Phone")
+         if Phone then
+            Phone:Destroy()
+        end
+        humanoid.PlatformStand = false
+        if bodyVelocity and bodyVelocity.Parent then
+            bodyVelocity:Destroy()
+        end
+    end)
 end
 -- emotes script functions stops here
 local function onCharacterAdded(character)
@@ -738,5 +758,5 @@ creditLabel.TextXAlignment = Enum.TextXAlignment.Center
 NotifyModule:Notify("Script Redited By Unmcon ", 5)
 NotifyModule:Notify("Gui Made By Ice", 5)
 NotifyModule:Notify("Animations Are FE but Sounds Are Not", 5)
-wait(1)
+wait(4)
 NotifyModule:Notify("To make hands fe use sukan emote then stopanims then play a deleted emote", 5)
