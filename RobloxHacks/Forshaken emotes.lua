@@ -2,6 +2,7 @@
 local player = game.Players.LocalPlayer
 local playerGui = player.PlayerGui
 local Debris = game:GetService("Debris")
+local EmoteFrame = game:GetService("Players").LocalPlayer.PlayerGui.TemporaryUI.EmoteMenuHolder.RadialMenu.Attach["6"]
 local NotifyModule:NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
 -- some large scripts inside functionality
 local function updateEmotes(name)
@@ -289,8 +290,16 @@ local function sern()
     end
 end
 
+local function RemoveEmoteButton()
+    local EmoteButton = EmoteFrame:FindFirstChild("TextButton")
+    if EmoteButton then
+        EmoteButton:Destroy()
+   end
+end
+
 -- this is for emotes function scripts
 local function Subterfuge()
+    RemoveEmoteButton()
     updateEmotes("_Subterfuge")
     -- freeze your robloz character
     local character = player.Character or player.CharacterAdded:Wait()
@@ -319,7 +328,7 @@ local function Subterfuge()
     sound.RollOffMode = Enum.RollOffMode.Linear
     sound.MaxDistance = 50
     sound:Play()
-    
+  
     local args = {
         [1] = "PlayEmote",
         [2] = "Animations",
@@ -397,6 +406,7 @@ local function SillyBilly()
 end
 
 local function Sillyofit()
+    RemoveEmoteButton()
     updateEmotes("_SillyBilly")
     -- freeze your robloz character
     local character = player.Character or player.CharacterAdded:Wait()
@@ -458,6 +468,7 @@ local function SillyOfBilly()
 end
 
 local function MissQuiet()
+    RemoveEmoteButton()
     updateEmotes("_MissTheQuiet")
     -- freeze your robloz character
     local character = player.Character or player.CharacterAdded:Wait()
@@ -476,6 +487,7 @@ local function MissQuiet()
     local animation = Instance.new("Animation")
     animation.AnimationId = "rbxassetid://100986631322204"
     local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack.Looped = false
     animationTrack:Play()
     sern()
     local sound = Instance.new("Sound")
@@ -516,6 +528,7 @@ local function MissQuiet()
 end
 
 local function NewTick()
+    RemoveEmoteButton()
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     humanoid.PlatformStand = true
@@ -548,6 +561,7 @@ local function NewTick()
 end
 
 local function OldTick()
+    RemoveEmoteButton()
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     humanoid.PlatformStand = true
@@ -592,6 +606,7 @@ local function Tick()
 end
 
 local function Pick()
+    RemoveEmoteButton()
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     humanoid.PlatformStand = true
@@ -664,8 +679,9 @@ if player.Character then
     onCharacterAdded(player.Character)
 end
 
-local function createButton(parent, text, position, color, onClick)
+local function createButton(ButtonName, parent, text, position, color, onClick)
     local button = Instance.new("TextButton")
+    button.Name = ButtonName
     button.Size = UDim2.new(0.8, 0, 0.12, 0)
     button.Position = position
     button.Text = text
@@ -682,6 +698,28 @@ local function createButton(parent, text, position, color, onClick)
     button.MouseButton1Click:Connect(onClick)
 
     return button
+end
+
+local function createEmoteButton(Emote)
+    local EmoteFrame = game:GetService("Players").LocalPlayer.PlayerGui.TemporaryUI.EmoteMenuHolder.RadialMenu.Attach["6"]
+    local EmoteButton = Instance.new("TextButton", EmoteFrame)
+    EmoteButton.Name = "PlayEmote"
+    EmoteButton.Size = UDim2.new(0.705655515, 1, 0.705655217, 1)
+    EmoteButton.Position = UDim2.new(0.153545171, 0, 0.356493711, 0)
+    EmoteButton.Text = ""
+    EmoteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    EmoteButton.BackgroundColor3 = Color3.new(1, 1, 1)
+    EmoteButton.BackgroundTransparency = 1 -- Set transparency to 1 (fully transparent)
+    EmoteButton.Font = Enum.Font.GothamBold
+    EmoteButton.TextSize = 16
+
+    local EmoteButtonCorner = Instance.new("UICorner")
+    EmoteButtonCorner.CornerRadius = UDim.new(0, 5)
+    EmoteButtonCorner.Parent = EmoteButton
+    
+    EmoteButton.TextButton.MouseButton1Down:Connect(Emote) -- not 1click but 1down its there for a reason
+    
+    return EmoteButton
 end
 
 local Playersgui = game:GetService("Players")
@@ -720,29 +758,34 @@ closeButton.MouseButton1Click:Connect(function()
 end)
 
 -- Create Buttons
-createButton(mainFrame, "Subterfuge", UDim2.new(0.1, 0, 0.1, 0), Color3.fromRGB(30, 60, 90), function()
+createButton("Subterfuge", mainFrame, "Subterfuge", UDim2.new(0.1, 0, 0.1, 0), Color3.fromRGB(30, 60, 90), function()
     Subterfuge()
 end)
 
-createButton(mainFrame, "Miss The Quiet", UDim2.new(0.1, 0, 0.24, 0), Color3.fromRGB(0, 0, 255), function()
+createButton("MissTheQuiet", mainFrame, "Miss The Quiet", UDim2.new(0.1, 0, 0.24, 0), Color3.fromRGB(0, 0, 255), function()
     MissQuiet()
 end)
 
-createButton(mainFrame, "Silly Billy", UDim2.new(0.1, 0, 0.38, 0), Color3.fromRGB(255, 105, 180), function()
+createButton("SillyBilly", mainFrame, "Silly Billy", UDim2.new(0.1, 0, 0.38, 0), Color3.fromRGB(255, 105, 180), function()
     SillyOfBilly()
 end)
 
-createButton(mainFrame, "Tick Tock", UDim2.new(0.1, 0, 0.52, 0), Color3.fromRGB(255, 105, 180), function()
+createButton("TickTock", mainFrame, "Tick Tock", UDim2.new(0.1, 0, 0.52, 0), Color3.fromRGB(255, 105, 180), function()
     Tick()
 end)
 
-createButton(mainFrame, "Pick Up The Phone", UDim2.new(0.1, 0, 0.66, 0), Color3.fromRGB(255, 105, 180), function()
+createButton("PickThePhone", mainFrame, "Pick Up The Phone", UDim2.new(0.1, 0, 0.66, 0), Color3.fromRGB(255, 105, 180), function()
     Pick()
 end)
 -- Last Button
-createButton(mainFrame, "Stop Emote", UDim2.new(0.1, 0, 0.80, 0), Color3.fromRGB(255, 50, 50), function()
+createButton("StopEmote", mainFrame, "Stop Emote", UDim2.new(0.1, 0, 0.80, 0), Color3.fromRGB(255, 50, 50), function()
     StopAnimation()
 end)
+
+-- make a emote button in the emote tab (forsaken emote tab not this one)
+-- reexecute script if this does not work
+updateEmotes("_SillyBilly")
+createEmoteButton(SillyOfBilly)
 
 -- Restored "Made by: Ice" Label
 local creditLabel = Instance.new("TextLabel", mainFrame)
