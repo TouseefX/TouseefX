@@ -1,46 +1,32 @@
 -- load using loadstring loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\34\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\84\111\117\115\101\101\102\88\47\84\111\117\115\101\101\102\88\47\109\97\105\110\47\82\111\98\108\111\120\72\97\99\107\115\47\77\111\114\101\84\111\117\115\101\101\102\88\72\117\98\46\108\117\97\34\44\116\114\117\101\41\41\40\41")()
-
-local StarterGui = game:GetService("StarterGui")
-local showNotification = true
+-- decompile the loadstring if you want to
 
 print("Creating Frames And GUI")
-function NotifyModule:Notifyy(tl, t, d) 
-	if showNotification == true then
-		StarterGui:SetCore("SendNotification", {
-			Title = tl;
-			Text = t;
-			Duration = d;
-			Icon = "http://www.roblox.com/asset/?id=";
-		})
-	end
-end
+-- fetching place holder https://assetdelivery.roblox.com/v1/asset/?ID=
+-- decomplier script will be here as i get a new pc
 
-NotifyModule:Notifyy("TouseefX Loader", "Creating Functions and GUI", 3)
-
-local NotifyModule:NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
+local NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
 local MainGUI = Instance.new("ScreenGui")
 local Open = Instance.new("Frame")
 local Open_2 = Instance.new("TextButton")
 local Main_2 = Instance.new("Frame")
 local TextLabel = Instance.new("TextLabel")
 local ScrollingFrame = Instance.new("ScrollingFrame")
-local Steve = Instance.new("TextButton")
+local FeNoobAll = Instance.new("TextButton")
 local FeAnimR6 = Instance.new("TextButton")
-local FeB = Instance.new("TextButton")
-local FFE = Instance.new("TextButton")
+local FeChatB = Instance.new("TextButton")
+local FeTelekineses = Instance.new("TextButton")
 local FB = Instance.new("TextButton")
-local FeAudio = Instance.new("TextButton")
+local FeGamepass = Instance.new("TextButton")
 local Close = Instance.new("TextButton")
 
 print("Created")
 print("Loading Frames,GUI")
-NotifyModule:Notifyy("TouseefX Loader", "Created, Starting Loading some scripts and gui cofings", 3)
--- trun off this thing ngl
-local showNotification = false
 
 MainGUI.Name = "MainGUI"
-MainGUI.Parent = game.CoreGui -- seeking into an undetected Gui
-
+MainGUI.Parent = game.CoreGui
+-- add more functions and male executor powerful enough
+loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\115\99\114\105\112\116\115\46\110\101\116\47\114\97\119\47\85\110\105\118\101\114\115\97\108\45\83\99\114\105\112\116\45\70\101\45\98\121\112\97\115\115\45\51\53\48\54\54"))()
 
 Open.Name = "Open"
 Open.Parent = MainGUI
@@ -65,9 +51,8 @@ Open_2.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.
 Open_2.Visible = true
 Open_2.MouseButton1Down:Connect(function()
 	Main_2.Visible = true
-	wait(1)
 	Open.Visible = false
-        NotifyModule:Notify("Opened!", 2)
+    NotifyModule:Notify("Opened!", 2)
 end)
 
 print("Open Frame Loaded")
@@ -88,7 +73,7 @@ TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TextLabel.BorderSizePixel = 0
 TextLabel.BackgroundColor3 = Color3.fromRGB(141, 141, 141)
 TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel.Text = "More TouseefX's Hub [Testing]"
+TextLabel.Text = "TouseefX's Hub Reborn [Testing]"
 TextLabel.TextSize = 14
 TextLabel.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 
@@ -102,26 +87,23 @@ ScrollingFrame.BorderSizePixel = 0
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(141, 141, 141)
 ScrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
 
-Steve.Name = "Steve"
-Steve.Parent = ScrollingFrame
-Steve.Size = UDim2.new(0, 137, 0, 23)
-Steve.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Steve.Position = UDim2.new(0.0504385978, 0, 0.0440616868, 0)
-Steve.BorderSizePixel = 0
-Steve.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
-Steve.TextColor3 = Color3.fromRGB(0, 0, 0)
-Steve.Text = "Fe Steve"
-Steve.TextSize = 14
-Steve.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-Steve.MouseButton1Down:Connect(function()
-	NotifyModule:NotifyModule:NotifyModule:Notify("does not work on some games", 5)
+FeNoobAll.Name = "Steve"
+FeNoobAll.Parent = ScrollingFrame
+FeNoobAll.Size = UDim2.new(0, 137, 0, 23)
+FeNoobAll.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FeNoobAll.Position = UDim2.new(0.0504385978, 0, 0.0440616868, 0)
+FeNoobAll.BorderSizePixel = 0
+FeNoobAll.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
+FeNoobAll.TextColor3 = Color3.fromRGB(0, 0, 0)
+FeNoobAll.Text = "Steve"
+FeNoobAll.TextSize = 14
+FeNoobAll.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+FeNoobAll.MouseButton1Down:Connect(function()
+	NotifyModule:Notify("does not work on some games", 5)
 	loadstring(game:HttpGet(('https://pastebin.com/raw/2NNDTLjL'),true))()
-        wait(4)
-        NotifyModule:Notify("Script By Depr1", 5)
-        NotifyModule:Notify("Script Link by Delros12", 5)
 end)
 
-FeAnimR6.Name = "FeAnimR6"
+FeAnimR6.Name = "Fe Admin"
 FeAnimR6.Parent = ScrollingFrame
 FeAnimR6.Size = UDim2.new(0, 137, 0, 23)
 FeAnimR6.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -129,1986 +111,42 @@ FeAnimR6.Position = UDim2.new(0.350877196, 0, 0.0448816456, 0)
 FeAnimR6.BorderSizePixel = 0
 FeAnimR6.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
 FeAnimR6.TextColor3 = Color3.fromRGB(0, 0, 0)
-FeAnimR6.Text = "Fe Animtion R6"
+FeAnimR6.Text = "Fe Admin"
 FeAnimR6.TextSize = 14
 FeAnimR6.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FeAnimR6.MouseButton1Down:Connect(function()
-    NotifyModule:Notify("This Script is Huge Gonna Cook In", 3)
-	local Energize = Instance.new("ScreenGui")
-	local MainFrame = Instance.new("Frame")
-	local GuiBottomFrame = Instance.new("Frame")
-	local Credits = Instance.new("TextLabel")
-	local GuiTopFrame = Instance.new("Frame")
-	local CloseGUI = Instance.new("TextButton")
-	local Title = Instance.new("TextLabel")
-	local CheckR = Instance.new("TextLabel")
-	local ScrollingFrame = Instance.new("ScrollingFrame")
-	local GlitchLevitate = Instance.new("TextButton")
-	local FullSwing = Instance.new("TextButton")
-	local MoonDance = Instance.new("TextButton")
-	local FullPunch = Instance.new("TextButton")
-	local FloorFaint = Instance.new("TextButton")
-	local Crouch = Instance.new("TextButton")
-	local SpinDance = Instance.new("TextButton")
-	local JumpingJacks = Instance.new("TextButton")
-	local ArmDetach = Instance.new("TextButton")
-	local MegaInsane = Instance.new("TextButton")
-	local WeirdMove = Instance.new("TextButton")
-	local DinoWalk = Instance.new("TextButton")
-	local FloorCrawl = Instance.new("TextButton")
-	local Spinner = Instance.new("TextButton")
-	local Faint = Instance.new("TextButton")
-	local Levitate = Instance.new("TextButton")
-	local LoopHead = Instance.new("TextButton")
-	local HeadThrow = Instance.new("TextButton")
-	local CloneIllusion = Instance.new("TextButton")
-	local Dab = Instance.new("TextButton")
-	local BarrelRoll = Instance.new("TextButton")
-	local Insane = Instance.new("TextButton")
-	local SwordSlam = Instance.new("TextButton")
-	local MovingDance = Instance.new("TextButton")
-	local ArmTurbine = Instance.new("TextButton")
-	local SuperPunch = Instance.new("TextButton")
-	local Scared = Instance.new("TextButton")
-	local LoopSlam = Instance.new("TextButton")
-	local HeroJump = Instance.new("TextButton")
-	local SpinDance2 = Instance.new("TextButton")
-	local SwordSlice = Instance.new("TextButton")
-	local FloatingHead = Instance.new("TextButton")
-	local InsaneArms = Instance.new("TextButton")
-	local SuperFaint = Instance.new("TextButton")
-	local FloatSit = Instance.new("TextButton")
-	local BowDown = Instance.new("TextButton")
-	local ScrollingFrameR15 = Instance.new("ScrollingFrame")
-	local FloatSlash = Instance.new("TextButton")
-	local ArmsOut = Instance.new("TextButton")
-	local DownSlash = Instance.new("TextButton")
-	local R15Spinner = Instance.new("TextButton")
-	local WeirdZombie = Instance.new("TextButton")
-	local CrazySlash = Instance.new("TextButton")
-	local Pull = Instance.new("TextButton")
-	local Open = Instance.new("TextButton")
-	local CircleArm = Instance.new("TextButton")
-	local Bend = Instance.new("TextButton")
-	local RotateSlash = Instance.new("TextButton")
-	local FlingArms = Instance.new("TextButton")
-	local SideFrame = Instance.new("Frame")
-	local OpenGUI = Instance.new("TextButton")
-	local SideFrameTitle = Instance.new("TextLabel")
-	--Properties:
-	Energize.Name = "Energize"
-	Energize.Parent = game.CoreGui
-	Energize.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-	MainFrame.Name = "MainFrame"
-	MainFrame.Active = true
-	MainFrame.Draggable = true
-	MainFrame.Parent = Energize
-	MainFrame.BackgroundColor3 = Color3.new(0.0313726, 0.0313726, 0.0313726)
-	MainFrame.BackgroundTransparency = 0.15000000596046
-	MainFrame.Position = UDim2.new(0.502199888, 0, 0.552243114, 0)
-	MainFrame.Size = UDim2.new(0, 426, 0, 258)
-
-	GuiBottomFrame.Name = "Gui BottomFrame"
-	GuiBottomFrame.Parent = MainFrame
-	GuiBottomFrame.BackgroundColor3 = Color3.new(1, 1, 1)
-	GuiBottomFrame.BackgroundTransparency = 1
-	GuiBottomFrame.Position = UDim2.new(0, 0, 0.901309371, 0)
-	GuiBottomFrame.Size = UDim2.new(0, 426, 0, 25)
-
-	Credits.Name = "Credits"
-	Credits.Parent = GuiBottomFrame
-	Credits.BackgroundColor3 = Color3.new(0, 0, 0)
-	Credits.BackgroundTransparency = 1
-	Credits.Size = UDim2.new(0, 426, 0, 25)
-	Credits.Font = Enum.Font.SourceSansSemibold
-	Credits.Text = "Subscribe to A2b scripts (the script is not mine)"
-	Credits.TextColor3 = Color3.new(1, 1, 1)
-	Credits.TextSize = 17
-
-	GuiTopFrame.Name = "Gui TopFrame"
-	GuiTopFrame.Parent = MainFrame
-	GuiTopFrame.BackgroundColor3 = Color3.new(1, 1, 1)
-	GuiTopFrame.BackgroundTransparency = 1
-	GuiTopFrame.Position = UDim2.new(0, 0, -0.00178042857, 0)
-	GuiTopFrame.Size = UDim2.new(0, 426, 0, 25)
-
-	CloseGUI.Name = "CloseGUI"
-	CloseGUI.Parent = GuiTopFrame
-	CloseGUI.BackgroundColor3 = Color3.new(0, 0, 0)
-	CloseGUI.BackgroundTransparency = 0.15000000596046
-	CloseGUI.BorderSizePixel = 0
-	CloseGUI.Position = UDim2.new(0.967136145, 0, 0, 0)
-	CloseGUI.Size = UDim2.new(0, 15, 0, 15)
-	CloseGUI.Font = Enum.Font.SourceSansSemibold
-	CloseGUI.Text = "X"
-	CloseGUI.TextColor3 = Color3.new(1, 1, 1)
-	CloseGUI.TextSize = 14
-
-	Title.Name = "Title"
-	Title.Parent = GuiTopFrame
-	Title.BackgroundColor3 = Color3.new(1, 1, 1)
-	Title.BackgroundTransparency = 1
-	Title.Position = UDim2.new(0.653472185, 0, 0, 0)
-	Title.Size = UDim2.new(0, 105, 0, 25)
-	Title.Font = Enum.Font.SourceSansSemibold
-	Title.Text = "FE animations"
-	Title.TextColor3 = Color3.new(1, 1, 1)
-	Title.TextSize = 17
-
-	CheckR.Name = "CheckR"
-	CheckR.Parent = GuiTopFrame
-	CheckR.BackgroundColor3 = Color3.new(1, 1, 1)
-	CheckR.BackgroundTransparency = 1
-	CheckR.Position = UDim2.new(0.0234741792, 0, 0, 0)
-	CheckR.Size = UDim2.new(0, 194, 0, 24)
-	CheckR.Font = Enum.Font.SourceSansSemibold
-	CheckR.Text = "Text"
-	CheckR.TextColor3 = Color3.new(1, 1, 1)
-	CheckR.TextSize = 17
-	CheckR.TextXAlignment = Enum.TextXAlignment.Left
-
-	ScrollingFrame.Parent = MainFrame
-	ScrollingFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-	ScrollingFrame.BackgroundTransparency = 0.60000002384186
-	ScrollingFrame.Position = UDim2.new(0, 0, 0.0951187983, 0)
-	ScrollingFrame.Size = UDim2.new(0, 426, 0, 207)
-	ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.29999995, 0)
-	ScrollingFrame.ScrollBarThickness = 10
-
-	GlitchLevitate.Name = "GlitchLevitate"
-	GlitchLevitate.Parent = ScrollingFrame
-	GlitchLevitate.BackgroundColor3 = Color3.new(0, 0, 0)
-	GlitchLevitate.BackgroundTransparency = 0.30000001192093
-	GlitchLevitate.Position = UDim2.new(0.0469483584, 0, 0.0273178034, 0)
-	GlitchLevitate.Size = UDim2.new(0, 90, 0, 30)
-	GlitchLevitate.Font = Enum.Font.SourceSansSemibold
-	GlitchLevitate.Text = "Glitch Levitate"
-	GlitchLevitate.TextColor3 = Color3.new(1, 1, 1)
-	GlitchLevitate.TextSize = 15
-
-	FullSwing.Name = "FullSwing"
-	FullSwing.Parent = ScrollingFrame
-	FullSwing.BackgroundColor3 = Color3.new(0, 0, 0)
-	FullSwing.BackgroundTransparency = 0.30000001192093
-	FullSwing.Position = UDim2.new(0.267605633, 0, 0.0273178034, 0)
-	FullSwing.Size = UDim2.new(0, 90, 0, 30)
-	FullSwing.Font = Enum.Font.SourceSansSemibold
-	FullSwing.Text = "Full Swing"
-	FullSwing.TextColor3 = Color3.new(1, 1, 1)
-	FullSwing.TextSize = 15
-
-	MoonDance.Name = "MoonDance"
-	MoonDance.Parent = ScrollingFrame
-	MoonDance.BackgroundColor3 = Color3.new(0, 0, 0)
-	MoonDance.BackgroundTransparency = 0.30000001192093
-	MoonDance.Position = UDim2.new(0.713614941, 0, 0.0273178034, 0)
-	MoonDance.Size = UDim2.new(0, 90, 0, 30)
-	MoonDance.Font = Enum.Font.SourceSansSemibold
-	MoonDance.Text = "Moon Dance"
-	MoonDance.TextColor3 = Color3.new(1, 1, 1)
-	MoonDance.TextSize = 15
-
-	FullPunch.Name = "FullPunch"
-	FullPunch.Parent = ScrollingFrame
-	FullPunch.BackgroundColor3 = Color3.new(0, 0, 0)
-	FullPunch.BackgroundTransparency = 0.30000001192093
-	FullPunch.Position = UDim2.new(0.492957741, 0, 0.0273178034, 0)
-	FullPunch.Size = UDim2.new(0, 90, 0, 30)
-	FullPunch.Font = Enum.Font.SourceSansSemibold
-	FullPunch.Text = "Full Punch"
-	FullPunch.TextColor3 = Color3.new(1, 1, 1)
-	FullPunch.TextSize = 15
-
-	FloorFaint.Name = "FloorFaint"
-	FloorFaint.Parent = ScrollingFrame
-	FloorFaint.BackgroundColor3 = Color3.new(0, 0, 0)
-	FloorFaint.BackgroundTransparency = 0.30000001192093
-	FloorFaint.Position = UDim2.new(0.0469483584, 0, 0.134652346, 0)
-	FloorFaint.Size = UDim2.new(0, 90, 0, 30)
-	FloorFaint.Font = Enum.Font.SourceSansSemibold
-	FloorFaint.Text = "Floor Faint"
-	FloorFaint.TextColor3 = Color3.new(1, 1, 1)
-	FloorFaint.TextSize = 15
-
-	Crouch.Name = "Crouch"
-	Crouch.Parent = ScrollingFrame
-	Crouch.BackgroundColor3 = Color3.new(0, 0, 0)
-	Crouch.BackgroundTransparency = 0.30000001192093
-	Crouch.Position = UDim2.new(0.267605633, 0, 0.134652346, 0)
-	Crouch.Size = UDim2.new(0, 90, 0, 30)
-	Crouch.Font = Enum.Font.SourceSansSemibold
-	Crouch.Text = "Crouch"
-	Crouch.TextColor3 = Color3.new(1, 1, 1)
-	Crouch.TextSize = 15
-
-	SpinDance.Name = "SpinDance"
-	SpinDance.Parent = ScrollingFrame
-	SpinDance.BackgroundColor3 = Color3.new(0, 0, 0)
-	SpinDance.BackgroundTransparency = 0.30000001192093
-	SpinDance.Position = UDim2.new(0.713614941, 0, 0.134652346, 0)
-	SpinDance.Size = UDim2.new(0, 90, 0, 30)
-	SpinDance.Font = Enum.Font.SourceSansSemibold
-	SpinDance.Text = "Spin Dance"
-	SpinDance.TextColor3 = Color3.new(1, 1, 1)
-	SpinDance.TextSize = 15
-
-	JumpingJacks.Name = "JumpingJacks"
-	JumpingJacks.Parent = ScrollingFrame
-	JumpingJacks.BackgroundColor3 = Color3.new(0, 0, 0)
-	JumpingJacks.BackgroundTransparency = 0.30000001192093
-	JumpingJacks.Position = UDim2.new(0.492957741, 0, 0.134652346, 0)
-	JumpingJacks.Size = UDim2.new(0, 90, 0, 30)
-	JumpingJacks.Font = Enum.Font.SourceSansSemibold
-	JumpingJacks.Text = "Jumping Jacks"
-	JumpingJacks.TextColor3 = Color3.new(1, 1, 1)
-	JumpingJacks.TextSize = 15
-
-	ArmDetach.Name = "ArmDetach"
-	ArmDetach.Parent = ScrollingFrame
-	ArmDetach.BackgroundColor3 = Color3.new(0, 0, 0)
-	ArmDetach.BackgroundTransparency = 0.30000001192093
-	ArmDetach.Position = UDim2.new(0.0469483584, 0, 0.241986871, 0)
-	ArmDetach.Size = UDim2.new(0, 90, 0, 30)
-	ArmDetach.Font = Enum.Font.SourceSansSemibold
-	ArmDetach.Text = "Arm Detach"
-	ArmDetach.TextColor3 = Color3.new(1, 1, 1)
-	ArmDetach.TextSize = 15
-
-	MegaInsane.Name = "MegaInsane"
-	MegaInsane.Parent = ScrollingFrame
-	MegaInsane.BackgroundColor3 = Color3.new(0, 0, 0)
-	MegaInsane.BackgroundTransparency = 0.30000001192093
-	MegaInsane.Position = UDim2.new(0.267605633, 0, 0.241986871, 0)
-	MegaInsane.Size = UDim2.new(0, 90, 0, 30)
-	MegaInsane.Font = Enum.Font.SourceSansSemibold
-	MegaInsane.Text = "Mega Insane"
-	MegaInsane.TextColor3 = Color3.new(1, 1, 1)
-	MegaInsane.TextSize = 15
-
-	WeirdMove.Name = "WeirdMove"
-	WeirdMove.Parent = ScrollingFrame
-	WeirdMove.BackgroundColor3 = Color3.new(0, 0, 0)
-	WeirdMove.BackgroundTransparency = 0.30000001192093
-	WeirdMove.Position = UDim2.new(0.713614941, 0, 0.241986871, 0)
-	WeirdMove.Size = UDim2.new(0, 90, 0, 30)
-	WeirdMove.Font = Enum.Font.SourceSansSemibold
-	WeirdMove.Text = "Weird Move"
-	WeirdMove.TextColor3 = Color3.new(1, 1, 1)
-	WeirdMove.TextSize = 15
-
-	DinoWalk.Name = "DinoWalk"
-	DinoWalk.Parent = ScrollingFrame
-	DinoWalk.BackgroundColor3 = Color3.new(0, 0, 0)
-	DinoWalk.BackgroundTransparency = 0.30000001192093
-	DinoWalk.Position = UDim2.new(0.492957741, 0, 0.241986871, 0)
-	DinoWalk.Size = UDim2.new(0, 90, 0, 30)
-	DinoWalk.Font = Enum.Font.SourceSansSemibold
-	DinoWalk.Text = "Dino Walk"
-	DinoWalk.TextColor3 = Color3.new(1, 1, 1)
-	DinoWalk.TextSize = 15
-
-	FloorCrawl.Name = "FloorCrawl"
-	FloorCrawl.Parent = ScrollingFrame
-	FloorCrawl.BackgroundColor3 = Color3.new(0, 0, 0)
-	FloorCrawl.BackgroundTransparency = 0.30000001192093
-	FloorCrawl.Position = UDim2.new(0.492957741, 0, 0.349321395, 0)
-	FloorCrawl.Size = UDim2.new(0, 90, 0, 30)
-	FloorCrawl.Font = Enum.Font.SourceSansSemibold
-	FloorCrawl.Text = "Floor Crawl"
-	FloorCrawl.TextColor3 = Color3.new(1, 1, 1)
-	FloorCrawl.TextSize = 15
-
-	Spinner.Name = "Spinner"
-	Spinner.Parent = ScrollingFrame
-	Spinner.BackgroundColor3 = Color3.new(0, 0, 0)
-	Spinner.BackgroundTransparency = 0.30000001192093
-	Spinner.Position = UDim2.new(0.267605633, 0, 0.349321395, 0)
-	Spinner.Size = UDim2.new(0, 90, 0, 30)
-	Spinner.Font = Enum.Font.SourceSansSemibold
-	Spinner.Text = "Spinner"
-	Spinner.TextColor3 = Color3.new(1, 1, 1)
-	Spinner.TextSize = 15
-
-	Faint.Name = "Faint"
-	Faint.Parent = ScrollingFrame
-	Faint.BackgroundColor3 = Color3.new(0, 0, 0)
-	Faint.BackgroundTransparency = 0.30000001192093
-	Faint.Position = UDim2.new(0.713614941, 0, 0.349321395, 0)
-	Faint.Size = UDim2.new(0, 90, 0, 30)
-	Faint.Font = Enum.Font.SourceSansSemibold
-	Faint.Text = "Faint"
-	Faint.TextColor3 = Color3.new(1, 1, 1)
-	Faint.TextSize = 15
-
-	Levitate.Name = "Levitate"
-	Levitate.Parent = ScrollingFrame
-	Levitate.BackgroundColor3 = Color3.new(0, 0, 0)
-	Levitate.BackgroundTransparency = 0.30000001192093
-	Levitate.Position = UDim2.new(0.0469483584, 0, 0.349321395, 0)
-	Levitate.Size = UDim2.new(0, 90, 0, 30)
-	Levitate.Font = Enum.Font.SourceSansSemibold
-	Levitate.Text = "Levitate"
-	Levitate.TextColor3 = Color3.new(1, 1, 1)
-	Levitate.TextSize = 15
-
-	LoopHead.Name = "LoopHead"
-	LoopHead.Parent = ScrollingFrame
-	LoopHead.BackgroundColor3 = Color3.new(0, 0, 0)
-	LoopHead.BackgroundTransparency = 0.30000001192093
-	LoopHead.Position = UDim2.new(0.0469483584, 0, 0.456655949, 0)
-	LoopHead.Size = UDim2.new(0, 90, 0, 30)
-	LoopHead.Font = Enum.Font.SourceSansSemibold
-	LoopHead.Text = "Loop Head"
-	LoopHead.TextColor3 = Color3.new(1, 1, 1)
-	LoopHead.TextSize = 15
-
-	HeadThrow.Name = "HeadThrow"
-	HeadThrow.Parent = ScrollingFrame
-	HeadThrow.BackgroundColor3 = Color3.new(0, 0, 0)
-	HeadThrow.BackgroundTransparency = 0.30000001192093
-	HeadThrow.Position = UDim2.new(0.267605633, 0, 0.456655949, 0)
-	HeadThrow.Size = UDim2.new(0, 90, 0, 30)
-	HeadThrow.Font = Enum.Font.SourceSansSemibold
-	HeadThrow.Text = "Head Throw"
-	HeadThrow.TextColor3 = Color3.new(1, 1, 1)
-	HeadThrow.TextSize = 15
-
-	CloneIllusion.Name = "CloneIllusion"
-	CloneIllusion.Parent = ScrollingFrame
-	CloneIllusion.BackgroundColor3 = Color3.new(0, 0, 0)
-	CloneIllusion.BackgroundTransparency = 0.30000001192093
-	CloneIllusion.Position = UDim2.new(0.713614941, 0, 0.456655949, 0)
-	CloneIllusion.Size = UDim2.new(0, 90, 0, 30)
-	CloneIllusion.Font = Enum.Font.SourceSansSemibold
-	CloneIllusion.Text = "Clone Illusion"
-	CloneIllusion.TextColor3 = Color3.new(1, 1, 1)
-	CloneIllusion.TextSize = 15
-
-	Dab.Name = "Dab"
-	Dab.Parent = ScrollingFrame
-	Dab.BackgroundColor3 = Color3.new(0, 0, 0)
-	Dab.BackgroundTransparency = 0.30000001192093
-	Dab.Position = UDim2.new(0.492957741, 0, 0.456655949, 0)
-	Dab.Size = UDim2.new(0, 90, 0, 30)
-	Dab.Font = Enum.Font.SourceSansSemibold
-	Dab.Text = "Dab"
-	Dab.TextColor3 = Color3.new(1, 1, 1)
-	Dab.TextSize = 15
-
-	BarrelRoll.Name = "BarrelRoll"
-	BarrelRoll.Parent = ScrollingFrame
-	BarrelRoll.BackgroundColor3 = Color3.new(0, 0, 0)
-	BarrelRoll.BackgroundTransparency = 0.30000001192093
-	BarrelRoll.Position = UDim2.new(0.492957741, 0, 0.563990533, 0)
-	BarrelRoll.Size = UDim2.new(0, 90, 0, 30)
-	BarrelRoll.Font = Enum.Font.SourceSansSemibold
-	BarrelRoll.Text = "Barrel Roll"
-	BarrelRoll.TextColor3 = Color3.new(1, 1, 1)
-	BarrelRoll.TextSize = 15
-
-	Insane.Name = "Insane"
-	Insane.Parent = ScrollingFrame
-	Insane.BackgroundColor3 = Color3.new(0, 0, 0)
-	Insane.BackgroundTransparency = 0.30000001192093
-	Insane.Position = UDim2.new(0.267605633, 0, 0.563990533, 0)
-	Insane.Size = UDim2.new(0, 90, 0, 30)
-	Insane.Font = Enum.Font.SourceSansSemibold
-	Insane.Text = "Insane"
-	Insane.TextColor3 = Color3.new(1, 1, 1)
-	Insane.TextSize = 15
-
-	SwordSlam.Name = "SwordSlam"
-	SwordSlam.Parent = ScrollingFrame
-	SwordSlam.BackgroundColor3 = Color3.new(0, 0, 0)
-	SwordSlam.BackgroundTransparency = 0.30000001192093
-	SwordSlam.Position = UDim2.new(0.713614941, 0, 0.563990533, 0)
-	SwordSlam.Size = UDim2.new(0, 90, 0, 30)
-	SwordSlam.Font = Enum.Font.SourceSansSemibold
-	SwordSlam.Text = "Sword Slam"
-	SwordSlam.TextColor3 = Color3.new(1, 1, 1)
-	SwordSlam.TextSize = 15
-
-	MovingDance.Name = "MovingDance"
-	MovingDance.Parent = ScrollingFrame
-	MovingDance.BackgroundColor3 = Color3.new(0, 0, 0)
-	MovingDance.BackgroundTransparency = 0.30000001192093
-	MovingDance.Position = UDim2.new(0.0469483584, 0, 0.563990533, 0)
-	MovingDance.Size = UDim2.new(0, 90, 0, 30)
-	MovingDance.Font = Enum.Font.SourceSansSemibold
-	MovingDance.Text = "Moving Dance"
-	MovingDance.TextColor3 = Color3.new(1, 1, 1)
-	MovingDance.TextSize = 15
-
-	ArmTurbine.Name = "ArmTurbine"
-	ArmTurbine.Parent = ScrollingFrame
-	ArmTurbine.BackgroundColor3 = Color3.new(0, 0, 0)
-	ArmTurbine.BackgroundTransparency = 0.30000001192093
-	ArmTurbine.Position = UDim2.new(0.267605633, 0, 0.671325028, 0)
-	ArmTurbine.Size = UDim2.new(0, 90, 0, 30)
-	ArmTurbine.Font = Enum.Font.SourceSansSemibold
-	ArmTurbine.Text = "Arm Turbine"
-	ArmTurbine.TextColor3 = Color3.new(1, 1, 1)
-	ArmTurbine.TextSize = 15
-
-	SuperPunch.Name = "SuperPunch"
-	SuperPunch.Parent = ScrollingFrame
-	SuperPunch.BackgroundColor3 = Color3.new(0, 0, 0)
-	SuperPunch.BackgroundTransparency = 0.30000001192093
-	SuperPunch.Position = UDim2.new(0.0469483584, 0, 0.671325028, 0)
-	SuperPunch.Size = UDim2.new(0, 90, 0, 30)
-	SuperPunch.Font = Enum.Font.SourceSansSemibold
-	SuperPunch.Text = "Super Punch"
-	SuperPunch.TextColor3 = Color3.new(1, 1, 1)
-	SuperPunch.TextSize = 15
-
-	Scared.Name = "Scared"
-	Scared.Parent = ScrollingFrame
-	Scared.BackgroundColor3 = Color3.new(0, 0, 0)
-	Scared.BackgroundTransparency = 0.30000001192093
-	Scared.Position = UDim2.new(0.267605633, 0, 0.778659523, 0)
-	Scared.Size = UDim2.new(0, 90, 0, 30)
-	Scared.Font = Enum.Font.SourceSansSemibold
-	Scared.Text = "Scared"
-	Scared.TextColor3 = Color3.new(1, 1, 1)
-	Scared.TextSize = 15
-
-	LoopSlam.Name = "LoopSlam"
-	LoopSlam.Parent = ScrollingFrame
-	LoopSlam.BackgroundColor3 = Color3.new(0, 0, 0)
-	LoopSlam.BackgroundTransparency = 0.30000001192093
-	LoopSlam.Position = UDim2.new(0.713614941, 0, 0.671325028, 0)
-	LoopSlam.Size = UDim2.new(0, 90, 0, 30)
-	LoopSlam.Font = Enum.Font.SourceSansSemibold
-	LoopSlam.Text = "Loop Slam"
-	LoopSlam.TextColor3 = Color3.new(1, 1, 1)
-	LoopSlam.TextSize = 15
-
-	HeroJump.Name = "HeroJump"
-	HeroJump.Parent = ScrollingFrame
-	HeroJump.BackgroundColor3 = Color3.new(0, 0, 0)
-	HeroJump.BackgroundTransparency = 0.30000001192093
-	HeroJump.Position = UDim2.new(0.0469483584, 0, 0.778659523, 0)
-	HeroJump.Size = UDim2.new(0, 90, 0, 30)
-	HeroJump.Font = Enum.Font.SourceSansSemibold
-	HeroJump.Text = "Hero Jump"
-	HeroJump.TextColor3 = Color3.new(1, 1, 1)
-	HeroJump.TextSize = 15
-
-	SpinDance2.Name = "SpinDance2"
-	SpinDance2.Parent = ScrollingFrame
-	SpinDance2.BackgroundColor3 = Color3.new(0, 0, 0)
-	SpinDance2.BackgroundTransparency = 0.30000001192093
-	SpinDance2.Position = UDim2.new(0.713614941, 0, 0.778659523, 0)
-	SpinDance2.Size = UDim2.new(0, 90, 0, 30)
-	SpinDance2.Font = Enum.Font.SourceSansSemibold
-	SpinDance2.Text = "Spin Dance 2"
-	SpinDance2.TextColor3 = Color3.new(1, 1, 1)
-	SpinDance2.TextSize = 15
-
-	SwordSlice.Name = "SwordSlice"
-	SwordSlice.Parent = ScrollingFrame
-	SwordSlice.BackgroundColor3 = Color3.new(0, 0, 0)
-	SwordSlice.BackgroundTransparency = 0.30000001192093
-	SwordSlice.Position = UDim2.new(0.492957741, 0, 0.671325028, 0)
-	SwordSlice.Size = UDim2.new(0, 90, 0, 30)
-	SwordSlice.Font = Enum.Font.SourceSansSemibold
-	SwordSlice.Text = "Sword Slice"
-	SwordSlice.TextColor3 = Color3.new(1, 1, 1)
-	SwordSlice.TextSize = 15
-
-	FloatingHead.Name = "FloatingHead"
-	FloatingHead.Parent = ScrollingFrame
-	FloatingHead.BackgroundColor3 = Color3.new(0, 0, 0)
-	FloatingHead.BackgroundTransparency = 0.30000001192093
-	FloatingHead.Position = UDim2.new(0.492957741, 0, 0.778659523, 0)
-	FloatingHead.Size = UDim2.new(0, 90, 0, 30)
-	FloatingHead.Font = Enum.Font.SourceSansSemibold
-	FloatingHead.Text = "Floating Head"
-	FloatingHead.TextColor3 = Color3.new(1, 1, 1)
-	FloatingHead.TextSize = 15
-
-	InsaneArms.Name = "InsaneArms"
-	InsaneArms.Parent = ScrollingFrame
-	InsaneArms.BackgroundColor3 = Color3.new(0, 0, 0)
-	InsaneArms.BackgroundTransparency = 0.30000001192093
-	InsaneArms.Position = UDim2.new(0.0469483584, 0, 0.888975561, 0)
-	InsaneArms.Size = UDim2.new(0, 90, 0, 30)
-	InsaneArms.Font = Enum.Font.SourceSansSemibold
-	InsaneArms.Text = "Insane Arms"
-	InsaneArms.TextColor3 = Color3.new(1, 1, 1)
-	InsaneArms.TextSize = 15
-
-	SuperFaint.Name = "SuperFaint"
-	SuperFaint.Parent = ScrollingFrame
-	SuperFaint.BackgroundColor3 = Color3.new(0, 0, 0)
-	SuperFaint.BackgroundTransparency = 0.30000001192093
-	SuperFaint.Position = UDim2.new(0.267605633, 0, 0.888975561, 0)
-	SuperFaint.Size = UDim2.new(0, 90, 0, 30)
-	SuperFaint.Font = Enum.Font.SourceSansSemibold
-	SuperFaint.Text = "Super Faint"
-	SuperFaint.TextColor3 = Color3.new(1, 1, 1)
-	SuperFaint.TextSize = 15
-
-	FloatSit.Name = "FloatSit"
-	FloatSit.Parent = ScrollingFrame
-	FloatSit.BackgroundColor3 = Color3.new(0, 0, 0)
-	FloatSit.BackgroundTransparency = 0.30000001192093
-	FloatSit.Position = UDim2.new(0.492957741, 0, 0.888975561, 0)
-	FloatSit.Size = UDim2.new(0, 90, 0, 30)
-	FloatSit.Font = Enum.Font.SourceSansSemibold
-	FloatSit.Text = "FloatSit"
-	FloatSit.TextColor3 = Color3.new(1, 1, 1)
-	FloatSit.TextSize = 15
-
-	BowDown.Name = "BowDown"
-	BowDown.Parent = ScrollingFrame
-	BowDown.BackgroundColor3 = Color3.new(0, 0, 0)
-	BowDown.BackgroundTransparency = 0.30000001192093
-	BowDown.Position = UDim2.new(0.713614941, 0, 0.888975561, 0)
-	BowDown.Size = UDim2.new(0, 90, 0, 30)
-	BowDown.Font = Enum.Font.SourceSansSemibold
-	BowDown.Text = "Bow Down"
-	BowDown.TextColor3 = Color3.new(1, 1, 1)
-	BowDown.TextSize = 15
-
-	ScrollingFrameR15.Name = "ScrollingFrameR15"
-	ScrollingFrameR15.Parent = MainFrame
-	ScrollingFrameR15.BackgroundColor3 = Color3.new(0, 0, 0)
-	ScrollingFrameR15.BackgroundTransparency = 0.60000002384186
-	ScrollingFrameR15.Position = UDim2.new(-0.00150352798, 0, 0.0951187983, 0)
-	ScrollingFrameR15.Size = UDim2.new(0, 427, 0, 207)
-	ScrollingFrameR15.CanvasSize = UDim2.new(0, 0, 0.430000007, 0)
-	ScrollingFrameR15.ScrollBarThickness = 10
-
-	FloatSlash.Name = "FloatSlash"
-	FloatSlash.Parent = ScrollingFrameR15
-	FloatSlash.BackgroundColor3 = Color3.new(0, 0, 0)
-	FloatSlash.BackgroundTransparency = 0.30000001192093
-	FloatSlash.Position = UDim2.new(0.0563380271, 0, 0.0405257866, 0)
-	FloatSlash.Size = UDim2.new(0, 90, 0, 30)
-	FloatSlash.Font = Enum.Font.SourceSansSemibold
-	FloatSlash.Text = "Float Slash"
-	FloatSlash.TextColor3 = Color3.new(1, 1, 1)
-	FloatSlash.TextSize = 15
-
-	ArmsOut.Name = "ArmsOut"
-	ArmsOut.Parent = ScrollingFrameR15
-	ArmsOut.BackgroundColor3 = Color3.new(0, 0, 0)
-	ArmsOut.BackgroundTransparency = 0.30000001192093
-	ArmsOut.Position = UDim2.new(0.28169015, 0, 0.0405257866, 0)
-	ArmsOut.Size = UDim2.new(0, 90, 0, 30)
-	ArmsOut.Font = Enum.Font.SourceSansSemibold
-	ArmsOut.Text = " Arms Out"
-	ArmsOut.TextColor3 = Color3.new(1, 1, 1)
-	ArmsOut.TextSize = 15
-
-	DownSlash.Name = "DownSlash"
-	DownSlash.Parent = ScrollingFrameR15
-	DownSlash.BackgroundColor3 = Color3.new(0, 0, 0)
-	DownSlash.BackgroundTransparency = 0.30000001192093
-	DownSlash.Position = UDim2.new(0.507042229, 0, 0.0405257866, 0)
-	DownSlash.Size = UDim2.new(0, 90, 0, 30)
-	DownSlash.Font = Enum.Font.SourceSansSemibold
-	DownSlash.Text = "Down Slash"
-	DownSlash.TextColor3 = Color3.new(1, 1, 1)
-	DownSlash.TextSize = 15
-
-	R15Spinner.Name = "R15Spinner"
-	R15Spinner.Parent = ScrollingFrameR15
-	R15Spinner.BackgroundColor3 = Color3.new(0, 0, 0)
-	R15Spinner.BackgroundTransparency = 0.30000001192093
-	R15Spinner.Position = UDim2.new(0.732394338, 0, 0.0405257866, 0)
-	R15Spinner.Size = UDim2.new(0, 90, 0, 30)
-	R15Spinner.Font = Enum.Font.SourceSansSemibold
-	R15Spinner.Text = "Spinner"
-	R15Spinner.TextColor3 = Color3.new(1, 1, 1)
-	R15Spinner.TextSize = 15
-
-	WeirdZombie.Name = "WeirdZombie"
-	WeirdZombie.Parent = ScrollingFrameR15
-	WeirdZombie.BackgroundColor3 = Color3.new(0, 0, 0)
-	WeirdZombie.BackgroundTransparency = 0.30000001192093
-	WeirdZombie.Position = UDim2.new(0.28169015, 0, 0.213602722, 0)
-	WeirdZombie.Size = UDim2.new(0, 90, 0, 30)
-	WeirdZombie.Font = Enum.Font.SourceSansSemibold
-	WeirdZombie.Text = "Weird Zombie"
-	WeirdZombie.TextColor3 = Color3.new(1, 1, 1)
-	WeirdZombie.TextSize = 15
-
-	CrazySlash.Name = "CrazySlash"
-	CrazySlash.Parent = ScrollingFrameR15
-	CrazySlash.BackgroundColor3 = Color3.new(0, 0, 0)
-	CrazySlash.BackgroundTransparency = 0.30000001192093
-	CrazySlash.Position = UDim2.new(0.0563380271, 0, 0.213602722, 0)
-	CrazySlash.Size = UDim2.new(0, 90, 0, 30)
-	CrazySlash.Font = Enum.Font.SourceSansSemibold
-	CrazySlash.Text = "Crazy Slash"
-	CrazySlash.TextColor3 = Color3.new(1, 1, 1)
-	CrazySlash.TextSize = 15
-
-	Pull.Name = "Pull"
-	Pull.Parent = ScrollingFrameR15
-	Pull.BackgroundColor3 = Color3.new(0, 0, 0)
-	Pull.BackgroundTransparency = 0.30000001192093
-	Pull.Position = UDim2.new(0.507042229, 0, 0.213602722, 0)
-	Pull.Size = UDim2.new(0, 90, 0, 30)
-	Pull.Font = Enum.Font.SourceSansSemibold
-	Pull.Text = "Pull"
-	Pull.TextColor3 = Color3.new(1, 1, 1)
-	Pull.TextSize = 15
-
-	Open.Name = "Open"
-	Open.Parent = ScrollingFrameR15
-	Open.BackgroundColor3 = Color3.new(0, 0, 0)
-	Open.BackgroundTransparency = 0.30000001192093
-	Open.Position = UDim2.new(0.732394338, 0, 0.213602722, 0)
-	Open.Size = UDim2.new(0, 90, 0, 30)
-	Open.Font = Enum.Font.SourceSansSemibold
-	Open.Text = "Open"
-	Open.TextColor3 = Color3.new(1, 1, 1)
-	Open.TextSize = 15
-
-	CircleArm.Name = "CircleArm"
-	CircleArm.Parent = ScrollingFrameR15
-	CircleArm.BackgroundColor3 = Color3.new(0, 0, 0)
-	CircleArm.BackgroundTransparency = 0.30000001192093
-	CircleArm.Position = UDim2.new(0.0563380271, 0, 0.386679649, 0)
-	CircleArm.Size = UDim2.new(0, 90, 0, 30)
-	CircleArm.Font = Enum.Font.SourceSansSemibold
-	CircleArm.Text = "Circle Arm"
-	CircleArm.TextColor3 = Color3.new(1, 1, 1)
-	CircleArm.TextSize = 15
-
-	Bend.Name = "Bend"
-	Bend.Parent = ScrollingFrameR15
-	Bend.BackgroundColor3 = Color3.new(0, 0, 0)
-	Bend.BackgroundTransparency = 0.30000001192093
-	Bend.Position = UDim2.new(0.28169015, 0, 0.386679649, 0)
-	Bend.Size = UDim2.new(0, 90, 0, 30)
-	Bend.Font = Enum.Font.SourceSansSemibold
-	Bend.Text = "Bend"
-	Bend.TextColor3 = Color3.new(1, 1, 1)
-	Bend.TextSize = 15
-
-	RotateSlash.Name = "RotateSlash"
-	RotateSlash.Parent = ScrollingFrameR15
-	RotateSlash.BackgroundColor3 = Color3.new(0, 0, 0)
-	RotateSlash.BackgroundTransparency = 0.30000001192093
-	RotateSlash.Position = UDim2.new(0.507042229, 0, 0.386679649, 0)
-	RotateSlash.Size = UDim2.new(0, 90, 0, 30)
-	RotateSlash.Font = Enum.Font.SourceSansSemibold
-	RotateSlash.Text = "Rotate Slash"
-	RotateSlash.TextColor3 = Color3.new(1, 1, 1)
-	RotateSlash.TextSize = 15
-
-	FlingArms.Name = "FlingArms"
-	FlingArms.Parent = ScrollingFrameR15
-	FlingArms.BackgroundColor3 = Color3.new(0, 0, 0)
-	FlingArms.BackgroundTransparency = 0.30000001192093
-	FlingArms.Position = UDim2.new(0.732394338, 0, 0.386679649, 0)
-	FlingArms.Size = UDim2.new(0, 90, 0, 30)
-	FlingArms.Font = Enum.Font.SourceSansSemibold
-	FlingArms.Text = "Fling Arms"
-	FlingArms.TextColor3 = Color3.new(1, 1, 1)
-	FlingArms.TextSize = 15
-
-	SideFrame.Name = "SideFrame"
-	SideFrame.Active = true
-	SideFrame.Draggable = true
-	SideFrame.Visible = false
-	SideFrame.Parent = Energize
-	SideFrame.BackgroundColor3 = Color3.new(0.0823529, 0.0823529, 0.0823529)
-	SideFrame.BackgroundTransparency = 0.15000000596046
-	SideFrame.Position = UDim2.new(0.502199769, 0, 0.55104512, 0)
-	SideFrame.Size = UDim2.new(0, 426, 0, 25)
-
-	OpenGUI.Name = "OpenGUI"
-	OpenGUI.Parent = SideFrame
-	OpenGUI.BackgroundColor3 = Color3.new(0, 0, 0)
-	OpenGUI.BackgroundTransparency = 0.15000000596046
-	OpenGUI.BorderSizePixel = 0
-	OpenGUI.Position = UDim2.new(0.967136145, 0, 0, 0)
-	OpenGUI.Size = UDim2.new(0, 15, 0, 15)
-	OpenGUI.Font = Enum.Font.SourceSansSemibold
-	OpenGUI.Text = "X"
-	OpenGUI.TextColor3 = Color3.new(1, 1, 1)
-	OpenGUI.TextSize = 14
-
-	SideFrameTitle.Name = "SideFrameTitle"
-	SideFrameTitle.Parent = SideFrame
-	SideFrameTitle.BackgroundColor3 = Color3.new(1, 1, 1)
-	SideFrameTitle.BackgroundTransparency = 1
-	SideFrameTitle.Position = UDim2.new(0.364739805, 0, 0, 0)
-	SideFrameTitle.Size = UDim2.new(0, 115, 0, 25)
-	SideFrameTitle.Font = Enum.Font.SourceSansSemibold
-	SideFrameTitle.Text = "Energize Remake"
-	SideFrameTitle.TextColor3 = Color3.new(1, 1, 1)
-	SideFrameTitle.TextSize = 17
-	-- Scripts:
-	col = Color3.fromRGB(0, 0, 0)
-	loc = Color3.fromRGB(255, 117, 19)
-	rcol = Color3.fromRGB(0, 0, 0)
-	rloc = Color3.fromRGB(255, 117, 19)
-
-	CloseGUI.MouseButton1Click:connect(function()
-		MainFrame.Visible = false
-		SideFrame.Visible = true
-		SideFrame.Position = MainFrame.Position
-	end)
-
-	OpenGUI.MouseButton1Click:connect(function()
-		MainFrame.Visible = true
-		SideFrame.Visible = false
-		MainFrame.Position = SideFrame.Position
-	end)
-
-	if (game:GetService"Players".LocalPlayer.Character:WaitForChild("Humanoid").RigType == Enum.HumanoidRigType.R15) then
-		ScrollingFrame.Visible = false
-		ScrollingFrameR15.Visible = true
-		CheckR.Text = "Showing R15 Animations"
-	else
-		ScrollingFrame.Visible = true
-		ScrollingFrameR15.Visible = false
-		CheckR.Text = "Showing R6 Animations"
-	end
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://35154961"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local HeadThrowACTIVE = false
-	HeadThrow.MouseButton1Click:connect(function()
-		HeadThrowACTIVE = not HeadThrowACTIVE
-		if HeadThrowACTIVE then
-			HeadThrow.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if HeadThrowACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			HeadThrow.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://121572214"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local FloatingHeadACTIVE = false
-	FloatingHead.MouseButton1Click:connect(function()
-		FloatingHeadACTIVE = not FloatingHeadACTIVE
-		if FloatingHeadACTIVE then
-			track:Play(.1, 1, 1)
-			FloatingHead.BackgroundColor3 = loc
-		else
-			track:Stop()
-			FloatingHead.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://182724289"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local CrouchACTIVE = false
-	Crouch.MouseButton1Click:connect(function()
-		CrouchACTIVE = not CrouchACTIVE
-		if CrouchACTIVE then
-			track:Play(.1, 1, 1)
-			Crouch.BackgroundColor3 = loc
-		else
-			track:Stop()
-			Crouch.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://282574440"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local FloorCrawlACTIVE = false
-	FloorCrawl.MouseButton1Click:connect(function()
-		FloorCrawlACTIVE = not FloorCrawlACTIVE
-		if FloorCrawlACTIVE then
-			track:Play(.1, 1, 1)
-			FloorCrawl.BackgroundColor3 = loc
-		else
-			track:Stop()
-			FloorCrawl.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://204328711"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local DinoWalkACTIVE = false
-	DinoWalk.MouseButton1Click:connect(function()
-		DinoWalkACTIVE = not DinoWalkACTIVE
-		if DinoWalkACTIVE then
-			track:Play(.1, 1, 1)
-			DinoWalk.BackgroundColor3 = loc
-		else
-			track:Stop()
-			DinoWalk.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://429681631"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local JumpingJacksACTIVE = false
-	JumpingJacks.MouseButton1Click:connect(function()
-		JumpingJacksACTIVE = not JumpingJacksACTIVE
-		if JumpingJacksACTIVE then
-			track:Play(.1, 1, 1)
-			JumpingJacks.BackgroundColor3 = loc
-		else
-			track:Stop()
-			JumpingJacks.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://35154961"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local LoopHeadACTIVE = false
-	LoopHead.MouseButton1Click:connect(function()
-		LoopHeadACTIVE = not LoopHeadACTIVE
-		if LoopHeadACTIVE then
-			LoopHead.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if LoopHeadACTIVE then
-						track:Play(.5, 1, 1e6)
-					end
-				end
-			end
-		else
-			track:Stop()
-			LoopHead.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://184574340"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local HeroJumpACTIVE = false
-	HeroJump.MouseButton1Click:connect(function()
-		HeroJumpACTIVE = not HeroJumpACTIVE
-		if HeroJumpACTIVE then
-			HeroJump.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if HeroJumpACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			HeroJump.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://181526230"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local FaintACTIVE = false
-	Faint.MouseButton1Click:connect(function()
-		FaintACTIVE = not FaintACTIVE
-		if FaintACTIVE then
-			track:Play(.1, 1, 1)
-			Faint.BackgroundColor3 = loc
-		else
-			track:Stop()
-			Faint.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://181525546"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local FloorFaintACTIVE = false
-	FloorFaint.MouseButton1Click:connect(function()
-		FloorFaintACTIVE = not FloorFaintACTIVE
-		if FloorFaintACTIVE then
-			FloorFaint.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if FloorFaintACTIVE then
-						track:Play(.1, 1, 2)
-					end
-				end
-			end
-		else
-			track:Stop()
-			FloorFaint.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://181525546"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local SuperFaintACTIVE = false
-	SuperFaint.MouseButton1Click:connect(function()
-		SuperFaintACTIVE = not SuperFaintACTIVE
-		if SuperFaintACTIVE then
-			SuperFaint.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if SuperFaintACTIVE then
-						track:Play(.1, 0.5, 40)
-					end
-				end
-			end
-		else
-			track:Stop()
-			SuperFaint.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://313762630"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local LevitateACTIVE = false
-	Levitate.MouseButton1Click:connect(function()
-		LevitateACTIVE = not LevitateACTIVE
-		if LevitateACTIVE then
-			track:Play(.1, 1, 1)
-			Levitate.BackgroundColor3 = loc
-		else
-			track:Stop()
-			Levitate.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://183412246"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local DabACTIVE = false
-	Dab.MouseButton1Click:connect(function()
-		DabACTIVE = not DabACTIVE
-		if DabACTIVE then
-			Dab.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if DabACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			Dab.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://188632011"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local SpinACTIVE = false
-	Spinner.MouseButton1Click:connect(function()
-		SpinACTIVE = not SpinACTIVE
-		if SpinACTIVE then
-			Spinner.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if SpinACTIVE then
-						track:Play(.1, 1, 2)
-					end
-				end
-			end
-		else
-			track:Stop()
-			Spinner.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://179224234"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local FloatSitACTIVE = false
-	FloatSit.MouseButton1Click:connect(function()
-		FloatSitACTIVE = not FloatSitACTIVE
-		if FloatSitACTIVE then
-			track:Play(.1, 1, 1)
-			FloatSit.BackgroundColor3 = loc
-		else
-			track:Stop()
-			FloatSit.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://429703734"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local MovingDanceACTIVE = false
-	MovingDance.MouseButton1Click:connect(function()
-		MovingDanceACTIVE = not MovingDanceACTIVE
-		if MovingDanceACTIVE then
-			MovingDance.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if MovingDanceACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			MovingDance.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://215384594"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local WeirdMoveACTIVE = false
-	WeirdMove.MouseButton1Click:connect(function()
-		WeirdMoveACTIVE = not WeirdMoveACTIVE
-		if WeirdMoveACTIVE then
-			track:Play(.1, 1, 1)
-			WeirdMove.BackgroundColor3 = loc
-		else
-			track:Stop()
-			WeirdMove.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://215384594"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local CloneIllusionACTIVE = false
-	CloneIllusion.MouseButton1Click:connect(function()
-		CloneIllusionACTIVE = not CloneIllusionACTIVE
-		if CloneIllusionACTIVE then
-			track:Play(.5, 1, 1e7)
-			CloneIllusion.BackgroundColor3 = loc
-		else
-			track:Stop()
-			CloneIllusion.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://313762630"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local GlitchLevitateACTIVE = false
-	GlitchLevitate.MouseButton1Click:connect(function()
-		GlitchLevitateACTIVE = not GlitchLevitateACTIVE
-		if GlitchLevitateACTIVE then
-			track:Play(.5, 1, 1e7)
-			GlitchLevitate.BackgroundColor3 = loc
-		else
-			track:Stop()
-			GlitchLevitate.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://429730430"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local SpinDanceACTIVE = false
-	SpinDance.MouseButton1Click:connect(function()
-		SpinDanceACTIVE = not SpinDanceACTIVE
-		if SpinDanceACTIVE then
-			SpinDance.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if SpinDanceACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			SpinDance.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://45834924"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local MoonDanceACTIVE = false
-	MoonDance.MouseButton1Click:connect(function()
-		MoonDanceACTIVE = not MoonDanceACTIVE
-		if MoonDanceACTIVE then
-			MoonDance.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if MoonDanceACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			MoonDance.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://204062532"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local FullPunchACTIVE = false
-	FullPunch.MouseButton1Click:connect(function()
-		FullPunchACTIVE = not FullPunchACTIVE
-		if FullPunchACTIVE then
-			FullPunch.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if FullPunchACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			FullPunch.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://186934910"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local SpinDance2ACTIVE = false
-	SpinDance2.MouseButton1Click:connect(function()
-		SpinDance2ACTIVE = not SpinDance2ACTIVE
-		if SpinDance2ACTIVE then
-			SpinDance2.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if SpinDance2ACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			SpinDance2.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://204292303"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local BowDownACTIVE = false
-	BowDown.MouseButton1Click:connect(function()
-		BowDownACTIVE = not BowDownACTIVE
-		if BowDownACTIVE then
-			BowDown.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if BowDownACTIVE then
-						track:Play(.1, 1, 3)
-					end
-				end
-			end
-		else
-			track:Stop()
-			BowDown.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://204295235"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local SwordSlamACTIVE = false
-	SwordSlam.MouseButton1Click:connect(function()
-		SwordSlamACTIVE = not SwordSlamACTIVE
-		if SwordSlamACTIVE then
-			SwordSlam.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if SwordSlamACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			SwordSlam.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://204295235"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local LoopSlamACTIVE = false
-	LoopSlam.MouseButton1Click:connect(function()
-		LoopSlamACTIVE = not LoopSlamACTIVE
-		if LoopSlamACTIVE then
-			LoopSlam.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if LoopSlamACTIVE then
-						track:Play(.1, 1, 1e4)
-					end
-				end
-			end
-		else
-			track:Stop()
-			LoopSlam.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://184574340"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local MegaInsaneACTIVE = false
-	MegaInsane.MouseButton1Click:connect(function()
-		MegaInsaneACTIVE = not MegaInsaneACTIVE
-		if MegaInsaneACTIVE then
-			MegaInsane.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if MegaInsaneACTIVE then
-						track:Play(.1, 0.5, 40)
-					end
-				end
-			end
-		else
-			track:Stop()
-			MegaInsane.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://126753849"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local SuperPunchACTIVE = false
-	SuperPunch.MouseButton1Click:connect(function()
-		SuperPunchACTIVE = not SuperPunchACTIVE
-		if SuperPunchACTIVE then
-			SuperPunch.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if SuperPunchACTIVE then
-						track:Play(.1, 1, 3)
-					end
-				end
-			end
-		else
-			track:Stop()
-			SuperPunch.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://218504594"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local FullSwingACTIVE = false
-	FullSwing.MouseButton1Click:connect(function()
-		FullSwingACTIVE = not FullSwingACTIVE
-		if FullSwingACTIVE then
-			FullSwing.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if FullSwingACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			FullSwing.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://259438880"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local ArmTurbineACTIVE = false
-	ArmTurbine.MouseButton1Click:connect(function()
-		ArmTurbineACTIVE = not ArmTurbineACTIVE
-		if ArmTurbineACTIVE then
-			track:Play(.1, 1, 1e3)
-			ArmTurbine.BackgroundColor3 = loc
-		else
-			track:Stop()
-			ArmTurbine.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://136801964"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local BarrelRollACTIVE = false
-	BarrelRoll.MouseButton1Click:connect(function()
-		BarrelRollACTIVE = not BarrelRollACTIVE
-		if BarrelRollACTIVE then
-			BarrelRoll.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if BarrelRollACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			BarrelRoll.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://180612465"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local ScaredACTIVE = false
-	Scared.MouseButton1Click:connect(function()
-		ScaredACTIVE = not ScaredACTIVE
-		if ScaredACTIVE then
-			Scared.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if ScaredACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			Scared.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://33796059"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local InsaneACTIVE = false
-	Insane.MouseButton1Click:connect(function()
-		InsaneACTIVE = not InsaneACTIVE
-		if InsaneACTIVE then
-			track:Play(.1, 1, 1e8)
-			Insane.BackgroundColor3 = loc
-		else
-			track:Stop()
-			Insane.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://33169583"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local ArmDetachACTIVE = false
-	ArmDetach.MouseButton1Click:connect(function()
-		ArmDetachACTIVE = not ArmDetachACTIVE
-		if ArmDetachACTIVE then
-			ArmDetach.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if ArmDetachACTIVE then
-						track:Play(.1, 1, 1e6)
-					end
-				end
-			end
-		else
-			track:Stop()
-			ArmDetach.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://35978879"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local SwordSliceACTIVE = false
-	SwordSlice.MouseButton1Click:connect(function()
-		SwordSliceACTIVE = not SwordSliceACTIVE
-		if SwordSliceACTIVE then
-			track:Play(.1, 1, 1)
-			SwordSlice.BackgroundColor3 = loc
-		else
-			track:Stop()
-			SwordSlice.BackgroundColor3 = col
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://27432691"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local InsaneArmsACTIVE = false
-	InsaneArms.MouseButton1Click:connect(function()
-		InsaneArmsACTIVE = not InsaneArmsACTIVE
-		if InsaneArmsACTIVE then
-			InsaneArms.BackgroundColor3 = loc
-			while wait() do
-				if track.IsPlaying == false then
-					if InsaneArmsACTIVE then
-						track:Play(.1, 1, 1e4)
-					end
-				end
-			end
-		else
-			track:Stop()
-			InsaneArms.BackgroundColor3 = col
-		end
-	end)
-	-- R15
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://674871189"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local CrazySlashACTIVE = false
-	CrazySlash.MouseButton1Click:connect(function()
-		CrazySlashACTIVE = not CrazySlashACTIVE
-		if CrazySlashACTIVE then
-			CrazySlash.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if CrazySlashACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			CrazySlash.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://582855105"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local OpenACTIVE = false
-	Open.MouseButton1Click:connect(function()
-		OpenACTIVE = not OpenACTIVE
-		if OpenACTIVE then
-			Open.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if OpenACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			Open.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://754658275"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local R15SpinnerACTIVE = false
-	R15Spinner.MouseButton1Click:connect(function()
-		R15SpinnerACTIVE = not R15SpinnerACTIVE
-		if R15SpinnerACTIVE then
-			R15Spinner.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if R15SpinnerACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			R15Spinner.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://582384156"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local ArmsOutACTIVE = false
-	ArmsOut.MouseButton1Click:connect(function()
-		ArmsOutACTIVE = not ArmsOutACTIVE
-		if ArmsOutACTIVE then
-			ArmsOut.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if ArmsOutACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			ArmsOut.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://717879555"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	local FloatSlashACTIVE = false
-	FloatSlash.MouseButton1Click:connect(function()
-		FloatSlashACTIVE = not FloatSlashACTIVE
-		if FloatSlashACTIVE then
-			FloatSlash.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if FloatSlashACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			FloatSlash.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://708553116"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	WeirdZombieACTIVE = false
-	WeirdZombie.MouseButton1Click:connect(function()
-		WeirdZombieACTIVE = not WeirdZombieACTIVE
-		if WeirdZombieACTIVE then
-			WeirdZombie.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if WeirdZombieACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			WeirdZombie.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://746398327"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	DownSlashACTIVE = false
-	DownSlash.MouseButton1Click:connect(function()
-		DownSlashACTIVE = not DownSlashACTIVE
-		if DownSlashACTIVE then
-			DownSlash.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if DownSlashACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			DownSlash.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://675025795"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	PullACTIVE = false
-	Pull.MouseButton1Click:connect(function()
-		PullACTIVE = not PullACTIVE
-		if PullACTIVE then
-			Pull.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if PullACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			Pull.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://698251653"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	CircleArmACTIVE = false
-	CircleArm.MouseButton1Click:connect(function()
-		CircleArmACTIVE = not CircleArmACTIVE
-		if CircleArmACTIVE then
-			CircleArm.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if CircleArmACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			CircleArm.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://696096087"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	BendACTIVE = false
-	Bend.MouseButton1Click:connect(function()
-		BendACTIVE = not BendACTIVE
-		if BendACTIVE then
-			Bend.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if BendACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			Bend.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://675025570"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	RotateSlashACTIVE = false
-	RotateSlash.MouseButton1Click:connect(function()
-		RotateSlashACTIVE = not RotateSlashACTIVE
-		if RotateSlashACTIVE then
-			RotateSlash.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if RotateSlashACTIVE then
-						track:Play(.1, 1, 1)
-					end
-				end
-			end
-		else
-			track:Stop()
-			RotateSlash.BackgroundColor3 = rcol
-		end
-	end)
-
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = "rbxassetid://754656200"
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
-	FlingArmsACTIVE = false
-	FlingArms.MouseButton1Click:connect(function()
-		FlingArmsACTIVE = not FlingArmsACTIVE
-		if FlingArmsACTIVE then
-			FlingArms.BackgroundColor3 = rloc
-			while wait() do
-				if track.IsPlaying == false then
-					if FlingArmsACTIVE then
-						track:Play(.1, 1, 10)
-					end
-				end
-			end
-		else
-			track:Stop()
-			FlingArms.BackgroundColor3 = rcol
-		end
-	end)
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/ltseverydayyou/Nameless-Admin/refs/heads/main/Source.lua", true))()
 end)
 	
-FeB.Name = "FeB"
-FeB.Parent = ScrollingFrame
-FeB.Size = UDim2.new(0, 137, 0, 23)
-FeB.BorderColor3 = Color3.fromRGB(0, 0, 0)
-FeB.Position = UDim2.new(0.0504385978, 0, 0.0932036042, 0)
-FeB.BorderSizePixel = 0
-FeB.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
-FeB.TextColor3 = Color3.fromRGB(0, 0, 0)
-FeB.Text = "Fe Bypass (HarkedReScripted)"
-FeB.TextSize = 14
-FeB.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-FeB.MouseButton1Down:Connect(function()
- loadstring(game:HttpGet("https://raw.githubusercontent.com/JulesV2/sigma-sigma-boy/refs/heads/main/break%20in%202%20harked.lua"))()
+FeChatB.Name = "FeChatB"
+FeChatB.Parent = ScrollingFrame
+FeChatB.Size = UDim2.new(0, 137, 0, 23)
+FeChatB.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FeChatB.Position = UDim2.new(0.0504385978, 0, 0.0932036042, 0)
+FeChatB.BorderSizePixel = 0
+FeChatB.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
+FeChatB.TextColor3 = Color3.fromRGB(0, 0, 0)
+FeChatB.Text = "Fe Chat Bypass"
+FeChatB.TextSize = 14
+FeChatB.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+FeChatB.MouseButton1Down:Connect(function()
+     print("noscript")
 end)
 
-FFE.Name = "ForsakenEmotes"
-FFE.Parent = ScrollingFrame
-FFE.Size = UDim2.new(0, 137, 0, 23)
-FFE.BorderColor3 = Color3.fromRGB(0, 0, 0)
-FFE.Position = UDim2.new(0.651315808, 0, 0.0445480719, 0)
-FFE.BorderSizePixel = 0
-FFE.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
-FFE.TextColor3 = Color3.fromRGB(0, 0, 0)
-FFE.Text = "Forsaken Emotes"
-FFE.TextSize = 14
-FFE.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-FFE.MouseButton1Down:Connect(function()
-
-local player = game.Players.LocalPlayer
-local playerGui = player.PlayerGui
-
--- some large scripts o think 
-local function updateEmotesSub()
-    local emotesValue = player.PlayerData.Equipped.Emotes.Value
-    local emotesList = {}
-
-    for value in string.gmatch(emotesValue, "[^|]+") do
-        table.insert(emotesList, value)
-    end
-
-    if #emotesList >= 6 then
-        emotesList[6] = "_Subterfuge"
-    end
-    
-    player.PlayerData.Equipped.Emotes.Value = table.concat(emotesList, "|")
-end
-
-local function updateEmotesSilly()
-    local emotesValue = player.PlayerData.Equipped.Emotes.Value
-    local emotesList = {}
-
-    for value in string.gmatch(emotesValue, "[^|]+") do
-        table.insert(emotesList, value)
-    end
-
-    if #emotesList >= 6 then
-        emotesList[6] = "_SillyBilly"
-    end
-
-    player.PlayerData.Equipped.Emotes.Value = table.concat(emotesList, "|")
-end
-
-local function updateEmotesMiss()
-    local emotesValue = player.PlayerData.Equipped.Emotes.Value
-    local emotesList = {}
-
-    for value in string.gmatch(emotesValue, "[^|]+") do
-        table.insert(emotesList, value)
-    end
-
-    if #emotesList >= 6 then
-        emotesList[6] = "_MissTheQuiet"
-    end
-
-    player.PlayerData.Equipped.Emotes.Value = table.concat(emotesList, "|")
-end
--- this is where it starts
-local function Subterfuge()
-    updateEmotesSub()
-    -- freeze your robloz character
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-    humanoid.PlatformStand = true
-    humanoid:Move(Vector3.zero)
-
-    local bodyVelocity = Instance.new("BodyVelocity")
-    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
-    bodyVelocity.Velocity = Vector3.zero
-    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
-    -- getting some emotes stuffs
-    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._Subterfuge) --the script had been chanced his name in new update
-    emoteScript.Created({Character = character})
-
-    local animation = Instance.new("Animation")
-    animation.AnimationId = "rbxassetid://87482480949358"
-    local animationTrack = humanoid:LoadAnimation(animation)
-    animationTrack:Play()
-
-    local sound = Instance.new("Sound")
-    sound.SoundId = "rbxassetid://132297506693854"
-    sound.Parent = character:WaitForChild("HumanoidRootPart")
-    sound.Volume = 5
-    sound.Looped = false
-    sound:Play()
-
-    local args = {
-        [1] = "PlayEmote",
-        [2] = "Animations",
-        [3] = "_Subterfuge"
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
-    -- the emote script is broken so hands can't disappear
-    game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 99)
-    -- unfreeze because something happend
-    animationTrack.Stopped:Connect(function()
-        humanoid.PlatformStand = false
-        if bodyVelocity and bodyVelocity.Parent then
-            bodyVelocity:Destroy()
-        end
-    end)
-end
-
-local function SillyBilly()
-    updateEmotesSilly()
-    -- freeze your robloz character
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-    humanoid.PlatformStand = true
-    humanoid:Move(Vector3.zero)
-
-    local bodyVelocity = Instance.new("BodyVelocity")
-    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
-    bodyVelocity.Velocity = Vector3.zero
-    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
-    -- getting some emotes stuffs
-    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly) --the script had been chanced his name in new update
-    emoteScript.Created({Character = character})
-
-    local animation = Instance.new("Animation")
-    animation.AnimationId = "rbxassetid://107464355830477"
-    local animationTrack = humanoid:LoadAnimation(animation)
-    animationTrack:Play()
-
-    local sound = Instance.new("Sound")
-    sound.SoundId = "rbxassetid://77601084987544"
-    sound.Parent = character:WaitForChild("HumanoidRootPart")
-    sound.Volume = 1
-    sound.Looped = false
-    sound:Play()
-
-    local args = {
-        [1] = "PlayEmote",
-        [2] = "Animations",
-        [3] = "_SillyBilly"
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
-    -- the emote script is broken so hands can't disappear
-    game:GetService("Debris"):AddItem(character:FindFirstChild("SillyBillyMicrophone"), 44)
-    -- unfreeze because something happend
-    animationTrack.Stopped:Connect(function()
-        humanoid.PlatformStand = false
-        if bodyVelocity and bodyVelocity.Parent then
-            bodyVelocity:Destroy()
-        end
-    end)
-end
-
-local function MissQuiet()
-    updateEmotesMiss()
-    -- freeze your robloz character
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-    humanoid.PlatformStand = true
-    humanoid:Move(Vector3.zero)
-
-    local bodyVelocity = Instance.new("BodyVelocity")
-    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
-    bodyVelocity.Velocity = Vector3.zero
-    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
-    -- getting some emotes stuffs
-    local emoteScript = require(game:GetService("ReplicatedStorage").Assets.Emotes._MissTheQuiet) --the script had been chanced his name in new update
-    emoteScript.Created({Character = character})
-
-    local animation = Instance.new("Animation")
-    animation.AnimationId = "rbxassetid://100986631322204"
-    local animationTrack = humanoid:LoadAnimation(animation)
-    animationTrack:Play()
-
-    local sound = Instance.new("Sound")
-    sound.SoundId = "rbxassetid://131936418953291"
-    sound.Parent = character:WaitForChild("HumanoidRootPart")
-    sound.Volume = 1
-    sound.Looped = false
-    sound:Play()
-
-    local args = {
-        [1] = "PlayEmote",
-        [2] = "Animations",
-        [3] = "_MissTheQuiet"
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Network"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
-    -- the emote script is broken so hands can't disappear
-    game:GetService("Debris"):AddItem(character:FindFirstChild("PlayerEmoteHand"), 400)
-    game:GetService("Debris"):AddItem(character:FindFirstChild("EmoteHat"), 400)
-    game:GetService("Debris"):AddItem(character:FindFirstChild("EmoteLighting"), 400)
-    -- unfreeze because something happend
-    animationTrack.Stopped:Connect(function()
-        humanoid.PlatformStand = false
-        if bodyVelocity and bodyVelocity.Parent then
-            bodyVelocity:Destroy()
-        end
-    end)
-end
-
--- choose one delete
--- Subterfuge()
--- SillyBilly()
--- MissQuiet()
-
--- FunÃƒÂ§ÃƒÂ£o para lidar com o inÃƒÂ­cio do personagem
-local function onCharacterAdded(character)
-    wait(0.1)
-    -- Em caso de a funÃƒÂ§ÃƒÂ£o de input ser chamada antes do personagem aparecer
-end
-
-player.CharacterAdded:Connect(onCharacterAdded)
-
--- Se o personagem jÃƒÂ¡ existe, chama a funÃƒÂ§ÃƒÂ£o
-if player.Character then
-    onCharacterAdded(player.Character)
-end
-
-local function createButton(parent, text, position, color, onClick)
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0.8, 0, 0.12, 0)
-    button.Position = position
-    button.Text = text
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.BackgroundColor3 = color
-    button.Font = Enum.Font.GothamBold
-    button.TextSize = 16
-    button.Parent = parent
-
-    local buttonCorner = Instance.new("UICorner")
-    buttonCorner.CornerRadius = UDim.new(0, 5)
-    buttonCorner.Parent = button
-
-    button.MouseButton1Click:Connect(onClick)
-
-    return button
-end
-
-local Playersgui = game:GetService("Players")
-local playergui = Playersgui.LocalPlayer
--- Ã°Å¸â€œÅ’ Smaller GUI
-local screenGui = Instance.new("ScreenGui", playergui:WaitForChild("PlayerGui"))
-local mainFrame = Instance.new("Frame", screenGui)
-mainFrame.Size = UDim2.new(0, 200, 0, 280)
-mainFrame.Position = UDim2.new(0.5, -100, 0.5, -140)
-mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-mainFrame.BackgroundTransparency = 0.2
-mainFrame.BorderSizePixel = 0
-mainFrame.Active = true
-mainFrame.Draggable = true
-
-local uiCorner = Instance.new("UICorner")
-uiCorner.CornerRadius = UDim.new(0, 10)
-uiCorner.Parent = mainFrame
-
--- Close Button
-local closeButton = Instance.new("TextButton", mainFrame)
-closeButton.Size = UDim2.new(0, 25, 0, 25)
-closeButton.Position = UDim2.new(1, -30, 0, 5)
-closeButton.Text = "X"
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
-closeButton.Font = Enum.Font.GothamBold
-closeButton.TextSize = 16
-
-local closeCorner = Instance.new("UICorner")
-closeCorner.CornerRadius = UDim.new(0, 5)
-closeCorner.Parent = closeButton
-
-closeButton.MouseButton1Click:Connect(function()
-    mainFrame.Visible = false
-end)
-
--- Create Buttons
-createButton(mainFrame, "Subterfuge", UDim2.new(0.1, 0, 0.1, 0), Color3.fromRGB(30, 60, 90), function()
-    Subterfuge()
-end)
-
-createButton(mainFrame, "Miss The Quiet", UDim2.new(0.1, 0, 0.24, 0), Color3.fromRGB(0, 0, 255), function()
-    MissQuiet()
-end)
-
-createButton(mainFrame, "Silly Billy", UDim2.new(0.1, 0, 0.38, 0), Color3.fromRGB(255, 105, 180), function()
-    SillyBilly()
-end)
-
--- Ã°Å¸Å½â€° Restored "Made by: Ice" Label
-local creditLabel = Instance.new("TextLabel", mainFrame)
-creditLabel.Size = UDim2.new(0.8, 0, 0.08, 0)
-creditLabel.Position = UDim2.new(0.1, 0, 0.92, 0)
-creditLabel.Text = "Credits In Script page info"
-creditLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-creditLabel.BackgroundTransparency = 1
-creditLabel.Font = Enum.Font.GothamBold
-creditLabel.TextSize = 14
-creditLabel.TextXAlignment = Enum.TextXAlignment.Centert = Enum.TextXAlignment.Center
-
+FeTelekineses.Name = "UndetectedRemoteSpy"
+FeTelekineses.Parent = ScrollingFrame
+FeTelekineses.Size = UDim2.new(0, 137, 0, 23)
+FeTelekineses.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FeTelekineses.Position = UDim2.new(0.651315808, 0, 0.0445480719, 0)
+FeTelekineses.BorderSizePixel = 0
+FeTelekineses.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
+FeTelekineses.TextColor3 = Color3.fromRGB(0, 0, 0)
+FeTelekineses.Text = "UndetectedRemoteSpy"
+FeTelekineses.TextSize = 14
+FeTelekineses.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+FeTelekineses.MouseButton1Down:Connect(function()
+ 	loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Octo-Spy/refs/heads/main/Main.lua", true))()
+     NotifyModule:Notify("made by @cherry_peashooter on discord Rewrite Soon", 5)
 end)
 
 FB.Name = "FB"
@@ -2119,19 +157,15 @@ FB.Position = UDim2.new(0.350877196, 0, 0.0919114947, 0)
 FB.BorderSizePixel = 0
 FB.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
 FB.TextColor3 = Color3.fromRGB(0, 0, 0)
-FB.Text = "Fe Bypass (Backdoor)"
+FB.Text = "Fe Bypass (Cars Games And More)"
 FB.TextSize = 14
 FB.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FB.MouseButton1Down:Connect(function()
-        NotifyModule:Notify("This Script Has Private", 2)
-        wait(1)
-        NotifyModule:Notify("But XXX Scripts Team Found it", 2)
-        wait(1)
-        NotifyModule:Notify("This Script Scans Tools using cars model", 3)
+    NotifyModule:Notify("This Script Has Private For Too Long", 2)
 	local StarterGui = game:GetService("StarterGui")
 	local showNotification = true
 
-	function NotifyModule:Notifyy(tl, t, d) 
+	function Notify(tl, t, d) 
 		if showNotification == true then
 			StarterGui:SetCore("SendNotification", {
 				Title = tl;
@@ -2173,7 +207,7 @@ FB.MouseButton1Down:Connect(function()
 	local names = {"Delete", "Deletar", "Remove", "Destroy", "Clean", "Clear","Bullet", "Bala", "Shoot", "Shot", "Fire", "Segway", "Handless", "Sword", "Attack"}
 	if char then
 		blurefct(20)
-		NotifyModule:Notifyy("Vulnerability Checker", "Looking up for remotes, may take a while.", 3)
+		Notify("Vulnerability Checker", "Looking up for remotes, may take a while.", 3)
 		for _, service in pairs(checkIn) do
 			for i,v in pairs(game:GetService(service):GetDescendants()) do
 				for _, str in pairs(names) do
@@ -2198,7 +232,7 @@ FB.MouseButton1Down:Connect(function()
 	end
 
 	if sent == false then
-		NotifyModule:Notifyy("Vulnerability Checker", "This game is not vulnerable/supported.", 5)
+		Notify("Vulnerability Checker", "This game is not vulnerable/supported.", 5)
 		blurefct(0)
 	end
 
@@ -2236,7 +270,7 @@ FB.MouseButton1Down:Connect(function()
 	end
 	if enable == true then
 		blurefct(0)
-		NotifyModule:Notifyy("Destructed Hex", "Made by Luq and Luca", 10)
+		Notify("Destructed Hex", "Made by Luq and Luca", 10)
 		local destruct = Instance.new("ScreenGui")
 		local main = Instance.new("Frame")
 		local TextLabel = Instance.new("TextLabel")
@@ -2619,12 +653,12 @@ FB.MouseButton1Down:Connect(function()
 		game:GetService("Players").PlayerAdded:Connect(function(plr)
 			for i,v in pairs(bannedPlayers) do
 				if plr.Name == v then
-					NotifyModule:Notifyy("Banned User", plr.Name .. " Tried to join the game", 5)
+					Notify("Banned User", plr.Name .. " Tried to join the game", 5)
 					work(plr)
 				end
 			end
 			if serverlock == true then
-				NotifyModule:Notifyy("Join Attempt", plr.Name .. " Tried to join the game but the server is locked", 5)
+				Notify("Join Attempt", plr.Name .. " Tried to join the game but the server is locked", 5)
 				work(plr)
 			end
 			if sdown == true then
@@ -2762,7 +796,7 @@ FB.MouseButton1Down:Connect(function()
 					if not table.find(bannedPlayers, v.Name) then
 						plr = game:GetService("Players")[v]
 						table.insert(bannedPlayers, plr.Name)
-						NotifyModule:Notify("Banned", plr.Name .. " Will not be able to join the server", 5)
+						Notify("Banned", plr.Name .. " Will not be able to join the server", 5)
 						work(plr)
 					end
 				end)
@@ -2773,7 +807,7 @@ FB.MouseButton1Down:Connect(function()
 			for i,v in pairs(GetBannedPlayer(player.Text)) do
 				spawn(function()
 					table.remove(bannedPlayers, table.find(bannedPlayers, v))
-					NotifyModule:Notify("UnBanned", v .." Is now able to join the server", 5)
+					Notify("UnBanned", v .." Is now able to join the server", 5)
 				end)
 			end
 		end)
@@ -2826,12 +860,12 @@ FB.MouseButton1Down:Connect(function()
 		slock.MouseButton1Click:Connect(function()
 			if toggle == false then
 				slock.Text = "UnSlock"
-				NotifyModule:Notifyy("Server Locked", "Nobody can join the server", 5)
+				Notify("Server Locked", "Nobody can join the server", 5)
 				serverlock = true
 				toggle = true
 			elseif toggle == true then
 				slock.Text = "Slock"
-				NotifyModule:Notifyy("Server Unlocked", "Anyone can join the server", 5)
+				Notify("Server Unlocked", "Anyone can join the server", 5)
 				serverlock = false
 				toggle = false
 			end
@@ -2853,7 +887,7 @@ FB.MouseButton1Down:Connect(function()
 
 		shutdown.MouseButton1Click:Connect(function()
 			sdown = true
-			NotifyModule:Notifyy("Shutdown", "Shutdowning server..", 5)
+			Notify("Shutdown", "Shutdowning server..", 5)
 			for i, v in pairs(game:GetService("Players"):GetPlayers()) do
 				spawn(function()
 					if v.Name ~= LocalPlayer.Name then
@@ -2908,23 +942,21 @@ FB.MouseButton1Down:Connect(function()
 			end
 		end)
 	end
-
 end)
 
-FeAudio.Name = "FeAudio"
-FeAudio.Parent = ScrollingFrame
-FeAudio.Size = UDim2.new(0, 137, 0, 23)
-FeAudio.BorderColor3 = Color3.fromRGB(0, 0, 0)
-FeAudio.Position = UDim2.new(0.651315808, 0, 0.0922147781, 0)
-FeAudio.BorderSizePixel = 0
-FeAudio.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
-FeAudio.TextColor3 = Color3.fromRGB(0, 0, 0)
-FeAudio.Text = "FE Audio Player (brookhaven)"
-FeAudio.TextSize = 14
-FeAudio.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-FeAudio.MouseButton1Down:Connect(function()
-	NotifyModule:Notify("Only works on brookhavenand some games i guess", 5)
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/ameicaa0/brookhaven/refs/heads/main/brookhaven%20script.txt"))()
+FeGamepass.Name = "FeBypassSelecteds"
+FeGamepass.Parent = ScrollingFrame
+FeGamepass.Size = UDim2.new(0, 137, 0, 23)
+FeGamepass.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FeGamepass.Position = UDim2.new(0.651315808, 0, 0.0922147781, 0)
+FeGamepass.BorderSizePixel = 0
+FeGamepass.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
+FeGamepass.TextColor3 = Color3.fromRGB(0, 0, 0)
+FeGamepass.Text = "FE Bypass (SelectedGames)"
+FeGamepass.TextSize = 14
+FeGamepass.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+FeGamepass.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/TheDarkoneMarcillisePex/The-Elite-Soldier/main/DarkWare'))()
 end)
 
 Close.Name = "Close"
@@ -2940,13 +972,12 @@ Close.TextSize = 14
 Close.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 Close.MouseButton1Down:Connect(function()
 	Open.Visible = true
-	wait(1)
 	Main_2.Visible = false
         NotifyModule:Notify("Closed!", 2)
 end)
 
 print("Main Frame Loaded")
-print("Adding TouseefX Drag V1")
+print("Adding Drag V1")
 
 local UserInputService = game:GetService("UserInputService")
 
@@ -2989,4 +1020,4 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 print("Loaded")
-NotifyModule:Notify("Loaded Thanks For Using More TouseefX Script Hub!:)", 5)
+NotifyModule:Notify("Thanks For Using More TouseefX Script Hub!:)", 5)
