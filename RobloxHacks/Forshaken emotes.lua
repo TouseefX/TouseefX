@@ -700,26 +700,25 @@ local function createButton(ButtonName, parent, text, position, color, onClick)
     return button
 end
 
-local function createEmoteButton(Emote)
+local function createEmoteButton(onClick)
     local EmoteFrame = game:GetService("Players").LocalPlayer.PlayerGui.TemporaryUI.EmoteMenuHolder.RadialMenu.Attach["6"]
-    local EmoteButton = Instance.new("TextButton", EmoteFrame)
-    EmoteButton.Name = "PlayEmote"
-    EmoteButton.Size = UDim2.new(0.705655515, 1, 0.705655217, 1)
-    EmoteButton.Position = UDim2.new(0.153545171, 0, 0.356493711, 0)
-    EmoteButton.Text = ""
-    EmoteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    EmoteButton.BackgroundColor3 = Color3.new(1, 1, 1)
-    EmoteButton.BackgroundTransparency = 1 -- Set transparency to 1 (fully transparent)
-    EmoteButton.Font = Enum.Font.GothamBold
-    EmoteButton.TextSize = 16
+    local button = Instance.new("TextButton", EmoteFrame)
+    button.Size = UDim2.new(0.705655515, 1, 0.705655217, 1)
+    button.Position = UDim2.new(0.153545171, 0, 0.356493711, 0)
+    button.Text = ""
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.BackgroundColor3 = Color3.new(1, 1, 1)
+    button.BackgroundTransparency = 1 -- Set transparency to 1 (fully transparent)
+    button.Font = Enum.Font.GothamBold
+    button.TextSize = 16
 
-    local EmoteButtonCorner = Instance.new("UICorner")
-    EmoteButtonCorner.CornerRadius = UDim.new(0, 5)
-    EmoteButtonCorner.Parent = EmoteButton
-    
-    EmoteButton.TextButton.MouseButton1Down:Connect(Emote) -- not 1click but 1down its there for a reason
-    
-    return EmoteButton
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.CornerRadius = UDim.new(0, 5)
+    buttonCorner.Parent = button
+
+    button.MouseButton1Down:Connect(onClick)
+
+    return button
 end
 
 local Playersgui = game:GetService("Players")
@@ -755,6 +754,8 @@ closeCorner.Parent = closeButton
 
 closeButton.MouseButton1Click:Connect(function()
     mainFrame.Visible = false
+    mainFrame:Destroy()
+    screenGui:Destroy()
 end)
 
 -- Create Buttons
@@ -783,15 +784,35 @@ createButton("StopEmote", mainFrame, "Stop Emote", UDim2.new(0.1, 0, 0.80, 0), C
 end)
 
 -- make a emote button in the emote tab (forsaken emote tab not this one)
--- reexecute script if this does not work
+-- re-execute script if this does not work
 updateEmotes("_SillyBilly")
-createEmoteButton(SillyOfBilly)
+
+local EmoteFrame = game:GetService("Players").LocalPlayer.PlayerGui.TemporaryUI.EmoteMenuHolder.RadialMenu.Attach["6"]
+local PlayerGui = game:GetService("Players").LocalPlayer.PlayerGui
+
+local SillyBillyButton = Instance.new("TextButton", EmoteFrame)
+SillyBillyButton.Size = UDim2.new(0.705655515, 1, 0.705655217, 1) -- Set the desired size
+SillyBillyButton.Position = UDim2.new(0.153545171, 0, 0.356493711, 0) -- Set the desired position
+SillyBillyButton.Text = ""
+SillyBillyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SillyBillyButton.BackgroundColor3 = Color3.new(1, 1, 1) -- set to white for transparency to work correctly.
+SillyBillyButton.BackgroundTransparency = 1 -- Set transparency to 1 (fully transparent)
+SillyBillyButton.Font = Enum.Font.GothamBold
+SillyBillyButton.TextSize = 16
+
+local SillyCorner = Instance.new("UICorner")
+SillyCorner.CornerRadius = UDim.new(0, 5)
+SillyCorner.Parent = SillyBillyButton
+
+SillyBillyButton.MouseButton1Down:Connect(function()
+    SillyOfBilly()
+end)
 
 -- Restored "Made by: Ice" Label
 local creditLabel = Instance.new("TextLabel", mainFrame)
 creditLabel.Size = UDim2.new(0.8, 0, 0.08, 0)
 creditLabel.Position = UDim2.new(0.1, 0, 0.92, 0)
-creditLabel.Text = "Credits In script page info"
+creditLabel.Text = "Forsaken Emotes"
 creditLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 creditLabel.BackgroundTransparency = 1
 creditLabel.Font = Enum.Font.GothamBold
