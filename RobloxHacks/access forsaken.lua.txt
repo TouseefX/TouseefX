@@ -1,5 +1,5 @@
 -- script is now public
-wait(2.7) -- to fix the thing where the game brokes
+wait(2.8) -- to fix the thing where the game brokes
 local Tworework = game:GetService("ReplicatedStorage").Assets.Survivors._SurvivorTwoTimeRework.Config
 local ArtN = game:GetService("ReplicatedStorage").Assets.Skins.Survivors["007n7"].Artist007n7.Config
 local MissTheQuiet = game:GetService("ReplicatedStorage").Assets.Emotes._MissTheQuiet
@@ -53,7 +53,6 @@ local CheifGuest = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.G
 local ArtNoob = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob.ArtistNoob.Config
 local EasterNoob = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob.EasterNoob.Config
 local ElsenNoob = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob.ElsenNoob.Config
-local GenisNoob = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob._GenesisNoob.Config
 local RaimbowNoob = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob.RainbowNoob.Config
 local Noob666 = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob._Noob666.Config
 local ArtS = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky.ArtistShedletsky.Config
@@ -118,7 +117,6 @@ local cyc = require(CassidyChance)
 local lbc = require(LawBreakerChance)
 local tcc = require(TrueCosplayChance)
 local pdc = require(PinkDayChance)
-local gd = require(GoldenDusekkar)
 local dli = require(DusekkarLockedIn)
 local ae = require(ArtElloit)
 local je = require(JimmyElloit)
@@ -132,7 +130,6 @@ local cfg = require(CheifGuest)
 local an = require(ArtNoob)
 local en = require(EasterNoob)
 local enn = require(ElsenNoob)
-local gn = require(GenisNoob)
 local rn = require(RaimbowNoob)
 local sixn = require(Noob666)
 local sa = require(ArtS)
@@ -171,7 +168,6 @@ cfg.Exclusive = false;
 an.Exclusive = false;
 en.Exclusive = false;
 enn.Exclusive = false;
-gn.Exclusive = false;
 rn.Exclusive = false;
 sixn.Exclusive = false;
 sa.Exclusive = false;
@@ -191,7 +187,6 @@ cyc.Exclusive = false;
 lbc.Exclusive = false;
 tcc.Exclusive = false;
 pdc.Exclusive = false;
-gd.Exclusive = false;
 dli.Exclusive = false;
 ae.Exclusive = false;
 je.Exclusive = false;
