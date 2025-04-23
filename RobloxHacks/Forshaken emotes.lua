@@ -114,7 +114,7 @@ end
 local function MissLyrics()
     wait(31) -- this is the only human wait time
     NotifyModule:Notify("Would you dare look over your shoulder?", 4.001)
-    task.wait(4.094)
+    task.wait(4.089)
     NotifyModule:Notify("Do you fear what's coming round the bend", 3.903)
     task.wait(4.093)
     NotifyModule:Notify("Do you know what happens while you're growing older?", 4.016)
