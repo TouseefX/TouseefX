@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 wait(4.3)
 
 local assetsFolder = ReplicatedStorage:WaitForChild("Assets")
-loadstring(game:HttpGet("https://raw.githubusercontent.com/TouseefX/TouseefX/refs/heads/main/RobloxHacks/view.lua",true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TouseefX/TouseefX/3c8cb7256b29837e635a289fb622b506854a0f5f/RobloxHacks/view.lua",true))()
 
 local function requireConfigModules(folder)
     for _, asset in ipairs(folder:GetChildren()) do
