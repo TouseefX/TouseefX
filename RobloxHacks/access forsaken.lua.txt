@@ -1,5 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-wait(3.9)
+wait(4.3)
 
 local assetsFolder = ReplicatedStorage:WaitForChild("Assets")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TouseefX/TouseefX/refs/heads/main/RobloxHacks/view.lua",true))()
