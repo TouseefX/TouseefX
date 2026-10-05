@@ -1,13 +1,18 @@
--- Patched lxm module sources, split out of LBGLoader.luau so other projects can
--- reuse them. These are metatablecat/lxm with the fixes lxm never got:
---   * Chunks/PROP  Content (typeID 0x22) decoder, sequential SharedString reads,
---                  and enum planes de-interleaved MSB-first
---   * Chunks/INST  instance referents preserved so nodes carry a usable Ref
+-- Standalone patched lxm: a complete rbxm/rbxl parser in one file, with every
+-- module inlined. No network access, no dependencies -- loadstring it and call it.
 --
--- Run this before the loader and it publishes itself; the loader will also fetch
--- and loadstring it on demand if it is not already present.
+--   loadstring(game:HttpGet("https://raw.githubusercontent.com/TouseefX/TouseefX/refs/heads/main/RobloxHacks/LBG/LxmModule.luau"))()
+--   local parse = getgenv().Lxm
+--   local model = parse(rbxmBytes)
 --
--- Publishes:  getgenv().LBGLxmModules = { ["Chunks/PROP"] = ..., ... }
+-- Upstream is metatablecat/lxm. These are the fixes it never got:
+--   Buffer        reads numbers straight out of the source (no substrings)
+--   lz4           O(n) buffer sink instead of `Source ..= data` per token
+--   Chunks/INST   instance referents preserved so nodes carry a usable Ref
+--   Chunks/PROP   Content (typeID 0x22) decoder, sequential SharedString reads,
+--                 and enum planes de-interleaved MSB-first
+--
+-- Publishes:  getgenv().Lxm  ->  function(bytes) -> model
 
 local MODULES = {
 	["Chunks/PROP"] = [=[
@@ -791,9 +796,545 @@ end
 
 return INST
 ]],
+
+	["init"] = [=[--[[
+	Reading process:
+
+	Parse header
+	Decompress chunks
+	Parse META and SSTR chunks
+	Parse INST chunks
+	Parse PROP chunks
+	Parse PRNT chunk
+
+	We parse this way to prevent eroneous chunk placement, whenever possible, break the script if something
+	doesn't read correctly
+]]
+
+local HEADER = "<roblox!"
+local RBXM_SIGNATURE = "\x89\xff\x0d\x0a\x1a\x0a"
+local ZSTD_HEADER = "\x28\xB5\x2F\xFD"
+
+local Buffer = require(script.Buffer)
+local Types = require(script.Types)
+local lz4 = require(script.lz4)
+local zstd = require(script.zstd)
+local Chunks = script.Chunks
+
+local VALID_CHUNK_IDENTIFIERS = {
+	["END\0"] = true,
+	["INST"] = true,
+	["META"] = true,
+	["PRNT"] = true,
+	["PROP"] = true,
+	["SIGN"] = true,
+	["SSTR"] = true
+}
+local CHUNK_MODULES = {
+	INST = require(Chunks.INST),
+	META = require(Chunks.META),
+	PRNT = require(Chunks.PRNT),
+	PROP = require(Chunks.PROP),
+	SSTR = require(Chunks.SSTR)
+
+	--END\0 and SIGN are not processed because they're irrelevant
 }
 
-local genv = (getgenv and getgenv()) or _G
-genv.LBGLxmModules = MODULES
+local function Chunk(buffer: Types.Buffer, chunkIndex: number): Types.Chunk
+	local chunk = {}
+	chunk.InternalID = chunkIndex
+	chunk.Header = buffer:read(4)
 
-return MODULES
+	if not VALID_CHUNK_IDENTIFIERS[chunk.Header] then
+		print(string.byte(chunk.Header, 1, 4))
+		error(`Invalid chunk identifier {chunk.Header} on chunk id {chunkIndex}`)
+	end
+
+	-- validate LZ4 header, though we can provide the buffer in directly, just used for checking for zstd
+	local data
+
+	local lz4Header = buffer:read(16, false)
+	local compressed = string.unpack("<I4", string.sub(lz4Header, 1, 4))
+	local decompressed = string.unpack("<I4", string.sub(lz4Header, 5, 8))
+	local reserved = string.sub(lz4Header, 9, 12)
+	local zstd_check = string.sub(lz4Header, 13, 16)
+
+	if reserved ~= "\0\0\0\0" then
+		error(`Invalid chunk header on chunk id {chunkIndex} of identifier {chunk.Header}`)
+	end
+
+	if compressed == 0 then
+		data = buffer:read(decompressed + 12)
+	else
+		if zstd_check == ZSTD_HEADER then
+			buffer:seek(12)
+			data = zstd(buffer:read(compressed))
+		else
+			data = lz4(buffer:read(compressed + 12))
+		end
+	end
+
+	chunk.Data = Buffer(data, false)
+
+	function chunk:Error(msg)
+		error(`[{self.Header}:{self.InternalID}]: {msg}`)
+	end
+	
+	return chunk
+end
+
+local function procChunkType(chunkStore: {[string]: {Types.Chunk}}, id: string, rbxm: Types.Rbxm)
+	local chunks = chunkStore[id]
+	local f = CHUNK_MODULES[id]
+
+	if chunks and f then
+		for _, chunk in chunks do
+			f(chunk, rbxm)
+		end
+	end
+end
+
+local function rbxm(buffer: string): Types.Rbxm
+	local rbxmBuffer = Buffer(buffer, false)
+
+	-- read signature data
+	if
+		rbxmBuffer:read(8) ~= HEADER
+		or rbxmBuffer:read(6) ~= RBXM_SIGNATURE
+	then
+		error("Provided file does not match the header of an RBXM file.")
+	end
+
+	if rbxmBuffer:read(2) ~= "\0\0" then
+		error("Invalid RBXM version, if Roblox has released a newer version (unlikely), please let me know.")
+	end
+
+	local rbxm = {}
+	local classCount = rbxmBuffer:readNumber("<i4")
+	local instCount = rbxmBuffer:readNumber("<i4")
+
+	local classRefIds = table.create(classCount)
+	local instRefIds = table.create(instCount)
+	rbxm.ClassRefs = classRefIds
+	rbxm.InstanceRefs = instRefIds
+	rbxm.Tree = {}
+	rbxm.Metadata = {}
+	rbxm.Strings = {}
+
+	local chunkInfo = {}
+	for k in VALID_CHUNK_IDENTIFIERS do
+		chunkInfo[k] = {}
+	end
+
+	if rbxmBuffer:read(8) ~= "\0\0\0\0\0\0\0\0" then
+		error("Provided file does not match the header of an RBXM file.")
+	end
+
+	local index = 0
+	repeat
+		index+=1
+		local last_chunk = Chunk(rbxmBuffer, index)
+		local header = last_chunk.Header
+		local chunkInfoSection = chunkInfo[header]
+		table.insert(chunkInfoSection, last_chunk)
+	until last_chunk.Header == "END\0"
+
+	procChunkType(chunkInfo, "META", rbxm)
+	procChunkType(chunkInfo, "SSTR", rbxm)
+	procChunkType(chunkInfo, "INST", rbxm)
+	procChunkType(chunkInfo, "PROP", rbxm)
+	procChunkType(chunkInfo, "PRNT", rbxm)
+
+	return rbxm
+end
+
+return rbxm]=],
+	["Types"] = [[export type Buffer = {
+	Offset: number,
+	Source: string,
+	Length: number,
+	IsFinished: boolean,
+	LastUnreadBytes: number,
+	AllowOverflows: boolean,
+
+	read: (Buffer, len: number?, shiftOffset: boolean?) -> string,
+	readNumber: (Buffer, packfmt: string?, shift: boolean?) -> number,
+	seek: (Buffer, len: number) -> (),
+	append: (Buffer, newData: string) -> (),
+	toEnd: (Buffer) -> (),
+	readByte: (Buffer, shift: boolean?) -> number
+}
+
+export type Chunk = {
+	InternalID: number,
+	Header: "END\0"|"INST"|"META"|"PRNT"|"PROP"|"SIGN"|"SSTR",
+	Data: Buffer,
+	Error: (Chunk, string) -> ()
+}
+
+export type VirtualInstance = {
+	ClassId: number,
+	ClassName: string,
+	Properties: {[string]: any},
+	Ref: number,
+	Children: {VirtualInstance}
+}
+
+export type Rbxm = {
+	ClassRefs: {
+		{
+			Name: string,
+			Sizeof: number,
+			Refs: {number}
+		}
+	},
+	InstanceRefs: {VirtualInstance},
+	Tree: {VirtualInstance},
+	Metadata: {[string]: string},
+	Strings: {string}
+}
+
+return nil]],
+	["zstd"] = [[-- This is such a hack lmao
+
+-- {"m":null,"t":"buffer","zbase64":""}
+
+local HttpService = game:GetService("HttpService")
+local b64 = require(script.Parent.b64)
+
+return function(stream: string): string
+	local zbase64 = b64.encode(stream)
+	local x = HttpService:JSONDecode(`\{"m": null, "t":"buffer", "zbase64":"{zbase64}"\}`)
+	return buffer.tostring(x)
+end]],
+	["b64"] = [[local SEQ = {
+	[0] = "A", "B", "C", "D", "E", "F", "G", "H",
+	"I", "J", "K", "L", "M", "N", "O", "P",
+	"Q", "R", "S", "T", "U", "V", "W", "X",
+	"Y", "Z", "a", "b", "c", "d", "e", "f",
+	"g", "h", "i", "j", "k", "l", "m", "n",
+	"o", "p", "q", "r", "s", "t", "u", "v",
+	"w", "x", "y", "z", "0", "1", "2", "3",
+	"4", "5", "6", "7", "8", "9", "+", "/",
+}
+
+local STRING_FAST = {}
+local INDEX = {[61] = 0, [65] = 0}
+
+for key, val in ipairs(SEQ) do
+	-- memoization
+	INDEX[string.byte(val)] = key
+end
+
+-- string.char has a MASSIVE overhead, its faster to precompute
+-- the values for performance
+for i = 0, 255 do
+	local c = string.char(i)
+	STRING_FAST[i] = c
+end
+
+local b64 = {}
+
+function b64.encode(str)
+	local len = string.len(str)
+	local output = table.create(math.ceil(len/4)*4)
+	local index = 1
+
+	for i = 1, len, 3 do
+		local b0, b1, b2 = string.byte(str, i, i + 2)
+		local b = bit32.lshift(b0, 16) + bit32.lshift(b1 or 0, 8) + (b2 or 0)
+
+		output[index] = SEQ[bit32.extract(b, 18, 6)]
+		output[index + 1] = SEQ[bit32.extract(b, 12, 6)]
+		output[index + 2] = b1 and SEQ[bit32.extract(b, 6, 6)] or "="
+		output[index + 3] = b2 and SEQ[bit32.band(b, 63)] or "="
+
+		index += 4
+	end
+
+	return table.concat(output)
+end
+
+function b64.decode(hash)
+	-- given a 24 bit word (4 6-bit letters), decode 3 bytes from it
+	local len = string.len(hash)
+	local output = table.create(len * 0.75)
+	
+	local index = 1
+	for i = 1, len, 4 do
+		local c0, c1, c2, c3 = string.byte(hash, i, i + 3)
+
+		local b = 
+			bit32.lshift(INDEX[c0], 18)
+			+ bit32.lshift(INDEX[c1], 12)
+			+ bit32.lshift(INDEX[c2], 6)
+			+ (INDEX[c3])
+		
+
+		output[index] = STRING_FAST[bit32.extract(b, 16, 8)]
+		output[index + 1] = c2 ~= "=" and STRING_FAST[bit32.extract(b, 8, 8)] or "="
+		output[index + 2] = c3 ~= "=" and STRING_FAST[bit32.band(b, 0xFF)] or "="
+		index += 3
+	end
+
+	return table.concat(output)
+end
+
+return b64]],
+	["BasicTypes"] = [[-- Used for deserialising interleaving, strings, numbers and refs
+-- Refs are held here since multiple chunks rely on it
+
+local Types = require(script.Parent.Types)
+local Buffer = require(script.Parent.Buffer)
+local basicTypes = {}
+
+local function transformInt(x: number): number
+	-- cant use the bit method because bit32 (yay)
+	return if x % 2 == 0
+		then x / 2
+		else -(x + 1) / 2
+end
+
+local function rbxF32(x: number): number
+	x = bit32.rrotate(x, 1)
+	return string.unpack(">f", string.pack(">I4", x))
+end
+
+function basicTypes.String(buffer: Types.Buffer): string
+	return buffer:read(buffer:readNumber("<I4"))
+end
+
+function basicTypes.Int32(buffer: Types.Buffer): number
+	return transformInt(buffer:readNumber(">I4"))
+end
+
+function basicTypes.Int64(buffer: Types.Buffer): number
+	return transformInt(buffer:readNumber(">I8"))
+end
+
+function basicTypes.Float32(buffer: Types.Buffer): number
+	return rbxF32(buffer:readNumber(">I4"))
+end
+
+function basicTypes.Float64(buffer: Types.Buffer): number --just use <d lol (here for completeness)
+	return buffer:readNumber("<d")
+end
+
+-- my favourite function :D
+function basicTypes.InterleaveArrayWithSize(buffer: Types.Buffer, count: number, sizeof: number): Types.Buffer
+	if count < 0 then return Buffer("", false) end
+	
+	local stream = buffer:read(count * sizeof)
+	local out = table.create(count)
+	for i = 1, count do
+		local chunk = table.create(sizeof)
+		for s = 0, sizeof-1 do
+			local bitPos = i + (count * s)
+			chunk[s+1] = string.sub(stream, bitPos, bitPos)
+		end
+		out[i] = table.concat(chunk)
+	end
+
+	return Buffer(table.concat(out), false)
+end
+
+function basicTypes.unsignedIntArray(buffer: Types.Buffer, count: number): {number}
+	if count < 1 then return {} end
+
+	local o = table.create(count)
+	local strings = basicTypes.InterleaveArrayWithSize(buffer, count, 4)
+	for i = 1, count do
+		o[i] = strings:readNumber("<I4")
+	end
+
+	return o
+end
+
+function basicTypes.Int32Array(buffer: Types.Buffer, count: number): {number}
+	if count < 1 then return {} end
+
+	local o = table.create(count)
+	local strings = basicTypes.InterleaveArrayWithSize(buffer, count, 4)
+	for i = 1, count do
+		o[i] = basicTypes.Int32(strings)
+	end
+
+	return o
+end
+
+function basicTypes.Int64Array(buffer: Types.Buffer, count: number): {number}
+	if count < 1 then return {} end
+
+	local o = table.create(count)
+	local strings = basicTypes.InterleaveArrayWithSize(buffer, count, 8)
+	for i = 1, count do
+		o[i] = basicTypes.Int64(strings)
+	end
+
+	return o
+end
+
+function basicTypes.RbxF32Array(buffer: Types.Buffer, count: number): {number}
+	if count < 1 then return {} end
+
+	local o = table.create(count)
+	local strings = basicTypes.InterleaveArrayWithSize(buffer, count, 4)
+
+	for i = 1, count do
+		o[i] = basicTypes.Float32(strings)
+	end
+
+	return o
+end
+
+function basicTypes.RefArray(buffer: Types.Buffer, count: number): {number}
+	if count < 1 then return {} end
+
+	local o = table.create(count)
+	local refs = basicTypes.Int32Array(buffer, count)
+
+	local last = 0
+	for i = 1, count do
+		local ref = last + refs[i]
+		o[i] = ref
+		last = ref
+	end
+
+	return o
+end
+
+return basicTypes]],
+	["Chunks/META"] = [[local Types = require(script.Parent.Parent.Types)
+local BasicTypes = require(script.Parent.Parent.BasicTypes)
+
+local function META(chunk: Types.Chunk, rbxm: Types.Rbxm)
+	local buffer = chunk.Data
+	for i = 1, buffer:readNumber("<I4") do
+		local k = BasicTypes.String(buffer)
+		local v = BasicTypes.String(buffer)
+
+		rbxm.Metadata[k] = v
+	end
+end
+
+return META]],
+	["Chunks/PRNT"] = [[local Types = require(script.Parent.Parent.Types)
+local BasicTypes = require(script.Parent.Parent.BasicTypes)
+
+local function PRNT(chunk: Types.Chunk, rbxm: Types.Rbxm)
+	local buffer = chunk.Data
+	--Builds the instance tree from the given PRNT structure
+
+	local ver = buffer:read()
+	if ver ~= "\0" then
+		chunk:Error("Invalid PRNT version")
+	end
+
+	local count = buffer:readNumber("<I4")
+	local child_refs = BasicTypes.RefArray(buffer, count)
+	local parent_refs = BasicTypes.RefArray(buffer, count)
+
+	for i = 1, count do
+		local childID = child_refs[i]
+		local parentID = parent_refs[i]
+
+		local child = rbxm.InstanceRefs[childID]
+		local parent = if parentID >= 0 then rbxm.InstanceRefs[parentID] else nil
+
+		if not child then
+			chunk:Error(`Could not parent {childID} to {parentID} because child {childID} was nil`)
+		end
+
+		if parentID >= 0 and not parent then
+			chunk:Error(`Could not parent {childID} to {parentID} because parent {parentID} was nil`)
+		end
+
+		local parentTable = if parent then parent.Children else rbxm.Tree
+		table.insert(parentTable, child)
+	end
+end
+
+return PRNT]],
+	["Chunks/SSTR"] = [[local Types = require(script.Parent.Parent.Types)
+local BasicTypes = require(script.Parent.Parent.BasicTypes)
+
+local function SSTR(chunk: Types.Chunk, rbxm: Types.Rbxm)
+	local buffer = chunk.Data
+	
+	local ver = buffer:readNumber("<I4")
+	if ver ~= 0 then
+		chunk:Error("Invalid SSTR version")
+	end
+
+	for i = 1, buffer:readNumber("<I4") do
+		buffer:read(16) --md5 hash (useless)
+		rbxm.Strings[i] = BasicTypes.String(buffer)
+	end
+end
+
+return SSTR]],
+}
+
+
+--============================ build the parser ================================
+-- Modules are wrapped in a factory taking the resolver as a parameter. Executors
+-- hand loadstring'd chunks their own _ENV, so a global set here would not be
+-- visible inside them; an upvalue travels correctly in any environment.
+
+local function buildParser()
+	local cache, done, loading = {}, {}, {}
+
+	local function resolve(name)
+		if done[name] then return cache[name] end
+		if loading[name] then error("lxm circular require: " .. name) end
+		loading[name] = true
+
+		local src = MODULES[name]
+		if not src then
+			error("lxm module missing: " .. name)
+		end
+
+		src = src:gsub("require%s*%(%s*script%.Parent%.Parent%.([%w_]+)%s*%)", '__LXM_REQUIRE("%1")')
+		src = src:gsub("require%s*%(%s*script%.Parent%.([%w_]+)%s*%)", '__LXM_REQUIRE("%1")')
+		src = src:gsub("require%s*%(%s*script%.([%w_]+)%s*%)", '__LXM_REQUIRE("%1")')
+		src = src:gsub("require%s*%(%s*Chunks%.([%w_]+)%s*%)", '__LXM_REQUIRE("Chunks/%1")')
+		src = src:gsub("local%s+Chunks%s*=%s*script%.Chunks", "local Chunks = {}")
+
+		-- `export type` is only legal at the top level of a module, so downgrade it
+		-- to a plain local type alias before wrapping.
+		src = src:gsub("export%s+type", "type")
+
+		local chunk, compileErr = loadstring("return function(__LXM_REQUIRE)\n" .. src .. "\nend", "lxm/" .. name)
+		if not chunk then
+			error("lxm/" .. name .. " failed to compile: " .. tostring(compileErr))
+		end
+
+		local built, factory = pcall(chunk)
+		if not built then
+			error("lxm/" .. name .. " failed to build: " .. tostring(factory))
+		end
+
+		local ok, value = pcall(factory, resolve)
+		loading[name] = nil
+		if not ok then
+			error("lxm/" .. name .. " threw: " .. tostring(value))
+		end
+
+		cache[name] = value
+		done[name] = true
+		return value
+	end
+
+	local ok, lxm = pcall(resolve, "init")
+	if not ok then
+		error("could not load lxm: " .. tostring(lxm))
+	end
+	return lxm
+end
+
+local parse = buildParser()
+
+local genv = (getgenv and getgenv()) or _G
+genv.Lxm = parse
+
+return parse
