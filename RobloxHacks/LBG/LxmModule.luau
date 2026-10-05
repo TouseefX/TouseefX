@@ -1628,8 +1628,8 @@ local SHIM_HOOK_NAME = nil
 local originalRequire = nil
 
 local function compileModule(inst, src)
-	local chunk, err = loadstring("local script = ...
-" .. src, inst:GetFullName())
+	local header = "local script = ...\n"
+	local chunk, err = loadstring(header .. src, inst:GetFullName())
 	if not chunk then
 		return nil, "compile error: " .. tostring(err)
 	end
