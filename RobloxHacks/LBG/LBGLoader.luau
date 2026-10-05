@@ -109,7 +109,10 @@ local LXM_MODULE_URL = "https://raw.githubusercontent.com/TouseefX/TouseefX/refs
 local function getLxm()
 	local genv = (getgenv and getgenv()) or _G
 	if type(genv.lxm) == "table" or type(genv.Lxm) == "table" or type(genv.Lxm) == "function" then
-		return genv.lxm or genv.Lxm
+		local mod = genv.lxm or genv.Lxm
+		_G.lxm = mod
+		_G.Lxm = mod
+		return mod
 	end
 
 	local ok, src = pcall(httpGet, LXM_MODULE_URL)
@@ -127,6 +130,8 @@ local function getLxm()
 	if type(cres) == "table" or type(cres) == "function" then
 		genv.lxm = cres
 		genv.Lxm = cres
+		_G.lxm = cres
+		_G.Lxm = cres
 	end
 	local mod = genv.lxm or genv.Lxm
 	if type(mod) ~= "table" and type(mod) ~= "function" then
@@ -136,11 +141,12 @@ local function getLxm()
 	return mod
 end
 
+-- Always load lxm module immediately at startup
+local lxm = getLxm()
+
 --============================== DECODE + BUILD ================================
 
 local function decodeRbxm(raw, label)
-	local lxm = getLxm()
-
 	local t0 = os.clock()
 	local ok, parsed = pcall(lxm.parse, raw)
 	if not ok then
@@ -163,13 +169,32 @@ end
 --============================== PARENTING HELPERS =============================
 
 local function parentAll(instances, target, skipExisting, label)
-	local lxm = getLxm()
 	return lxm.parentAll(instances, target, skipExisting, label, { log = log, warn = warnf })
 end
 
 local function replaceChild(parent, name, instances)
-	local lxm = getLxm()
 	return lxm.replaceChild(parent, name, instances, { log = log, warn = warnf })
+end
+
+local function setupRbxm(url, folderName, parentTarget, label)
+	folderName = folderName or "Animations"
+	parentTarget = parentTarget or ReplicatedStorage
+	label = label or folderName
+
+	local raw = httpGet(url)
+	local parsed = lxm.parse(raw)
+	local instances = lxm.build(parsed, label, { yieldEvery = YIELD_EVERY, log = log, warn = warnf })
+
+	local folder = parentTarget:FindFirstChild(folderName)
+	if not folder then
+		folder = Instance.new("Folder")
+		folder.Name = folderName
+		folder.Parent = parentTarget
+	end
+
+	lxm.parentAll(instances, folder, false, label, { log = log, warn = warnf })
+	log(("setup %s with %d instance(s) in %s.%s"):format(label, #instances, parentTarget:GetFullName(), folderName))
+	return folder, instances
 end
 
 --============================== STEP 1-4: ASSETS ==============================
@@ -572,6 +597,12 @@ local function run()
 				hook()
 			end
 		end,
+		lxm            = lxm,
+		fetch          = fetch,
+		decodeRbxm     = decodeRbxm,
+		setupRbxm      = setupRbxm,
+		parentAll      = parentAll,
+		replaceChild   = replaceChild,
 	}
 
 	LBG = api
