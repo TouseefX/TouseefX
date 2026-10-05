@@ -182,11 +182,14 @@ function Animator:LoadAnimation(folder)
 
 	local track = setmetatable({}, Track)
 	track.Name          = folder.Name
+	track.Length        = durationV.Value -- seconds, unscaled (like AnimationTrack.Length)
 	track.Looped        = false
 	track.Speed         = 1     -- time multiplier (0.5 = half speed)
 	track.HoldLastFrame = false -- keep the last pose applied when it ends
 	track.IsPlaying     = false
 	track.TimePosition  = 0
+
+	track._animator = self
 
 	track._fps      = fpsV.Value
 	track._frames   = framesV.Value -- totalFrames = math.floor(duration * fps)
@@ -358,6 +361,13 @@ function Track:Destroy()
 	self._stoppedBindable:Destroy()
 	for _, sig in pairs(self._markerSignals) do
 		sig:Destroy()
+	end
+	-- untrack from its animator so the list doesn't collect dead tracks
+	local list = self._animator and self._animator._tracks
+	if list then
+		for i, t in ipairs(list) do
+			if t == self then table.remove(list, i) break end
+		end
 	end
 end
 
