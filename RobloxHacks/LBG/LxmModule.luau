@@ -1,9 +1,22 @@
--- Standalone patched lxm: a complete rbxm/rbxl parser in one file, with every
--- module inlined. No network access, no dependencies -- loadstring it and call it.
+-- Standalone patched lxm: a complete rbxm/rbxl parser and instance builder in
+-- one file, with every module inlined. No network access, no dependencies.
 --
 --   loadstring(game:HttpGet("https://raw.githubusercontent.com/TouseefX/TouseefX/refs/heads/main/RobloxHacks/LBG/LxmModule.luau"))()
---   local parse = getgenv().Lxm
---   local model = parse(rbxmBytes)
+--   local lxm = getgenv().lxm
+--
+--   -- 1. Parse decodes the rbxm into virtual data:
+--   local parsed = lxm.parse(rbxmBytes)
+--
+--   -- 2. Build turns the parsed data into real Roblox Instances:
+--   --    (automatically compiles scripts and installs require shims)
+--   local instances = lxm.build(parsed)
+--
+--   -- 3. Builder fixes and parenting utilities:
+--   lxm.repairReferences(instances)
+--   lxm.auditScripts(instances)
+--   lxm.installRequireShim(sources)
+--   lxm.parentAll(instances, target, skipExisting)
+--   lxm.replaceChild(parent, name, instances)
 --
 -- Upstream is metatablecat/lxm. These are the fixes it never got:
 --   Buffer        reads numbers straight out of the source (no substrings)
@@ -11,8 +24,12 @@
 --   Chunks/INST   instance referents preserved so nodes carry a usable Ref
 --   Chunks/PROP   Content (typeID 0x22) decoder, sequential SharedString reads,
 --                 and enum planes de-interleaved MSB-first
+--   Builder       turns lxm's virtual tree into real Roblox Instances with
+--                 correct properties, enums, mesh parts, and scripts.
+--   Builder Fixes automatic require shim on compile, joint/beam reference
+--                 repair, script bytecode audit, and hierarchy parenting.
 --
--- Publishes:  getgenv().Lxm  ->  function(bytes) -> model
+-- Publishes:  getgenv().lxm / getgenv().Lxm  ->  lxm module table
 
 local MODULES = {
 	["Chunks/PROP"] = [=[
@@ -1334,7 +1351,931 @@ end
 
 local parse = buildParser()
 
-local genv = (getgenv and getgenv()) or _G
-genv.Lxm = parse
 
-return parse
+--============================== INSTANCE BUILDER ===============================
+
+local function defaultLog(...)
+	print("[lxm]", ...)
+end
+
+local function defaultWarn(...)
+	warn("[lxm]", ...)
+end
+
+-- Serialized-only properties that ride along on essentially every instance in
+-- an rbxm and are never writable from a client. Measured against the real
+-- LBGReplicatedStorage.rbxm: these four alone are 595,232 of its 1,298,755
+-- property writes (46%), and every one of them raises. Skipping them removes
+-- ~600k raised-and-caught errors, which dominated the build time.
+local NEVER_WRITABLE = {
+	SourceAssetId = true,
+	DefinesCapabilities = true,
+	AttributesSerialize = true,
+	Tags = true,
+	ClassName = true,
+}
+
+-- Hoisted so the property loop allocates no closure per write (~1.3M of them).
+local function writeProp(inst, key, value)
+	inst[key] = value
+end
+
+-- Static readers, because a dynamic `_G[name]` read misses executor globals
+-- whenever _ENV is sandboxed.
+local GLOBAL_READERS = {
+	hookfunction   = function() return hookfunction end,
+	replaceclosure = function() return replaceclosure end,
+	hookfunc       = function() return hookfunc end,
+	replacefunction= function() return replacefunction end,
+	replacefunc    = function() return replacefunc end,
+	detourfunction = function() return detourfunction end,
+	detour_function= function() return detour_function end,
+	getscriptbytecode = function() return getscriptbytecode end,
+	sethiddenproperty = function() return sethiddenproperty end,
+	setscriptsource   = function() return setscriptsource end,
+}
+
+-- hookfunction and its documented aliases, in preference order.
+local HOOK_NAMES = {
+	"hookfunction", "replaceclosure", "hookfunc", "replacefunction",
+	"replacefunc", "detourfunction", "detour_function",
+}
+
+local function readGlobal(name)
+	local reader = GLOBAL_READERS[name]
+	if not reader then
+		return nil
+	end
+	local ok, f = pcall(reader)
+	if ok and f ~= nil then
+		return f
+	end
+	local ok2, g = pcall(function() return _G[name] end)
+	return ok2 and g or nil
+end
+
+local function findHookFunction()
+	for _, name in ipairs(HOOK_NAMES) do
+		local f = readGlobal(name)
+		if type(f) == "function" then
+			return f, name
+		end
+	end
+	return nil
+end
+
+local function scriptHasBytecode(inst)
+	local f = readGlobal("getscriptbytecode")
+	if type(f) ~= "function" then
+		return nil
+	end
+	local ok, bytecode = pcall(f, inst)
+	if not ok then
+		return nil
+	end
+	return bytecode ~= nil
+end
+
+-- Mesh/texture references. Decoded from the rbxm's Content (typeID 0x22)
+-- properties, which lxm upstream drops entirely.
+-- The rbxm serialises internal/legacy property names that scripts cannot write.
+-- Color3uint8 is the hidden storage behind Color; size/shape/formFactorRaw are
+-- lowercase legacy spellings. Same bug class as TextureContent -> Texture: the
+-- value is present and correct, only the name is unwritable.
+-- Object references in these rbxms are all the null sentinel -1. Writing -1 to
+-- Attachment0 leaves a non-nil junk value that blocks hierarchy reconstruction,
+-- so null references are dropped and repairReferences fills them in instead.
+local NULL_REF_PROPS = {
+	Attachment0 = true, Attachment1 = true, Part0 = true, Part1 = true,
+	PrimaryPart = true, WeldPart0 = true, WeldPart1 = true,
+}
+
+local PROPERTY_ALIASES = {
+	Color3uint8 = "Color",
+	size = "Size",
+	shape = "Shape",
+	formFactorRaw = "FormFactor",
+	archivable = "Archivable",
+	-- Legacy serialised spelling of Sound.RollOffMaxDistance.
+	xmlRead_MaxDistance_3 = "RollOffMaxDistance",
+}
+
+-- Read-only Content properties have writable legacy aliases that route through
+-- the engine's real setter. ParticleEmitter.Texture and FileMesh.MeshId are both
+-- access:ReadWrite, so they work with a plain write where *Content does not.
+-- Tried before sethiddenproperty, which stores the raw value and desyncs it.
+local CONTENT_ALIASES = {
+	-- "Texture" first: it is the writable legacy property on ParticleEmitter,
+	-- Beam and Decal, which is where every TextureContent in this rbxm lives.
+	-- TextureID is the fallback for classes that only expose that spelling.
+	TextureContent = { "Texture", "TextureID" },
+	MeshContent = { "MeshId" },
+}
+
+local MESH_CONTENT_KEYS = {
+	MeshContent = true, MeshId = true, TextureContent = true, TextureID = true,
+}
+
+local meshPartCache = {}
+
+local enumItemCache = {}
+
+local function toEnumItem(inst, className, key, value)
+	local ck = className .. "." .. key
+	local byValue = enumItemCache[ck]
+	if byValue == nil then
+		byValue = {}
+		enumItemCache[ck] = byValue
+	end
+	local hit = byValue[value]
+	if hit ~= nil then
+		return hit or nil
+	end
+
+	local resolved = false
+	local category
+	local okCur, cur = pcall(function() return inst[key] end)
+	if okCur and cur ~= nil then
+		local okT, et = pcall(function() return cur.EnumType end)
+		if okT and et ~= nil then category = et end
+	end
+
+	if category then
+		local okI, items = pcall(category.GetEnumItems, category)
+		if okI and type(items) == "table" then
+			local candidates = { value }
+			if value % 16777216 == 0 then candidates[2] = value // 16777216 end
+			for _, want in ipairs(candidates) do
+				for _, it in ipairs(items) do
+					if it.Value == want then resolved = it break end
+				end
+				if resolved then break end
+			end
+		end
+	end
+
+	byValue[value] = resolved
+	return resolved or nil
+end
+
+local function enumItemOr(v, fallback)
+	local t = (typeof or type)(v)
+	if t == "EnumItem" then
+		return v
+	end
+	return fallback
+end
+
+local function enumKey(e)
+	if e == nil then
+		return "nil"
+	end
+	local okN, n = pcall(function() return e.Name end)
+	if okN and type(n) == "string" then
+		return n
+	end
+	local okV, v = pcall(function() return e.Value end)
+	if okV and v ~= nil then
+		return v
+	end
+	return e
+end
+
+local function getInsertService()
+	local ok, svc = pcall(function() return game:GetService("InsertService") end)
+	if ok and svc then
+		return svc
+	end
+	return nil
+end
+
+local function createMeshPart(node, stats)
+	local url = node.Properties.MeshContent
+	if type(url) ~= "string" or url == "" then
+		return nil
+	end
+
+	local cf = enumItemOr(node.Properties.CollisionFidelity, Enum.CollisionFidelity.Default)
+	local rf = enumItemOr(node.Properties.RenderFidelity, Enum.RenderFidelity.Automatic)
+
+	local byUrl = meshPartCache[url]
+	if not byUrl then
+		byUrl = {}
+		meshPartCache[url] = byUrl
+	end
+	local cfKey, rfKey = enumKey(cf), enumKey(rf)
+	local byCf = byUrl[cfKey]
+	if not byCf then
+		byCf = {}
+		byUrl[cfKey] = byCf
+	end
+
+	local cached = byCf[rfKey]
+	if cached then
+		stats.meshClones = (stats.meshClones or 0) + 1
+		return cached:Clone()
+	end
+
+	local svc = getInsertService()
+	if not svc then
+		return nil
+	end
+
+	local log = (stats and stats.log) or defaultLog
+
+	if stats.meshCreates == 0 and stats.meshCreateFailures == 0 then
+		log("creating MeshParts via InsertService:CreateMeshPartAsync "
+			.. "(one yielding request per distinct mesh)...")
+	end
+
+	local ok, part = pcall(svc.CreateMeshPartAsync, svc, url, cf, rf)
+	if not ok or part == nil then
+		stats.meshCreateFailures = (stats.meshCreateFailures or 0) + 1
+		if not stats.meshErrors then
+			stats.meshErrors = {}
+		end
+		local msg = tostring(part)
+		if not stats.meshErrors[msg] then
+			stats.meshErrors[msg] = url
+			local distinct = 0
+			for _ in pairs(stats.meshErrors) do
+				distinct = distinct + 1
+			end
+			if distinct <= 5 then
+				log(("mesh create FAILED (%s) url=%s"):format(msg, url))
+			end
+		end
+		return nil
+	end
+
+	byCf[rfKey] = part
+	stats.meshCreates = (stats.meshCreates or 0) + 1
+	return part:Clone()
+end
+
+--============================== REQUIRE SHIM ==================================
+-- Roblox will not necessarily compile a ModuleScript that was created at
+-- runtime, so require() on one can fail with "Requested module experienced an
+-- error while loading" and no line number. We already hold the exact source for
+-- every module we injected, and loadstring works, so rescue those requires by
+-- compiling the source ourselves. Automatically installed on compile.
+
+local SHIM_SOURCES = {}
+local SHIM_CACHE = {}
+local SHIM_LOADING = {}
+local SHIM_INSTALLED = false
+local SHIM_HOOK_NAME = nil
+local originalRequire = nil
+
+local function compileModule(inst, src)
+	local chunk, err = loadstring("local script = ...
+" .. src, inst:GetFullName())
+	if not chunk then
+		return nil, "compile error: " .. tostring(err)
+	end
+	local ok, result = pcall(chunk, inst)
+	if not ok then
+		return nil, "runtime error: " .. tostring(result)
+	end
+	return result
+end
+
+local function resolveModule(inst, logFn)
+	logFn = logFn or defaultLog
+	local cached = SHIM_CACHE[inst]
+	if cached ~= nil then
+		return cached
+	end
+	if SHIM_LOADING[inst] then
+		error("Requested module was required recursively: " .. inst:GetFullName())
+	end
+
+	SHIM_LOADING[inst] = true
+	local value, err = compileModule(inst, SHIM_SOURCES[inst])
+	SHIM_LOADING[inst] = nil
+
+	if value == nil then
+		error(("%s: %s"):format(inst:GetFullName(), tostring(err)))
+	end
+
+	SHIM_CACHE[inst] = value
+	logFn("compiled injected module from source: " .. inst:GetFullName())
+	return value
+end
+
+local function installRequireShim(sources, label, options)
+	local log = (type(options) == "table" and options.log) or defaultLog
+	local warnf = (type(options) == "table" and options.warn) or defaultWarn
+
+	if type(sources) == "table" then
+		for inst, src in pairs(sources) do
+			SHIM_SOURCES[inst] = src
+		end
+	end
+
+	if SHIM_INSTALLED then
+		return true
+	end
+
+	if type(loadstring) ~= "function" then
+		warnf("loadstring unavailable - cannot compile injected modules")
+		return false
+	end
+
+	local hook, hookName = findHookFunction()
+	if not hook then
+		local count = 0
+		for _ in pairs(SHIM_SOURCES) do count = count + 1 end
+		warnf(("no hookfunction/replaceclosure available - %d injected module(s) depend on Roblox compiling them"):format(count))
+		return false
+	end
+
+	local ok, orig = pcall(hook, require, function(target, ...)
+		if SHIM_SOURCES[target] ~= nil then
+			local realOk, realResult = pcall(originalRequire, target, ...)
+			if realOk then
+				return realResult
+			end
+			-- Roblox could not run it. Fall back to the source we injected.
+			return resolveModule(target, log)
+		end
+		return originalRequire(target, ...)
+	end)
+
+	if not ok then
+		warnf(("hooking require via %s failed: %s"):format(hookName, tostring(orig)))
+		return false
+	end
+
+	originalRequire = orig
+	SHIM_INSTALLED = true
+	SHIM_HOOK_NAME = hookName
+
+	local count = 0
+	for _ in pairs(SHIM_SOURCES) do count = count + 1 end
+	log(("require shim installed via %s (%d injected module(s) recoverable)"):format(hookName, count))
+	return true
+end
+
+--============================== BUILD INSTANCE =================================
+
+local function buildInstance(node, stats)
+	local inst
+
+	local meshApplied = false
+	if node.ClassName == "MeshPart" then
+		inst = createMeshPart(node, stats)
+		meshApplied = inst ~= nil
+	end
+
+	local ok = inst ~= nil
+	if not ok then
+		ok, inst = pcall(Instance.new, node.ClassName)
+	end
+	if not ok or inst == nil then
+		stats.failed[node.ClassName] = (stats.failed[node.ClassName] or 0) + 1
+		return nil
+	end
+
+	local className = node.ClassName
+	local failed = stats.writeFailures[className]
+	if not failed then
+		failed = {}
+		stats.writeFailures[className] = failed
+	end
+
+	local props = node.Properties
+	for key, value in pairs(props) do
+		-- Numeric enum values cannot be assigned to an enum property; swap in the
+		-- EnumItem. Non-enum numbers fall straight through untouched.
+		if type(value) == "number" then
+			local item = toEnumItem(inst, className, key, value)
+			if item then value = item end
+		end
+
+		if NEVER_WRITABLE[key] then
+			stats.neverWritable = stats.neverWritable + 1
+		elseif NULL_REF_PROPS[key] and value == -1 then
+			-- Null referent: leave the property unset so it can be reconstructed.
+			stats.skippedWrites = stats.skippedWrites + 1
+		elseif PROPERTY_ALIASES[key] then
+			local alias = PROPERTY_ALIASES[key]
+			if not failed[alias] and pcall(writeProp, inst, alias, value) then
+				stats.writes = stats.writes + 1
+			else
+				failed[alias] = true
+				stats.skippedWrites = stats.skippedWrites + 1
+			end
+		elseif key == "Source" and inst:IsA("LuaSourceContainer") then
+			if typeof(value) == "string" then
+				local sourceOk = pcall(function()
+					local sss = readGlobal("setscriptsource") or (type(setscriptsource) == "function" and setscriptsource)
+					local shp = readGlobal("sethiddenproperty") or (type(sethiddenproperty) == "function" and sethiddenproperty)
+					if sss then
+						sss(inst, value)
+					elseif shp then
+						shp(inst, "Source", value)
+					else
+						inst.Source = value
+					end
+				end)
+
+				if sourceOk then
+					stats.writes = stats.writes + 1
+
+					-- FORCE COMPILATION:
+					-- Toggling the script's core properties forces the executor's
+					-- background thread or the engine to re-link and compile bytecode.
+					pcall(function()
+						if inst:IsA("Script") or inst:IsA("LocalScript") then
+							inst.Enabled = false
+							inst.Enabled = true
+						elseif inst:IsA("ModuleScript") then
+							-- Triggers compilation linkage hooks inside executor sandboxes
+							local currentParent = inst.Parent
+							inst.Parent = nil
+							inst.Parent = currentParent
+
+							-- Automatically install require shim on compile
+							SHIM_SOURCES[inst] = value
+							installRequireShim(nil, nil, { log = stats.log or defaultLog, warn = stats.warnf or defaultWarn })
+						end
+					end)
+				else
+					failed[key] = true
+					stats.skippedWrites = stats.skippedWrites + 1
+				end
+			end
+		elseif MESH_CONTENT_KEYS[key] and meshApplied
+				and (key == "MeshContent" or key == "MeshId") then
+			-- Already applied by CreateMeshPartAsync. Deliberately left alone.
+			stats.writes = stats.writes + 1
+		elseif MESH_CONTENT_KEYS[key] and not failed[key] then
+			-- MeshPart.MeshId/MeshContent carry NotAccessible, so a plain write is
+			-- refused even when the asset itself is public. Try the executor's
+			-- protected-write function first, then the plain write.
+			local wrote = false
+			for _, alias in ipairs(CONTENT_ALIASES[key] or {}) do
+				if pcall(writeProp, inst, alias, value) then
+					wrote = true
+					break
+				end
+			end
+			if not wrote then
+				local sh = readGlobal("sethiddenproperty")
+				if type(sh) == "function" then
+					wrote = pcall(sh, inst, key, value)
+				end
+			end
+			if not wrote then
+				wrote = pcall(writeProp, inst, key, value)
+			end
+			if wrote then
+				stats.writes = stats.writes + 1
+			else
+				failed[key] = true
+				stats.skippedWrites = stats.skippedWrites + 1
+			end
+		elseif key ~= "Name" and not failed[key] then
+			if pcall(writeProp, inst, key, value) then
+				stats.writes = stats.writes + 1
+			else
+				failed[key] = true
+				stats.skippedWrites = stats.skippedWrites + 1
+			end
+		end
+	end
+
+	if typeof(props.Name) == "string" then
+		inst.Name = props.Name
+	end
+
+	-- Build the subtree before attaching it, so nothing re-indexes twice.
+	for _, childNode in ipairs(node.Children) do
+		local child = buildInstance(childNode, stats)
+		if child then
+			child.Parent = inst
+		end
+	end
+
+	stats.built = stats.built + 1
+
+	local yieldEvery = (stats and stats.yieldEvery) or 2500
+	if yieldEvery > 0 and stats.built % yieldEvery == 0 then
+		task.wait()
+	end
+
+	return inst
+end
+
+--============================== BUILD ==========================================
+
+local function build(parsedData, label, options)
+	if type(label) == "table" and options == nil then
+		options = label
+		label = nil
+	end
+	label = label or "rbxm"
+	local log = (type(options) == "table" and options.log) or defaultLog
+	local warnf = (type(options) == "table" and options.warn) or defaultWarn
+	local yieldEvery = (type(options) == "table" and options.yieldEvery) or 2500
+	local parsedTime = (type(options) == "table" and options.parsedTime)
+
+	local tree
+	if type(parsedData) == "table" and parsedData.Tree then
+		tree = parsedData.Tree
+	elseif type(parsedData) == "table" then
+		tree = parsedData
+	else
+		error(("%s: expected parsed rbxm data with Tree, got %s"):format(label, typeof and typeof(parsedData) or type(parsedData)))
+	end
+
+	-- LBGReplicatedStorage.rbxm's root is the ReplicatedStorage *service* itself.
+	-- You cannot Instance.new() a service, so unwrap it and take its children.
+	local roots, unwrapped = {}, 0
+	for _, root in ipairs(tree) do
+		if root.IsService then
+			unwrapped = unwrapped + 1
+			for _, child in ipairs(root.Children or {}) do
+				roots[#roots + 1] = child
+			end
+		else
+			roots[#roots + 1] = root
+		end
+	end
+
+	if parsedTime then
+		log(("%s: parsed %d root(s) in %.2fs%s"):format(label, #roots, parsedTime,
+			unwrapped > 0 and (" (unwrapped " .. unwrapped .. " service root(s))") or ""))
+	end
+
+	local stats = {
+		built = 0,
+		failed = {},
+		writeFailures = {},
+		writes = 0,
+		skippedWrites = 0,
+		neverWritable = 0,
+		meshCreates = 0,
+		meshClones = 0,
+		meshCreateFailures = 0,
+		yieldEvery = yieldEvery,
+		log = log,
+		warnf = warnf,
+	}
+
+	log(label .. ": building instances...")
+	local t1 = os.clock()
+	local instances = {}
+	for _, rootNode in ipairs(roots) do
+		local inst = buildInstance(rootNode, stats)
+		if inst then
+			instances[#instances + 1] = inst
+		end
+	end
+
+	local failedClasses = {}
+	for className in pairs(stats.failed) do
+		failedClasses[#failedClasses + 1] = className
+	end
+	if #failedClasses > 0 then
+		table.sort(failedClasses)
+		warnf(("%s: could not create %d class(es): %s"):format(label, #failedClasses,
+			table.concat(failedClasses, ", ")))
+	end
+
+	if stats.meshCreates > 0 or stats.meshCreateFailures > 0 then
+		log(("%s: meshes: %d created, %d cloned, %d failed"):format(
+			label, stats.meshCreates, stats.meshClones, stats.meshCreateFailures))
+	end
+
+	log(("%s: built %d instance(s), %d property write(s) in %.2fs"):format(
+		label, stats.built, stats.writes, os.clock() - t1))
+	if stats.neverWritable > 0 or stats.skippedWrites > 0 then
+		log(("%s: skipped %d non-writable serialized propert(y/ies) (%d known, %d learned)"):format(
+			label, stats.neverWritable + stats.skippedWrites, stats.neverWritable, stats.skippedWrites))
+	end
+	return instances
+end
+
+--============================== BUILDER FIXES: REPAIR REFERENCES ================
+-- The source rbxms contain no object references: every 0x13 value is the null
+-- sentinel -1. Reconstruct what the instance hierarchy implies. A Beam's endpoints
+-- are the attachments that sit beside it under a shared parent, conventionally A1/A2.
+
+local JOINT_CLASSES = { Motor6D = true, Weld = true, WeldConstraint = true }
+local BASE_PARTS = { Part = true, MeshPart = true }
+
+local LIMB_BY_JOINT = {
+	Neck = { "Head" },
+	["Left Shoulder"] = { "Left Arm", "LeftArm", "Left UpperArm", "LeftUpperArm" },
+	["Right Shoulder"] = { "Right Arm", "RightArm", "Right UpperArm", "RightUpperArm" },
+	["Left Hip"] = { "Left Leg", "LeftLeg", "Left UpperLeg", "LeftUpperLeg" },
+	["Right Hip"] = { "Right Leg", "RightLeg", "Right UpperLeg", "RightUpperLeg" },
+	RootJoint = { "Torso", "LowerTorso", "UpperTorso", "HumanoidRootPart" },
+	Root = { "Torso", "LowerTorso", "UpperTorso", "HumanoidRootPart" },
+	Waist = { "UpperTorso", "Torso" },
+}
+
+local function repairReferences(root, label, options)
+	if type(label) == "table" and options == nil then
+		options = label
+		label = nil
+	end
+	label = label or "repair"
+	local log = (type(options) == "table" and options.log) or defaultLog
+
+	if type(root) == "table" and not (typeof and typeof(root) == "Instance") then
+		local totalBeams, totalPrimaries = 0, 0
+		for _, inst in ipairs(root) do
+			local b, p = repairReferences(inst, label, options)
+			totalBeams = totalBeams + b
+			totalPrimaries = totalPrimaries + p
+		end
+		return totalBeams, totalPrimaries
+	end
+
+	local beams, primaries, joints = 0, 0, 0
+
+	local function visit(inst)
+		local cn = inst.ClassName
+		if cn == "Beam" or cn == "Trail" then
+			if not inst.Attachment0 or not inst.Attachment1 then
+				local node, a1, a2 = inst.Parent, nil, nil
+				for _ = 1, 4 do
+					if not node then break end
+					local sibs = {}
+					for _, c in ipairs(node:GetChildren()) do
+						if c.ClassName == "Attachment" then
+							sibs[#sibs + 1] = c
+							if c.Name == "A1" then a1 = c
+							elseif c.Name == "A2" then a2 = c end
+						end
+					end
+					if not (a1 and a2) and #sibs >= 2 then a1, a2 = sibs[1], sibs[2] end
+					if a1 and a2 then break end
+					a1, a2 = nil, nil
+					node = node.Parent
+				end
+				if a1 and a2 and pcall(function()
+					inst.Attachment0 = a1
+					inst.Attachment1 = a2
+				end) then
+					beams = beams + 1
+				end
+			end
+		elseif JOINT_CLASSES[cn] then
+			if not inst.Part0 or not inst.Part1 then
+				local parent, p0 = inst.Parent, nil
+				local node = parent
+				for _ = 1, 4 do
+					if not node then break end
+					if BASE_PARTS[node.ClassName] then p0 = node break end
+					node = node.Parent
+				end
+
+				local scope = parent
+				while scope and scope.ClassName ~= "Model" do scope = scope.Parent end
+				if not scope then scope = parent end
+
+				local p1
+				local wanted = LIMB_BY_JOINT[inst.Name]
+				if wanted and scope then
+					for _, d in ipairs(scope:GetDescendants()) do
+						if BASE_PARTS[d.ClassName] and d ~= p0 then
+							for _, nm in ipairs(wanted) do
+								if d.Name == nm then p1 = d break end
+							end
+						end
+						if p1 then break end
+					end
+				end
+				if not p1 and scope then
+					for _, d in ipairs(scope:GetDescendants()) do
+						if d ~= inst and d ~= p0 and BASE_PARTS[d.ClassName] then p1 = d break end
+					end
+				end
+
+				if p0 and p1 and pcall(function()
+					inst.Part0 = p0
+					inst.Part1 = p1
+				end) then
+					joints = joints + 1
+				end
+			end
+		elseif cn == "Model" and not inst.PrimaryPart then
+			for _, d in ipairs(inst:GetDescendants()) do
+				if d.ClassName == "Part" or d.ClassName == "MeshPart" then
+					if pcall(function() inst.PrimaryPart = d end) then
+						primaries = primaries + 1
+					end
+					break
+				end
+			end
+		end
+		for _, c in ipairs(inst:GetChildren()) do visit(c) end
+	end
+
+	visit(root)
+	if beams > 0 or primaries > 0 or joints > 0 then
+		log(("%s: repaired %d beam/trail endpoint pair(s), %d primary part(s), %d joint(s)"):format(label, beams, primaries, joints))
+	end
+	return beams, primaries
+end
+
+--============================== BUILDER FIXES: SCRIPT AUDIT =====================
+
+local SCRIPT_CLASSES = { ModuleScript = true, Script = true, LocalScript = true }
+
+local function auditScripts(instances, label, options)
+	if type(label) == "table" and options == nil then
+		options = label
+		label = nil
+	end
+	label = label or "audit"
+	local log = (type(options) == "table" and options.log) or defaultLog
+	local warnf = (type(options) == "table" and options.warn) or defaultWarn
+
+	if typeof and typeof(instances) == "Instance" then
+		instances = { instances }
+	end
+
+	local total, empty = 0, {}
+	local sources, uncompiled, compiledCount = {}, {}, 0
+
+	local function walk(inst)
+		if SCRIPT_CLASSES[inst.ClassName] then
+			total = total + 1
+			local ok, src = pcall(function() return inst.Source end)
+			if not ok or type(src) ~= "string" or #src == 0 then
+				empty[#empty + 1] = inst:GetFullName()
+			elseif inst.ClassName == "ModuleScript" then
+				sources[inst] = src
+				local compiled = scriptHasBytecode(inst)
+				if compiled == false then
+					uncompiled[#uncompiled + 1] = inst:GetFullName()
+				elseif compiled == true then
+					compiledCount = compiledCount + 1
+				end
+			end
+		end
+		for _, c in ipairs(inst:GetChildren()) do walk(c) end
+	end
+
+	for _, inst in ipairs(instances) do walk(inst) end
+
+	if total == 0 then
+		return 0, 0, sources
+	end
+
+	if #empty == 0 then
+		log(("%s: all %d script(s) have source"):format(label, total))
+	else
+		warnf(("%s: %d of %d script(s) have EMPTY source - require() on these fails"):format(
+			label, #empty, total))
+		for i = 1, math.min(10, #empty) do
+			warnf("  empty source: " .. empty[i])
+		end
+		if #empty > 10 then
+			warnf(("  ... and %d more"):format(#empty - 10))
+		end
+	end
+
+	if #uncompiled > 0 then
+		warnf(("%s: %d ModuleScript(s) have source but NO bytecode - the engine did not compile them"):format(
+			label, #uncompiled))
+		for i = 1, math.min(5, #uncompiled) do
+			warnf("  uncompiled: " .. uncompiled[i])
+		end
+	elseif compiledCount > 0 then
+		log(("%s: %d ModuleScript(s) confirmed compiled"):format(label, compiledCount))
+	end
+
+	return #empty, total, sources
+end
+
+--============================== BUILDER FIXES: DIAGNOSE MODULES =================
+
+local DIAGNOSE_MODULES = false
+
+local function diagnoseModules(instances, label, options)
+	if type(label) == "table" and options == nil then
+		options = label
+		label = nil
+	end
+	label = label or "diagnose"
+	local log = (type(options) == "table" and options.log) or defaultLog
+	local warnf = (type(options) == "table" and options.warn) or defaultWarn
+
+	if typeof and typeof(instances) == "Instance" then
+		instances = { instances }
+	end
+
+	local tested, bad = 0, {}
+
+	local function walk(inst)
+		if inst.ClassName == "ModuleScript" then
+			tested = tested + 1
+			local ok, err = pcall(require, inst)
+			if not ok then
+				bad[#bad + 1] = inst:GetFullName() .. "  ->  " .. tostring(err)
+			end
+		end
+		for _, c in ipairs(inst:GetChildren()) do walk(c) end
+	end
+
+	for _, inst in ipairs(instances) do walk(inst) end
+
+	log(("%s: required %d module(s), %d failed"):format(label, tested, #bad))
+	for i = 1, math.min(15, #bad) do
+		warnf("  " .. bad[i])
+	end
+	if #bad > 15 then
+		warnf(("  ... and %d more"):format(#bad - 15))
+	end
+
+	return #bad
+end
+
+--============================== BUILDER PARENTING ===============================
+
+local function parentAll(instances, target, skipExisting, label, options)
+	local log = (type(options) == "table" and options.log) or defaultLog
+	local warnf = (type(options) == "table" and options.warn) or defaultWarn
+	local added, skipped = 0, 0
+
+	for _, inst in ipairs(instances) do
+		if skipExisting and target:FindFirstChild(inst.Name) then
+			skipped = skipped + 1
+		else
+			inst.Parent = target
+			added = added + 1
+		end
+	end
+
+	log(("parented %d into %s%s"):format(added, target:GetFullName(),
+		skipped > 0 and (" (skipped " .. skipped .. " existing)") or ""))
+
+	-- References cannot come from the file, so rebuild them once the tree exists.
+	for _, inst in ipairs(instances) do
+		repairReferences(inst, label or target.Name, options)
+	end
+
+	local _, _, sources = auditScripts(instances, label or target:GetFullName(), options)
+	installRequireShim(sources, label or target:GetFullName(), options)
+	if DIAGNOSE_MODULES then
+		diagnoseModules(instances, label or target:GetFullName(), options)
+	end
+
+	return added
+end
+
+local function replaceChild(parent, name, instances, options)
+	local log = (type(options) == "table" and options.log) or defaultLog
+	local existing = parent:FindFirstChild(name)
+	if existing then
+		existing:Destroy()
+		log("destroyed old " .. parent:GetFullName() .. "." .. name)
+	end
+
+	if #instances == 1 and instances[1].Name == name then
+		instances[1].Parent = parent
+		log("installed " .. parent:GetFullName() .. "." .. name)
+		return instances[1]
+	end
+
+	local folder = Instance.new("Folder")
+	folder.Name = name
+	for _, inst in ipairs(instances) do
+		inst.Parent = folder
+	end
+	folder.Parent = parent
+	log("installed " .. parent:GetFullName() .. "." .. name .. " (wrapped folder)")
+	return folder
+end
+
+--============================== EXPORT =========================================
+
+local lxm = {
+	parse = parse,
+	build = build,
+	parentAll = parentAll,
+	replaceChild = replaceChild,
+	repairReferences = repairReferences,
+	auditScripts = auditScripts,
+	installRequireShim = installRequireShim,
+	diagnoseModules = diagnoseModules,
+	DIAGNOSE_MODULES = false,
+}
+
+setmetatable(lxm, {
+	__call = function(_, raw)
+		return parse(raw)
+	end,
+})
+
+local genv = (getgenv and getgenv()) or _G
+genv.lxm = lxm
+genv.Lxm = lxm
+
+return lxm
