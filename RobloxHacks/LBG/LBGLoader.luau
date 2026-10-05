@@ -557,16 +557,6 @@ local function run()
 		return
 	end
 
-	local ok, how = FireSelf({
-		Request = "RagingFangsCamera",
-		On      = character,
-		T       = character,
-	})
-
-	if not ok then
-		warnf("could not fire: " .. tostring(how))
-	end
-
 	--   _G.LBG.Fire({ Request = "EndRagingFangsCamera" })  -- needs no other fields
 	local api = {
 		Fire           = FireSelf,
