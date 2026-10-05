@@ -60410,4 +60410,4 @@ _G.UniversalRendererReload = Reload
 print("[UniversalClientRenderer] Loaded - Universal version ready")
 print("[UniversalClientRenderer] Use _G.UniversalRendererReload() to reload")
 print("[UniversalClientRenderer] ImagePreload and TexturePreload created automatically")
-print("[UniversalClientRenderer] Safe workspace lookups enabled
+print("[UniversalClientRenderer] Safe workspace lookups enabled")
