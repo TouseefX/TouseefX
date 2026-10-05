@@ -144,8 +144,9 @@ do
 			end
 
 			ClientRenderRequest = ReplicatedStorage:WaitForChild("ClientRenderRequest")
-			Map = workspace:FindFirstChild("Map")
-			Borders = Map and Map:FindFirstChild("Borders") or nil
+			-- Map was only used for hitboxes/raycasts - now using workspace directly
+			Map = nil -- No longer needed
+			Borders = nil -- No longer needed
 			VFX = workspace:FindFirstChild("VFX")
 			if not VFX then
 				VFX = Instance.new("Folder")
@@ -186,15 +187,25 @@ do
 			Terrain = workspace:FindFirstChild("Terrain") or workspace.Terrain
 			workspace:FindFirstChild("Caches") -- optional
 			Cutscenes = workspace:FindFirstChild("Cutscenes")
+			if not Cutscenes then
+				Cutscenes = Instance.new("Folder")
+				Cutscenes.Name = "Cutscenes"
+				Cutscenes.Parent = workspace
+			end
 			FlyingRocksStorage = VFX:FindFirstChild("FlyingRocksStorage")
 			if not FlyingRocksStorage then
 				FlyingRocksStorage = Instance.new("Folder")
 				FlyingRocksStorage.Name = "FlyingRocksStorage"
 				FlyingRocksStorage.Parent = VFX
 			end
-			Trees = Map and Map:FindFirstChild("Destroyables") and Map.Destroyables:FindFirstChild("Trees") or nil
-			Bushes = Map and Map:FindFirstChild("Destroyables") and Map.Destroyables:FindFirstChild("Bushes") or nil
+			Trees = workspace:FindFirstChild("Trees")
+			Bushes = workspace:FindFirstChild("Bushes")
 			Characters = workspace:FindFirstChild("Characters")
+			if not Characters then
+				Characters = Instance.new("Folder")
+				Characters.Name = "Characters"
+				Characters.Parent = workspace
+			end
 
 			for _, v in pairs(CollectionService:GetTagged("Character")) do
 				if v ~= nil and v.Parent ~= nil and v:GetAttribute("IsDummy") and v:FindFirstChild("Head") and v:FindFirstChild("Head"):FindFirstChild("HealthUI") then
@@ -258,18 +269,9 @@ do
 				end
 			end)
 			raycastParams = RaycastParams.new()
-			raycastParams.FilterType = Enum.RaycastFilterType.Include
-			local raycastInstances = {}
-			if Map then
-				if Map:FindFirstChild("Arena") then table.insert(raycastInstances, Map.Arena) end
-				if Map:FindFirstChild("Miscellaneous") then table.insert(raycastInstances, Map.Miscellaneous) end
-				if Map:FindFirstChild("Destroyables") and Map.Destroyables:FindFirstChild("Buildings") then
-					table.insert(raycastInstances, Map.Destroyables.Buildings)
-				end
-			end
-			if Borders then table.insert(raycastInstances, Borders) end
-			raycastParams.FilterDescendantsInstances = raycastInstances
-			Tiles = Map and Map:FindFirstChild("Arena") and Map.Arena:FindFirstChild("Tiles") or nil
+			raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+			raycastParams.FilterDescendantsInstances = {LocalPlayer.Character or workspace}
+			Tiles = workspace:FindFirstChild("Tiles")
 
 			local tileRaycastParams = RaycastParams.new()
 
@@ -52294,9 +52296,9 @@ do
 				local raycastParams3 = RaycastParams.new()
 
 				raycastParams3.FilterDescendantsInstances = {
-					Map.Arena,
-					Map.Borders,
-					Map.Miscellaneous
+					workspace,
+					workspace,
+					workspace
 				}
 				raycastParams3.FilterType = Enum.RaycastFilterType.Include
 
@@ -52622,9 +52624,9 @@ do
 				local raycastParams4 = RaycastParams.new()
 
 				raycastParams4.FilterDescendantsInstances = {
-					Map.Arena,
-					Map.Miscellaneous,
-					Map.Borders
+					workspace,
+					workspace,
+					workspace
 				}
 				raycastParams4.FilterType = Enum.RaycastFilterType.Include
 
@@ -52955,9 +52957,9 @@ do
 				local raycastParams5 = RaycastParams.new()
 
 				raycastParams5.FilterDescendantsInstances = {
-					Map.Arena,
-					Map.Miscellaneous,
-					Map.Borders
+					workspace,
+					workspace,
+					workspace
 				}
 				raycastParams5.FilterType = Enum.RaycastFilterType.Include
 
@@ -53288,9 +53290,9 @@ do
 				local raycastParams6 = RaycastParams.new()
 
 				raycastParams6.FilterDescendantsInstances = {
-					Map.Arena,
-					Map.Borders,
-					Map.Miscellaneous
+					workspace,
+					workspace,
+					workspace
 				}
 				raycastParams6.FilterType = Enum.RaycastFilterType.Include
 
@@ -54112,9 +54114,9 @@ do
 				local raycastParams7 = RaycastParams.new()
 
 				raycastParams7.FilterDescendantsInstances = {
-					Map.Arena,
-					Map.Borders,
-					Map.Miscellaneous
+					workspace,
+					workspace,
+					workspace
 				}
 				raycastParams7.FilterType = Enum.RaycastFilterType.Include
 
@@ -56950,7 +56952,7 @@ do
 
 			if Request == "PreloadAnimations" then
                 local List = Data.List
-                local PreloadAnimationsClient = workspace:WaitForChild("PreloadAnimationsClient")
+                local PreloadAnimationsClient = workspace:FindFirstChild("PreloadAnimationsClient")
                 local Humanoid = PreloadAnimationsClient:WaitForChild("Humanoid")
                 local Animator9 = Humanoid:WaitForChild("Animator")
                 local Animations = {}
@@ -60408,4 +60410,4 @@ _G.UniversalRendererReload = Reload
 print("[UniversalClientRenderer] Loaded - Universal version ready")
 print("[UniversalClientRenderer] Use _G.UniversalRendererReload() to reload")
 print("[UniversalClientRenderer] ImagePreload and TexturePreload created automatically")
-print("[UniversalClientRenderer] Safe workspace lookups enabled")
+print("[UniversalClientRenderer] Safe workspace lookups enabled
