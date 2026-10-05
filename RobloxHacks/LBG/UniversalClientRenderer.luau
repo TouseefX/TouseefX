@@ -63,8 +63,8 @@ do
 				DesiredCameraType = Enum.CameraType.Custom
 				LocalPlayer = Players.LocalPlayer
 				PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
-				Bars = PlayerGui:FindFirstChild("Bars")
-				Skills = PlayerGui:FindFirstChild("Skills")
+				Bars = PlayerGui:FindFirstChild("Bars") -- Game-specific UI, optional
+				Skills = PlayerGui:FindFirstChild("Skills") -- Game-specific UI, optional
 				Buttons = Skills and Skills:FindFirstChild("Container") and Skills.Container:FindFirstChild("Buttons") or nil
 				Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 				HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
@@ -524,118 +524,13 @@ do
 				New = LocalSettings
 			})
 
-			local Awakening = Bars and Bars:FindFirstChild("Awakening") or nil
-			local Gradient = Awakening:WaitForChild("Bar"):WaitForChild("Gradient")
-			local Gradient2 = Awakening:WaitForChild("SecondsBar"):WaitForChild("Gradient")
+			local Awakening = nil -- Game-specific UI removed for universality
+			local Percent = nil -- Game-specific UI removed
 
-			Percent = Awakening:WaitForChild("Percent")
-			NumberValue = Instance.new("NumberValue")
-			NumberValue2 = Instance.new("NumberValue")
-			NumberValue2:GetPropertyChangedSignal("Value"):Connect(function()
+			-- Awakening UI is game-specific and not needed for universal rendering
+			-- The VFX/SFX/rendering systems work without it
 
-				local v260 = NumberValue2.Value / 100
-
-				if v260 > 1 then
-					v260 = 1
-				end
-
-				if v260 < 0 then
-					v260 = 0
-				end
-
-				if v260 >= 1 then
-					Gradient2.Transparency = NumberSequence.new({
-						NumberSequenceKeypoint.new(0, 0, 0),
-						NumberSequenceKeypoint.new(1, 0, 0)
-					})
-
-					return
-				end
-
-				if v260 <= 0 then
-					Gradient2.Transparency = NumberSequence.new({
-						NumberSequenceKeypoint.new(0, 1, 0),
-						NumberSequenceKeypoint.new(1, 1, 0)
-					})
-
-					return
-				end
-
-				local v261 = v260 + 0.001
-
-				if v261 < 0 then
-					v261 = 0
-				end
-
-				if v261 >= 1 then
-					Gradient2.Transparency = NumberSequence.new({
-						NumberSequenceKeypoint.new(0, 0, 0),
-						NumberSequenceKeypoint.new(1, 0, 0)
-					})
-
-					return
-				end
-
-				Gradient2.Transparency = NumberSequence.new({
-					NumberSequenceKeypoint.new(0, 0, 0),
-					NumberSequenceKeypoint.new(v260, 0, 0),
-					NumberSequenceKeypoint.new(v261, 1, 0),
-					NumberSequenceKeypoint.new(1, 1, 0)
-				})
-			end)
-			NumberValue:GetPropertyChangedSignal("Value"):Connect(function()
-
-				local v262 = NumberValue.Value / 1000
-
-				if v262 > 1 then
-					v262 = 1
-				end
-
-				if v262 < 0 then
-					v262 = 0
-				end
-
-				if v262 >= 1 then
-					Gradient.Transparency = NumberSequence.new({
-						NumberSequenceKeypoint.new(0, 0, 0),
-						NumberSequenceKeypoint.new(1, 0, 0)
-					})
-
-					return
-				end
-
-				if v262 <= 0 then
-					Gradient.Transparency = NumberSequence.new({
-						NumberSequenceKeypoint.new(0, 1, 0),
-						NumberSequenceKeypoint.new(1, 1, 0)
-					})
-
-					return
-				end
-
-				local v263 = v262 + 0.001
-
-				if v263 < 0 then
-					v263 = 0
-				end
-
-				if v263 >= 1 then
-					Gradient.Transparency = NumberSequence.new({
-						NumberSequenceKeypoint.new(0, 0, 0),
-						NumberSequenceKeypoint.new(1, 0, 0)
-					})
-
-					return
-				end
-
-				Gradient.Transparency = NumberSequence.new({
-					NumberSequenceKeypoint.new(0, 0, 0),
-					NumberSequenceKeypoint.new(v262, 0, 0),
-					NumberSequenceKeypoint.new(v263, 1, 0),
-					NumberSequenceKeypoint.new(1, 1, 0)
-				})
-			end)
-			-- =============== Early ClientCommunication handler (character spawn, dash effects, states, skills) ===============
+-- =============== Early ClientCommunication handler (character spawn, dash effects, states, skills) ===============
 			ClientCommunication.Event:Connect(function(Data)
 
 				if typeof(Data) ~= "table" then
@@ -679,18 +574,18 @@ do
 						--AnimatedTitles.Update(p9)
 					end)
 					Animator = Humanoid:WaitForChild("Animator")
-					Skills = PlayerGui:FindFirstChild("Skills")
+					Skills = PlayerGui:FindFirstChild("Skills") -- Game-specific UI, optional
 					Buttons = Skills and Skills:FindFirstChild("Container") and Skills.Container:FindFirstChild("Buttons") or nil
 
-					local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+					local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 						Position = UDim2.new(0.5, 0, 1, -75)
 					})
-					local tween2 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+					local tween2 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 						Position = UDim2.new(0.5, 0, 1, -3)
 					})
 
-					tween:Play()
-					tween2:Play()
+					if tween then tween:Play() end
+					if tween2 then tween2:Play() end
 					VFXService.EndCutscene()
 				end
 
@@ -2082,7 +1977,7 @@ do
 										v9:Destroy()
 									end
 								end)
-								tween:Play()
+								if tween then tween:Play() end
 							end
 
 							task.wait(0.5)
@@ -2671,7 +2566,7 @@ do
 									tween = TweenService:Create(CurrentCamera, TweenInfo.new(smoothOut.Time, smoothOut.EasingStyle, smoothOut.EasingDirection), {
 										FieldOfView = 70
 									})
-									tween:Play()
+									if tween then tween:Play() end
 								end
 
 								local smoothOutBind = VFXService.CreateBind(Character, "CutsceneSmoothOutBind", function()
@@ -2876,7 +2771,7 @@ do
 								tween = TweenService:Create(CurrentCamera, TweenInfo.new(smoothOut.Time, smoothOut.EasingStyle, smoothOut.EasingDirection), {
 									FieldOfView = 70
 								})
-								tween:Play()
+								if tween then tween:Play() end
 							end
 
 							local smoothOutBind = VFXService.CreateBind(Character, "CutsceneSmoothOutBind", function()
@@ -3257,7 +3152,7 @@ do
 							local v6929 = tile
 
 							v6929.Position = v6929.Position + Vector3.new(0, 10, 0)
-							tween:Play()
+							if tween then tween:Play() end
 						end
 					end)
 				end,
@@ -3391,7 +3286,7 @@ do
 						end
 					end)
 					ScreenGui.Parent = PlayerGui
-					tween:Play()
+					if tween then tween:Play() end
 				end,
 				EndScreenFlashes = function()
 
@@ -3550,7 +3445,7 @@ do
 						table.insert(smoothOutTweens, tween7)
 						Frame.Parent = ScreenGui
 						bottomBar.Parent = ScreenGui
-						tween:Play()
+						if tween then tween:Play() end
 						tween5:Play()
 						table.insert(endDelayThreads, (task.delay(duration, function()
 
@@ -3652,7 +3547,7 @@ do
 
 						table.insert(smoothOutTweens, tween8)
 						ImageLabel.Parent = ScreenGui
-						tween:Play()
+						if tween then tween:Play() end
 						table.insert(endDelayThreads, (task.delay(duration, function()
 
 							if ImageLabel ~= nil and (ImageLabel.Parent ~= nil and tween8 ~= nil) then
@@ -4749,7 +4644,7 @@ do
 			}
 		end
 
-		AwakeningOutfitSignals = PlayerGui:WaitForChild("AwakeningOutfit"):WaitForChild("Signals")
+		AwakeningOutfitSignals = PlayerGui:FindFirstChild("AwakeningOutfit") and PlayerGui.AwakeningOutfit:FindFirstChild("Signals") or nil
 
 		local function SendAwakeningOutfitSignal(signalName: string, characterName: string)
 
@@ -4769,7 +4664,7 @@ do
 			Configuration:Destroy()
 		end
 
-		SkillTextSignals = PlayerGui:WaitForChild("SkillText"):WaitForChild("Signals")
+		SkillTextSignals = PlayerGui:FindFirstChild("SkillText") and PlayerGui.SkillText:FindFirstChild("Signals") or nil
 
 		local function SendSkillTextSignal(signalName: string, characterName: string)
 
@@ -4930,7 +4825,7 @@ do
 						BodyVelocity:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -4971,7 +4866,7 @@ do
 						BodyVelocity:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -5012,7 +4907,7 @@ do
 					end
 				end)
 				Highlight.Parent = U
-				tween:Play()
+				if tween then tween:Play() end
 			elseif Request == "JunATH" then
 				local U = Data.U
 
@@ -5040,7 +4935,7 @@ do
 					end
 				end)
 				Highlight.Parent = U
-				tween:Play()
+				if tween then tween:Play() end
 			elseif Request == "ATD" then
 				for _, child in pairs(HumanoidRootPart:GetChildren()) do
 					if child:IsA("BodyVelocity") then
@@ -5067,7 +4962,7 @@ do
 						BodyVelocity:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -5600,7 +5495,7 @@ do
 						BodyVelocity:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -6060,7 +5955,7 @@ do
 					end
 				end)
 				Highlight.Parent = U
-				tween:Play()
+				if tween then tween:Play() end
 				Debris.AddItem(clone, 3)
 				Debris.AddItem(clone39, 3)
 				Debris.AddItem(clone40, 3)
@@ -6176,7 +6071,7 @@ do
 						clone:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				VFXService.CreateBind(Character, "IronDragonAim", function()
 
 					if connection ~= nil then
@@ -6233,7 +6128,7 @@ do
 
 					local tweenInfo = TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
 					local Awakening = Bars and Bars:FindFirstChild("Awakening") or nil
-					local Container = Skills:WaitForChild("Container")
+					local Container = (Skills and Skills:FindFirstChild("Container"))
 					local tween = TweenService:Create(Awakening, TweenInfo.new(1.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 						Position = UDim2.new(0.5, 0, 1.3, 0)
 					})
@@ -6241,7 +6136,7 @@ do
 						Position = UDim2.new(0.5, 0, 1.3, 0)
 					})
 
-					tween:Play()
+					if tween then tween:Play() end
 					tween10:Play()
 					CutsceneModel = v1172
 					VFXService.PreloadImages({
@@ -6396,7 +6291,7 @@ do
 									clone:Destroy()
 								end
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 
 							return
 						end
@@ -6611,7 +6506,7 @@ do
 						task.delay(v1219, function()
 
 							if tween ~= nil then
-								tween:Play()
+								if tween then tween:Play() end
 							end
 
 							if tween11 ~= nil then
@@ -6696,7 +6591,7 @@ do
 							PointLight:Destroy()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end)
 
 				if true then
@@ -7113,7 +7008,7 @@ do
 									task.delay(v7100, function()
 
 										if tween ~= nil then
-											tween:Play()
+											if tween then tween:Play() end
 										end
 
 										if tween12 ~= nil then
@@ -7168,7 +7063,7 @@ do
 									task.delay(v7112, function()
 
 										if tween ~= nil then
-											tween:Play()
+											if tween then tween:Play() end
 										end
 
 										if tween13 ~= nil then
@@ -8022,7 +7917,7 @@ do
 
 						u7167 = true
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 
 					while U ~= nil and U.Parent ~= nil and not u7167 do
 						U:PivotTo(CFrameValue.Value)
@@ -8304,7 +8199,7 @@ do
 							task.delay(v1280, function()
 
 								if tween ~= nil then
-									tween:Play()
+									if tween then tween:Play() end
 								end
 
 								if tween14 ~= nil then
@@ -8359,7 +8254,7 @@ do
 							task.delay(v1292, function()
 
 								if tween ~= nil then
-									tween:Play()
+									if tween then tween:Play() end
 								end
 
 								if tween15 ~= nil then
@@ -8619,7 +8514,7 @@ do
 							task.delay(v1317, function()
 
 								if tween ~= nil then
-									tween:Play()
+									if tween then tween:Play() end
 								end
 
 								if tween16 ~= nil then
@@ -8854,7 +8749,7 @@ do
 							VFXService.ApplyFlyingRocksProperties(t90)
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 
 					while U ~= nil and U.Parent ~= nil and not u1326 do
 						local Vector3ValueValue = Vector3Value.Value
@@ -8994,7 +8889,7 @@ do
 						})
 
 						tween.Completed:Once(Rotate)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					Rotate()
@@ -9806,7 +9701,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local cFrame = CFrame.new(0, 0, -6)
@@ -9973,7 +9868,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 					VFXService.ShakeCamera(0, 0.4, 18, 0.135, 0.135, 0.135)
 				end
 
@@ -10054,7 +9949,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -10100,7 +9995,7 @@ do
 						tween17:Play()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				VFXService.ShakeCamera(0, 0.4, 36, 0.4, 0.4, 0.4)
 				VFXService.ShakeCamera(0, 9, 30, 0.125, 0.125, 0.125)
 			elseif Request == "ELR" then
@@ -10262,7 +10157,7 @@ do
 				SoundUtil.PlaySoundAtCFrame(C, "LightningRampageImpact")
 				VFXService.EmitParticlesInInstance(clone97)
 				KickPreset(C * CFrame.Angles(3.141592653589793, 0, 0) * CFrame.new(0, 2, 0), true)
-				tween:Play()
+				if tween then tween:Play() end
 				tween18:Play()
 
 				for _, descendant in pairs(clone97.Wind1:GetDescendants()) do
@@ -10349,7 +10244,7 @@ do
 				local v1500 = VFXService.CreateBind(U, "LRStartSound", function()
 
 					if tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					if tween19 ~= nil then
@@ -10538,7 +10433,7 @@ do
 					u1517 = nil
 
 					if v1515 ~= nil and v1515.Parent ~= nil and not v1515:GetAttribute("Ended") and tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -10595,10 +10490,10 @@ do
 				end)
 
 				local tweenInfo34 = TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-				local tween21 = TweenService:Create(Bars:WaitForChild("Awakening"), tweenInfo34, {
+				local tween21 = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), tweenInfo34, {
 					Position = UDim2.new(0.5, 0, 1, -75)
 				})
-				local tween22 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween22 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -3)
 				})
 
@@ -10608,10 +10503,10 @@ do
 					tween22:Play()
 				end)
 
-				local tween23 = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween23 = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1.3, 0)
 				})
-				local tween24 = TweenService:Create(Skills:WaitForChild("Container"), tweenInfo34, {
+				local tween24 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), tweenInfo34, {
 					Position = UDim2.new(0.5, 0, 1.3, 0)
 				})
 
@@ -10661,7 +10556,7 @@ do
 					u1529 = nil
 
 					if v1527 ~= nil and v1527.Parent ~= nil and not v1527:GetAttribute("Ended") and tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 			elseif Request == "CObliteration" then
@@ -12345,7 +12240,7 @@ do
 					u1734 = nil
 
 					if v1732 ~= nil and v1732.Parent ~= nil and not v1732:GetAttribute("Ended") and tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 				task.spawn(function()
@@ -12632,10 +12527,10 @@ do
 					u1746 = nil
 				end)
 
-				local tween25 = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween25 = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1.3, 0)
 				})
-				local tween26 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween26 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1.3, 0)
 				})
 
@@ -12693,7 +12588,7 @@ do
 					end
 
 					if v1750 ~= nil and v1750.Parent ~= nil and not v1750:GetAttribute("Ended") and tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 			elseif Request == "CAtomicBomb" then
@@ -12713,14 +12608,14 @@ do
 					VFXService.EndCutscene()
 					VFXService.DestroyBind(Character, "AtomicBombSFX", true)
 
-					local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+					local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 						Position = UDim2.new(0.5, 0, 1, -75)
 					})
-					local tween27 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+					local tween27 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 						Position = UDim2.new(0.5, 0, 1, -3)
 					})
 
-					tween:Play()
+					if tween then tween:Play() end
 					tween27:Play()
 				end
 			elseif Request == "EAtomicBomb" then
@@ -12764,14 +12659,14 @@ do
 					Configuration2:Destroy()
 					VFXService.DestroyBind(Character, "AtomicBombSFX", true)
 
-					local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+					local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 						Position = UDim2.new(0.5, 0, 1, -75)
 					})
-					local tween28 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+					local tween28 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 						Position = UDim2.new(0.5, 0, 1, -3)
 					})
 
-					tween:Play()
+					if tween then tween:Play() end
 					tween28:Play()
 				end
 			elseif Request == "AtomicBombFall" then
@@ -13156,7 +13051,7 @@ do
 						CFrame = MeshV3.CFrame * CFrame.Angles(0, math.random(-3, 3), 0)
 					})
 
-					tween:Play()
+					if tween then tween:Play() end
 					tween29:Play()
 					tween30:Play()
 					tween31:Play()
@@ -13229,7 +13124,7 @@ do
 
 							PartCache:ReturnPart(Part)
 						end)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end
 
@@ -13282,7 +13177,7 @@ do
 
 					if tween ~= nil then
 						u1786 = true
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					if clone ~= nil and clone.Parent ~= nil then
@@ -13332,14 +13227,14 @@ do
 				local _, _ = VFXService.InitiateCutscene("PillarOfLight", 360, nil, HumanoidRootPart, CFrame.new(0, -2.5, 0), {
 					Time = 0.4
 				})
-				local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1.3, 0)
 				})
-				local tween36 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween36 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1.3, 0)
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween36:Play()
 				VFXService.PreloadImages({
 					"rbxassetid://119014460472683",
@@ -13355,14 +13250,14 @@ do
 			elseif Request == "EPOLCam" then
 				VFXService.EndCutscene()
 
-				local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -75)
 				})
-				local tween37 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween37 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -3)
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween37:Play()
 			elseif Request == "POLStart" then
 				local U = Data.U
@@ -13413,7 +13308,7 @@ do
 					u1818 = nil
 
 					if u1816 ~= nil and u1816.Parent ~= nil and not u1816:GetAttribute("Done") and tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 				u1818 = U.ChildAdded:Connect(function(child)
@@ -13666,7 +13561,7 @@ do
 							clone147:Destroy()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local Sphere = PillarOfLight.Sphere
@@ -13742,7 +13637,7 @@ do
 						thread = nil
 					end)
 					tween39:Play()
-					tween:Play()
+					if tween then tween:Play() end
 					tween38:Play()
 				end
 
@@ -13820,7 +13715,7 @@ do
 							SWMesh()
 
 							if tween ~= nil then
-								tween:Play()
+								if tween then tween:Play() end
 							end
 
 							task.delay(0.05, function()
@@ -14050,7 +13945,7 @@ do
 					VFXService.CreateBind(Character, "IronOnslaughtSFX", function()
 
 						if tween ~= nil then
-							tween:Play()
+							if tween then tween:Play() end
 						end
 
 						if tween41 ~= nil then
@@ -14101,7 +13996,7 @@ do
 					VFXService.CreateBind(Character, "IronOnslaughtSFX", function()
 
 						if tween ~= nil then
-							tween:Play()
+							if tween then tween:Play() end
 						end
 
 						if tween42 ~= nil then
@@ -14241,7 +14136,7 @@ do
 					end
 				end
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween43:Play()
 				tween44:Play()
 				task.spawn(function()
@@ -14614,7 +14509,7 @@ do
 						VFXService.CreateBind(Character, "IronOnslaughtSFX", function()
 
 							if tween ~= nil then
-								tween:Play()
+								if tween then tween:Play() end
 							end
 
 							if tween46 ~= nil then
@@ -14673,7 +14568,7 @@ do
 					VFXService.CreateBind(Character, "IronOnslaughtSFX", function()
 
 						if tween ~= nil then
-							tween:Play()
+							if tween then tween:Play() end
 						end
 
 						if tween47 ~= nil then
@@ -14822,7 +14717,7 @@ do
 									child:Destroy()
 								end
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 						end
 					end
 				end
@@ -14893,7 +14788,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local Contact = Assets.Particles.Shinji.IronOnslaughtGrab.Contact
@@ -15088,7 +14983,7 @@ do
 
 								PartCache:ReturnPart(Part)
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 
 							local tween48 = TweenService:Create(Part, TweenInfo.new(v7710 - 0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
 								Size = Vector3.new(0, 0, 0)
@@ -15817,7 +15712,7 @@ do
 				clone196.Parent = VFX
 				clone197.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone)
-				tween:Play()
+				if tween then tween:Play() end
 				tween49:Play()
 				tween50:Play()
 				tween51:Play()
@@ -15976,7 +15871,7 @@ do
 						end
 					end)
 					Highlight.Parent = Character
-					tween:Play()
+					if tween then tween:Play() end
 
 					local clone = A:Clone()
 
@@ -16016,7 +15911,7 @@ do
 								child:Destroy()
 							end
 						end)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end
 			elseif Request == "IronOnslaughtEffect" then
@@ -16047,7 +15942,7 @@ do
 					end
 				end)
 				Highlight.Parent = U
-				tween:Play()
+				if tween then tween:Play() end
 
 				local clone = Assets.Particles.Shinji.IronOnslaught.EyeFlash.A:Clone()
 
@@ -16264,7 +16159,7 @@ do
 						BodyVelocity:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 
 				local v2175 = VFXService.CreateBind(Character, "IronOnslaughtMotion", function()
 
@@ -16316,7 +16211,7 @@ do
 						BodyVelocity:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 
 				local v2181 = VFXService.CreateBind(Character, "IronOnslaughtMotion", function()
 
@@ -16367,7 +16262,7 @@ do
 						BodyVelocity:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 
 				local v2187 = VFXService.CreateBind(Character, "IronOnslaughtMotion", function()
 
@@ -17630,7 +17525,7 @@ do
 					end
 
 					if tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					tween = nil
@@ -17806,14 +17701,14 @@ do
 				LocalPlayer.CameraMinZoomDistance = CameraMinZoomDistance
 				LocalPlayer.CameraMaxZoomDistance = CameraMaxZoomDistance
 
-				local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -75)
 				})
-				local tween66 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween66 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -3)
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween66:Play()
 			end
 
@@ -17934,7 +17829,7 @@ do
 
 							PartCache:ReturnPart(Part)
 						end)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end
 
@@ -18077,7 +17972,7 @@ do
 						end
 					end)
 					clone.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween67:Play()
 				end
 
@@ -18322,7 +18217,7 @@ do
 							PartCache:ReturnPart()
 						end)
 						table.insert(t150, t151)
-						tween:Play()
+						if tween then tween:Play() end
 						TweenService:Create(NumberValue26, TweenInfo.new(v2308, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
 							Value = v2302 - math.random(30, 60)
 						}):Play()
@@ -18704,10 +18599,10 @@ do
 				local uDim2 = UDim2.new(0.5, 0, 1.3, 0)
 				local tweenInfo = TweenInfo.new(0, Enum.EasingStyle.Linear)
 
-				TweenService:Create(Bars:WaitForChild("Awakening"), tweenInfo, {
+				TweenService:Create((Bars and Bars:FindFirstChild("Awakening")), tweenInfo, {
 					Position = uDim2
 				}):Play()
-				TweenService:Create(Skills:WaitForChild("Container"), tweenInfo, {
+				TweenService:Create((Skills and Skills:FindFirstChild("Container")), tweenInfo, {
 					Position = uDim2
 				}):Play()
 				Bars.Awakening.Position = uDim2
@@ -18898,7 +18793,7 @@ do
 					["195"] = function()
 
 						if tween ~= nil then
-							tween:Play()
+							if tween then tween:Play() end
 						end
 					end,
 					["205"] = function()
@@ -19519,7 +19414,7 @@ do
 
 								if p355 == Enum.PlaybackState.Completed then
 									if tween ~= nil then
-										tween:Play()
+										if tween then tween:Play() end
 									end
 
 									if tween75 ~= nil then
@@ -19706,7 +19601,7 @@ do
 							end)
 							clone256.Parent = VFX
 							clone255.Parent = VFX
-							tween:Play()
+							if tween then tween:Play() end
 							tween77:Play()
 							tween78:Play()
 							tween79:Play()
@@ -19729,7 +19624,7 @@ do
 								end
 							end)
 							clone257.Parent = VFX
-							tween:Play()
+							if tween then tween:Play() end
 							tween80:Play()
 							n91 = 3
 						elseif n91 == 3 then
@@ -19750,7 +19645,7 @@ do
 								end
 							end)
 							clone258.Parent = VFX
-							tween:Play()
+							if tween then tween:Play() end
 							tween81:Play()
 							n91 = 1
 						end
@@ -19821,7 +19716,7 @@ do
 				end)
 				clone.Parent = VFX
 				clone259.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween82:Play()
 				tween83:Play()
 				tween84:Play()
@@ -19920,7 +19815,7 @@ do
 
 					if v2473 ~= nil and v2473.Parent ~= nil then
 						v2473:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -20066,7 +19961,7 @@ do
 
 					if v2488 ~= nil and v2488.Parent ~= nil then
 						v2488:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 				local t165 = {
@@ -20405,7 +20300,7 @@ do
 				local v2531 = VFXService.CreateBind(U, "NCBUserSFX", function()
 
 					if tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -20776,7 +20671,7 @@ do
 						BodyVelocity:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -20836,7 +20731,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if U == Character then
@@ -20883,7 +20778,7 @@ do
 					end
 				end)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 
 				local tweenInfo89 = TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
 				local t167 = {
@@ -21107,7 +21002,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if U == Character then
@@ -21162,7 +21057,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local t171 = {
@@ -21221,7 +21116,7 @@ do
 					clone274.Parent = VFX
 					clone275.Parent = VFX
 					clone276.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween97:Play()
 					tween98:Play()
 					tween99:Play()
@@ -21328,7 +21223,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if U == Character then
@@ -21383,7 +21278,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local t174 = {
@@ -21442,7 +21337,7 @@ do
 					clone279.Parent = VFX
 					clone280.Parent = VFX
 					clone281.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween103:Play()
 					tween104:Play()
 					tween105:Play()
@@ -21549,7 +21444,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if U == Character then
@@ -21604,7 +21499,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local t177 = {
@@ -21663,7 +21558,7 @@ do
 					clone284.Parent = VFX
 					clone285.Parent = VFX
 					clone286.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween109:Play()
 					tween110:Play()
 					tween111:Play()
@@ -21770,7 +21665,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if U == Character then
@@ -21825,7 +21720,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local t180 = {
@@ -21884,7 +21779,7 @@ do
 					clone289.Parent = VFX
 					clone290.Parent = VFX
 					clone291.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween115:Play()
 					tween116:Play()
 					tween117:Play()
@@ -21991,7 +21886,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if U == Character then
@@ -22046,7 +21941,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local cFrame = CFrame.Angles(1.5707963267948966, 0, 0)
@@ -22101,7 +21996,7 @@ do
 					clone294.Parent = VFX
 					clone295.Parent = VFX
 					clone296.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween121:Play()
 					tween122:Play()
 					tween123:Play()
@@ -22172,7 +22067,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if U == Character then
@@ -22227,7 +22122,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local t185 = {
@@ -22286,7 +22181,7 @@ do
 					clone298.Parent = VFX
 					clone299.Parent = VFX
 					clone300.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween127:Play()
 					tween128:Play()
 					tween129:Play()
@@ -22393,7 +22288,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if U == Character then
@@ -22448,7 +22343,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local t188 = {
@@ -22507,7 +22402,7 @@ do
 					clone303.Parent = VFX
 					clone304.Parent = VFX
 					clone305.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween133:Play()
 					tween134:Play()
 					tween135:Play()
@@ -22643,7 +22538,7 @@ do
 							task.wait()
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				local t191 = {
@@ -22702,7 +22597,7 @@ do
 					clone308.Parent = VFX
 					clone309.Parent = VFX
 					clone310.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween139:Play()
 					tween140:Play()
 					tween141:Play()
@@ -22765,7 +22660,7 @@ do
 					clone311.Parent = VFX
 					clone312.Parent = VFX
 					clone313.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween145:Play()
 					tween146:Play()
 					tween147:Play()
@@ -22855,7 +22750,7 @@ do
 				clone317.Parent = VFX
 				SoundUtil.PlaySoundAtCFrame(C, "LightningFlashFinisherFK")
 				VFXService.EmitParticlesInInstance(clone)
-				tween:Play()
+				if tween then tween:Play() end
 				tween150:Play()
 				MeshCombo2(C * cFrame83)
 				MeshCombo1(C, 3, 3)
@@ -23148,7 +23043,7 @@ do
 				local v2730 = VFXService.CreateBind(U, "LightningFlashSound", function()
 
 					if tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					if tween151 ~= nil then
@@ -23352,7 +23247,7 @@ do
 					Position = clone332.WorldPosition
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween152:Play()
 				clone330:Destroy()
 				clone331:Destroy()
@@ -23494,7 +23389,7 @@ do
 						u8440 = true
 						NumberValue47:Destroy()
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if U ~= Character and V ~= Character then
@@ -23607,7 +23502,7 @@ do
 									child:Destroy()
 								end
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 						end
 					end
 				end
@@ -23646,7 +23541,7 @@ do
 
 					if v2798 ~= nil and v2798.Parent ~= nil then
 						v2798:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -23717,14 +23612,14 @@ do
 				LocalPlayer.CameraMaxZoomDistance = CameraMaxZoomDistance
 				VFXService.ShakeCamera(0, 0.55, 35, 0.175, 0.175, 0.05, true, true)
 
-				local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -75)
 				})
-				local tween153 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween153 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -3)
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween153:Play()
 			elseif Request == "EndOIPCam" then
 				Humanoid.CameraOffset = Vector3.new(0, 0, 0)
@@ -23742,14 +23637,14 @@ do
 				LocalPlayer.CameraMinZoomDistance = CameraMinZoomDistance
 				LocalPlayer.CameraMaxZoomDistance = CameraMaxZoomDistance
 
-				local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -75)
 				})
-				local tween154 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween154 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -3)
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween154:Play()
 			end
 
@@ -24156,7 +24051,7 @@ do
 					Humanoid.CameraOffset = Vector3.new(0, 0, 0)
 
 					if (U == nil or U.Parent == nil) and tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					if typeof(t200) == "table" then
@@ -24262,7 +24157,7 @@ do
 							task.wait(0.022222222222222223)
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 					tween156:Play()
 				end
 				local function WindV2()
@@ -24296,7 +24191,7 @@ do
 							task.wait(0.022222222222222223)
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 					tween157:Play()
 				end
 				local function QuickSwirl()
@@ -24322,7 +24217,7 @@ do
 						end
 					end)
 					clone342.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween158:Play()
 					tween159:Play()
 				end
@@ -24357,7 +24252,7 @@ do
 							task.wait(0.022222222222222223)
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 					tween160:Play()
 				end
 				local function QuickSwirl3()
@@ -24391,7 +24286,7 @@ do
 							task.wait(0.022222222222222223)
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 					tween161:Play()
 				end
 				local function MeshCombo()
@@ -24427,7 +24322,7 @@ do
 					end)
 					clone345.Parent = VFX
 					clone346.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween162:Play()
 				end
 
@@ -24562,7 +24457,7 @@ do
 						local v2877 = VFXService.CreateBind(Character, "OIKPSong", function()
 
 							if tween ~= nil then
-								tween:Play()
+								if tween then tween:Play() end
 							end
 						end)
 
@@ -24688,7 +24583,7 @@ do
 						tween163:Play()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 
 				local elapsed = os.clock()
 				local n98 = 7.5
@@ -25026,7 +24921,7 @@ do
 
 					Kanji["4"].CFrame = cFrame101
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				tween167:Play()
 				tween169:Play()
 				tween171:Play()
@@ -26250,14 +26145,14 @@ do
 				LocalPlayer.CameraMinZoomDistance = CameraMinZoomDistance
 				LocalPlayer.CameraMaxZoomDistance = CameraMaxZoomDistance
 
-				local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -75)
 				})
-				local tween221 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween221 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -3)
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween221:Play()
 			end
 
@@ -26294,7 +26189,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 
 				local v3023 = VFXService.CreateBind(Character, "PBBack", function()
 
@@ -26369,7 +26264,7 @@ do
 					tween222:Play()
 				end
 
-				tween:Play()
+				if tween then tween:Play() end
 				VFXService.CreateProjectile(t, 5, nil, function()
 
 					if clone ~= nil and clone.Parent ~= nil then
@@ -26466,7 +26361,7 @@ do
 				clone.Parent = V.HumanoidRootPart
 				clone356.Parent = VFX
 				clone357.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween223:Play()
 				tween224:Play()
 				tween225:Play()
@@ -27003,7 +26898,7 @@ do
 				tween228:Play()
 				tween229:Play()
 				tween230:Play()
-				tween:Play()
+				if tween then tween:Play() end
 
 				if U == Character or V == Character then
 					VFXService.ShakeCamera(0, 0.325, 27, 0.125, 0.125, 0.125)
@@ -27248,7 +27143,7 @@ do
 				tween232:Play()
 				tween233:Play()
 				tween234:Play()
-				tween:Play()
+				if tween then tween:Play() end
 
 				if U == Character or V == Character then
 					VFXService.ShakeCamera(0, 0.325, 27, 0.125, 0.125, 0.125)
@@ -27493,7 +27388,7 @@ do
 				tween236:Play()
 				tween237:Play()
 				tween238:Play()
-				tween:Play()
+				if tween then tween:Play() end
 
 				if U == Character or V == Character then
 					VFXService.ShakeCamera(0, 0.325, 27, 0.125, 0.125, 0.125)
@@ -27529,7 +27424,7 @@ do
 
 					if v3178 ~= nil and v3178.Parent ~= nil then
 						v3178:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -27732,7 +27627,7 @@ do
 				clone388.Parent = VFX
 				clone.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone)
-				tween:Play()
+				if tween then tween:Play() end
 				tween239:Play()
 				tween240:Play()
 				tween241:Play()
@@ -27851,7 +27746,7 @@ do
 				end)
 				clone391.Parent = VFX
 				clone392.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween243:Play()
 				tween244:Play()
 				tween245:Play()
@@ -27938,7 +27833,7 @@ do
 						task.wait()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				VFXService.ShakeCamera(0, 0.5, 33.5, 0.5, 0.5, 0.5)
 			end
 
@@ -27983,7 +27878,7 @@ do
 						task.wait()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 				VFXService.ShakeCamera(0, 0.35, 27, 0.4, 0.4, 0.4)
 			end
 
@@ -28028,7 +27923,7 @@ do
 						task.wait()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "EPBCM" then
@@ -28115,7 +28010,7 @@ do
 
 						DoTween()
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				clone.Parent = VFX
@@ -28178,7 +28073,7 @@ do
 									child:Destroy()
 								end
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 						end
 					end
 				end
@@ -28196,7 +28091,7 @@ do
 									child:Destroy()
 								end
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 						end
 					end
 				end
@@ -28221,7 +28116,7 @@ do
 								child:Destroy()
 							end
 						end)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end
 
@@ -28398,7 +28293,7 @@ do
 
 					if v3300 ~= nil and v3300.Parent ~= nil then
 						v3300:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -28588,7 +28483,7 @@ do
 								end
 							end)
 							clone399.Parent = VFX
-							tween:Play()
+							if tween then tween:Play() end
 						end
 
 						local clone400 = MeshV3:Clone()
@@ -28608,7 +28503,7 @@ do
 							end
 						end)
 						clone400.Parent = VFX
-						tween:Play()
+						if tween then tween:Play() end
 						task.spawn(function()
 
 							for i = 1, #t219 do
@@ -28782,7 +28677,7 @@ do
 						end
 					end
 
-					tween:Play()
+					if tween then tween:Play() end
 					tween247:Play()
 					tween248:Play()
 					tween249:Play()
@@ -28888,7 +28783,7 @@ do
 				VFXService.CreateBind(U, "PhantomSeverRunEffects", function()
 
 					if tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					if clone ~= nil and clone.Parent ~= nil then
@@ -28949,7 +28844,7 @@ do
 				local v3365 = VFXService.CreateBind(U, "PhantomSeverWhiffSound", function()
 
 					if tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					if tween253 ~= nil then
@@ -29024,7 +28919,7 @@ do
 						BodyVelocity:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "EndPhantomSeverRun" then
@@ -29444,7 +29339,7 @@ do
 						end)
 						VFXService.EmitParticlesInInstance(clone415)
 						VFXService.EmitParticlesInInstance(clone414)
-						tween:Play()
+						if tween then tween:Play() end
 						Debris.AddItem(clone414, 5.25)
 						Debris.AddItem(clone415, 3.5)
 					end)
@@ -29509,7 +29404,7 @@ do
 						clone417.Parent = VFX
 						VFXService.EmitParticlesInInstance(clone416)
 						VFXService.EmitParticlesInInstance(clone417)
-						tween:Play()
+						if tween then tween:Play() end
 						Debris.AddItem(clone417, 5.25)
 					end)
 					track:Play()
@@ -29673,7 +29568,7 @@ do
 					end
 				end
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween255:Play()
 				tween256:Play()
 				tween257:Play()
@@ -29789,7 +29684,7 @@ do
 				local v3494 = VFXService.CreateBind(Character, "PhantomSeverCutsceneSound", function()
 
 					if tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -31295,7 +31190,7 @@ do
 							end
 
 							if tween ~= nil then
-								tween:Play()
+								if tween then tween:Play() end
 							end
 						end)
 					end
@@ -32112,7 +32007,7 @@ do
 
 					if v3709 ~= nil and v3709.Parent ~= nil then
 						v3709:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -32302,7 +32197,7 @@ do
 				clone444.Parent = VFX
 				clone445.Parent = VFX
 				clone446.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween274:Play()
 				tween275:Play()
 				tween276:Play()
@@ -32413,7 +32308,7 @@ do
 						end
 					end
 
-					tween:Play()
+					if tween then tween:Play() end
 					tween285:Play()
 					VFXService.CreateBind(On, "KratosRetributionEnabledEffects", function()
 
@@ -32704,7 +32599,7 @@ do
 					VFXService.ShakeCamera(0, 0.5, 33, 0.6, 0.6, 0.6)
 				end
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween286:Play()
 				tween287:Play()
 				tween288:Play()
@@ -33073,7 +32968,7 @@ do
 					VFXService.ShakeCamera(0, 0.5, 28, 0.4, 0.4, 0.4)
 				end
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween293:Play()
 				tween294:Play()
 				tween295:Play()
@@ -33176,7 +33071,7 @@ do
 					end
 				end)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween301:Play()
 				tween302:Play()
 			end
@@ -33207,7 +33102,7 @@ do
 					end
 				end)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "MistOfHellGrabVictimMesh" then
@@ -33243,7 +33138,7 @@ do
 					end
 				end)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween303:Play()
 				tween304:Play()
 			end
@@ -33308,7 +33203,7 @@ do
 				clone.Parent = VFX
 				clone457.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone457)
-				tween:Play()
+				if tween then tween:Play() end
 				tween305:Play()
 				tween306:Play()
 				Debris.AddItem(clone457, 5.5)
@@ -33530,7 +33425,7 @@ do
 						end
 					end
 
-					tween:Play()
+					if tween then tween:Play() end
 					tween307:Play()
 					tween308:Play()
 					tween309:Play()
@@ -34536,7 +34431,7 @@ do
 				clone471.Parent = VFX
 				clone472.Parent = VFX
 				clone473.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween310:Play()
 				tween311:Play()
 				tween312:Play()
@@ -34645,7 +34540,7 @@ do
 				clone476.Parent = VFX
 				clone477.Parent = VFX
 				clone478.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween313:Play()
 				tween314:Play()
 				tween315:Play()
@@ -34781,7 +34676,7 @@ do
 					clone480.Parent = VFX
 					clone481.Position = T.Torso.Position + Vector3.new(0, 2.5, 0) - v8881.LookVector * 0.4
 					clone481.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween317:Play()
 					tween318:Play()
 					tween319:Play()
@@ -34945,7 +34840,7 @@ do
 						clone483.Parent = VFX
 						clone484.Parent = VFX
 						clone485.Parent = VFX
-						tween:Play()
+						if tween then tween:Play() end
 						tween320:Play()
 						tween321:Play()
 						tween322:Play()
@@ -35443,7 +35338,7 @@ do
 				})
 
 				clone.Parent = U
-				tween:Play()
+				if tween then tween:Play() end
 				tween324:Play()
 			elseif Request == "BlueFlameAuraCosmetic" then
 				local U = Data.U
@@ -35491,7 +35386,7 @@ do
 				})
 
 				clone.Parent = U
-				tween:Play()
+				if tween then tween:Play() end
 				tween325:Play()
 			elseif Request == "EndFlameAuraCosmetic" then
 				local U = Data.U
@@ -35612,7 +35507,7 @@ do
 									tween326:Play()
 								end
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 						end
 					end
 				end
@@ -35695,7 +35590,7 @@ do
 									end
 								end
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 							SoundUtil.PlaySoundInInstance(descendant, "WheelOfAdaptationSpin")
 
 							break
@@ -35747,7 +35642,7 @@ do
 										end
 									end
 								end)
-								tween:Play()
+								if tween then tween:Play() end
 								SoundUtil.PlaySoundInInstance(descendant, "WheelOfAdaptationSpin")
 							end
 						end)
@@ -36696,7 +36591,7 @@ do
 							VFXService.EmitParticlesInInstance(clone495)
 							VFXService.EmitParticlesInInstance(clone493)
 							VFXService.EmitParticlesInInstance(clone494)
-							tween:Play()
+							if tween then tween:Play() end
 							Debris.AddItem(clone495, 5)
 							VFXService.CreateBind(On, "NoMoreGamesEffects", function()
 
@@ -37861,7 +37756,7 @@ do
 							end)
 							clone.Parent = VFX
 							clone534.Parent = VFX
-							tween:Play()
+							if tween then tween:Play() end
 							VFXService.EmitParticlesInInstance(clone534)
 							Debris.AddItem(clone534, 2)
 						end
@@ -38039,7 +37934,7 @@ do
 
 					if v4342 ~= nil and v4342.Parent ~= nil then
 						v4342:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					if v4343 ~= nil and v4343.Parent ~= nil then
@@ -38089,7 +37984,7 @@ do
 
 					if v4349 ~= nil and v4349.Parent ~= nil then
 						v4349:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -38398,7 +38293,7 @@ do
 							end
 						end
 					end)
-					tween:Play()
+					if tween then tween:Play() end
 
 					local clone538 = Assets.Particles.Jun.RagingFangs.FinalImpact:Clone()
 
@@ -38614,7 +38509,7 @@ do
 
 					if v4414 ~= nil and v4414.Parent ~= nil then
 						v4414:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -39348,7 +39243,7 @@ do
 
 				clone.Parent = VFX
 				clone543.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween343:Play()
 				VFXService.EmitParticlesInInstance(clone544)
 				Debris.AddItem(clone544, 4.5)
@@ -39949,7 +39844,7 @@ do
 					end)
 					SoundUtil.PlaySoundAtCFrame(cFrame, "WolfFangFuryFinalKick")
 					VFXService.EmitParticlesInInstance(clone)
-					tween:Play()
+					if tween then tween:Play() end
 					tween344:Play()
 					tween345:Play()
 					tween346:Play()
@@ -40460,7 +40355,7 @@ do
 								VFXService.ShakeCamera(0, 0.5, 15, 0.3, 0.3, 0.3)
 							end
 						end)
-						tween:Play()
+						if tween then tween:Play() end
 
 						local clone = Assets.Particles.Jun.WolfFangFury.ShootClone:Clone()
 
@@ -41612,7 +41507,7 @@ do
 				clone546.CFrame = On.HumanoidRootPart.CFrame
 				clone546.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone546)
-				tween:Play()
+				if tween then tween:Play() end
 				tween352:Play()
 				tween353:Play()
 
@@ -41686,7 +41581,7 @@ do
 				clone547.CFrame = On.HumanoidRootPart.CFrame
 				clone547.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone547)
-				tween:Play()
+				if tween then tween:Play() end
 				tween354:Play()
 				tween355:Play()
 
@@ -41733,7 +41628,7 @@ do
 				clone548.CFrame = On.HumanoidRootPart.CFrame
 				clone548.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone548)
-				tween:Play()
+				if tween then tween:Play() end
 				tween356:Play()
 
 				if (clone548.Position - HumanoidRootPart.Position).Magnitude <= 20 then
@@ -41784,7 +41679,7 @@ do
 				clone549.CFrame = On.HumanoidRootPart.CFrame
 				clone549.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone549)
-				tween:Play()
+				if tween then tween:Play() end
 				tween357:Play()
 				tween358:Play()
 
@@ -41885,7 +41780,7 @@ do
 
 				clone551.CFrame = HumanoidRootPartCFrame * cFrame186
 				clone551.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween359:Play()
 				tween360:Play()
 				tween361:Play()
@@ -41929,7 +41824,7 @@ do
 
 				clone552.CFrame = HumanoidRootPartCFrame * cFrame187
 				clone552.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween362:Play()
 				tween363:Play()
 				VFXService.EmitParticlesInInstance(clone552)
@@ -41994,7 +41889,7 @@ do
 					end
 				end
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween364:Play()
 				tween365:Play()
 				tween366:Play()
@@ -42061,7 +41956,7 @@ do
 					end
 				end
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween367:Play()
 				tween368:Play()
 				tween369:Play()
@@ -42126,7 +42021,7 @@ do
 
 				clone558.CFrame = HumanoidRootPartCFrame * cFrame193
 				clone558.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween370:Play()
 				tween371:Play()
 				tween372:Play()
@@ -42277,7 +42172,7 @@ do
 					end
 				end
 
-				tween:Play()
+				if tween then tween:Play() end
 				VFXService.EmitParticlesInInstance(clone559)
 				Debris.AddItem(clone559, 5.5)
 				Debris.AddItem(clone, 0.7)
@@ -42373,7 +42268,7 @@ do
 
 				clone564:PivotTo(HumanoidRootPartCFrame * cFrame199)
 				clone564.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween375:Play()
 				tween376:Play()
 				tween377:Play()
@@ -42444,7 +42339,7 @@ do
 
 					if v4809 ~= nil and v4809.Parent ~= nil then
 						v4809:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -43268,7 +43163,7 @@ do
 			if Request == "KratosInvisible" then
 				local function GetIconButton2(iconName: string)
 
-					for _, descendant in pairs(PlayerGui:WaitForChild("TopbarPlus"):GetDescendants()) do
+					for _, descendant in pairs((PlayerGui:FindFirstChild("TopbarPlus") and PlayerGui.TopbarPlus:GetDescendants() or {})) do
 						if descendant:IsA("Frame") and iconName == descendant.Name then
 							return descendant:WaitForChild("IconButton")
 						end
@@ -43297,7 +43192,7 @@ do
 			if Request == "KratosVisible" then
 				local function GetIconButton3(iconName: string)
 
-					for _, descendant in pairs(PlayerGui:WaitForChild("TopbarPlus"):GetDescendants()) do
+					for _, descendant in pairs((PlayerGui:FindFirstChild("TopbarPlus") and PlayerGui.TopbarPlus:GetDescendants() or {})) do
 						if descendant:IsA("Frame") and iconName == descendant.Name then
 							return descendant:WaitForChild("IconButton")
 						end
@@ -43346,7 +43241,7 @@ do
 
 					if u4959 ~= nil and u4959.Parent ~= nil then
 						u4959:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -43391,7 +43286,7 @@ do
 
 					if u4964 ~= nil and u4964.Parent ~= nil then
 						u4964:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -43987,7 +43882,7 @@ do
 				clone.CFrame = U.HumanoidRootPart.CFrame * CFrame.new(0, -2.8, 0)
 				clone.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone)
-				tween:Play()
+				if tween then tween:Play() end
 				Debris.AddItem(clone, 4)
 			end
 
@@ -44248,7 +44143,7 @@ do
 				})
 
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 
 				local v5058 = VFXService.CreateBind(Character, "FangDanceMotion2", function()
 
@@ -44311,7 +44206,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 
 				local v5065 = VFXService.CreateBind(Character, "FangDanceMotion", function()
 
@@ -44604,7 +44499,7 @@ do
 
 					if v5109 ~= nil and v5109.Parent ~= nil then
 						v5109:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -44663,7 +44558,7 @@ do
 
 					if v5114 ~= nil and v5114.Parent ~= nil then
 						v5114:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 
 					if v5115 ~= nil and v5115.Parent ~= nil then
@@ -45514,7 +45409,7 @@ do
 						v5199:SetAttribute("DefaultVolume", nil)
 
 						if not v5199:GetAttribute("C") then
-							tween:Play()
+							if tween then tween:Play() end
 
 							return
 						end
@@ -45675,7 +45570,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -45719,7 +45614,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -45763,7 +45658,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -45807,7 +45702,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -45851,7 +45746,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -45890,7 +45785,7 @@ do
 				})
 
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				VFXService.CreateBind(Character, "DraconicHonorDragVelocity", function()
 
 					if BodyVelocity ~= nil and BodyVelocity.Parent ~= nil then
@@ -46147,7 +46042,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -46188,7 +46083,7 @@ do
 				})
 
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					local overlapParams = OverlapParams.new()
@@ -46324,7 +46219,7 @@ do
 
 					if v5282 ~= nil and v5282.Parent ~= nil then
 						v5282:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -46407,7 +46302,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 				task.spawn(function()
 
 					while BodyVelocity ~= nil and BodyVelocity.Parent ~= nil do
@@ -46854,7 +46749,7 @@ do
 				task.delay(4, function()
 
 					if tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 			end
@@ -46934,7 +46829,7 @@ do
 				task.delay(4, function()
 
 					if tween ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 			end
@@ -47275,7 +47170,7 @@ do
 						task.wait()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "GlimpseOfPowerFinisherForward2" then
@@ -47319,7 +47214,7 @@ do
 						task.wait()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "GlimpseOfPowerVariantForward2" then
@@ -47363,7 +47258,7 @@ do
 						task.wait()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "GlimpseOfPowerVariantForward" then
@@ -47407,7 +47302,7 @@ do
 						task.wait()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "GlimpseOfPowerFinisherForward" then
@@ -47451,7 +47346,7 @@ do
 						task.wait()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "GlimpseOfPowerGrabDash" then
@@ -47488,7 +47383,7 @@ do
 						task.wait()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "GlimpseOfPowerEye" then
@@ -47674,7 +47569,7 @@ do
 
 					if v5448 ~= nil and v5448.Parent ~= nil then
 						v5448:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -47719,7 +47614,7 @@ do
 
 					if v5453 ~= nil and v5453.Parent ~= nil then
 						v5453:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -47774,7 +47669,7 @@ do
 					end
 				end)
 				BodyVelocity.Parent = HumanoidRootPart
-				tween:Play()
+				if tween then tween:Play() end
 
 				local v5461 = VFXService.CreateBind(Character, "GlimpseOfPowerMotion", function()
 
@@ -47831,7 +47726,7 @@ do
 						Sound:Destroy()
 					end
 				end)
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "MuteAwakeningMusic" then
@@ -48042,7 +47937,7 @@ do
 					end
 				end)
 				Highlight.Parent = Character
-				tween:Play()
+				if tween then tween:Play() end
 
 				if CharacterName == "Martial Legend" then
 					SoundUtil.PlaySound("Dragon'sFuryAwakeningReached")
@@ -48078,7 +47973,7 @@ do
 					end
 				end)
 				Highlight.Parent = On
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "Voxels" then
@@ -48136,7 +48031,7 @@ do
 
 										Part:Destroy()
 									end)
-									tween:Play()
+									if tween then tween:Play() end
 								end
 							end)
 						end
@@ -48271,7 +48166,7 @@ do
 					})
 
 					tween.Completed:Connect(TweenDisplacementPositive)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 				local function TweenDisplacementNegative()
 
@@ -48284,7 +48179,7 @@ do
 					})
 
 					tween.Completed:Connect(TweenDisplacementNegative)
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				if Direction == "Negative" then
@@ -48384,7 +48279,7 @@ do
 								u9286 = nil
 							end
 						end)
-						tween:Play()
+						if tween then tween:Play() end
 						SoundUtil.PlaySoundAtCFrame(Pivot, "CrateSpawn")
 					end)
 				end
@@ -48454,7 +48349,7 @@ do
 								u9289 = nil
 							end
 						end)
-						tween:Play()
+						if tween then tween:Play() end
 						SoundUtil.PlaySoundAtCFrame(Pivot, "BenchSpawn")
 					end)
 				end
@@ -48572,7 +48467,7 @@ do
 								u9294 = nil
 							end
 						end)
-						tween:Play()
+						if tween then tween:Play() end
 						SoundUtil.PlaySoundAtCFrame(Pivot, "RockWallSpawn")
 					end)
 				end
@@ -48681,7 +48576,7 @@ do
 
 					if v5572 ~= nil and v5572.Parent ~= nil then
 						v5572:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -48969,7 +48864,7 @@ do
 									tween387:Play()
 								end
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 							tween386:Play()
 							tween388:Play()
 							clone575.Parent = VFX
@@ -49529,7 +49424,7 @@ do
 					task.delay(0.2, function()
 
 						if tween ~= nil then
-							tween:Play()
+							if tween then tween:Play() end
 						end
 
 						if tween402 ~= nil then
@@ -49614,7 +49509,7 @@ do
 
 					if v5636 ~= nil and v5636.Parent ~= nil then
 						v5636:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -50642,7 +50537,7 @@ do
 				local v5736 = VFXService.CreateBind(On, "DragonBlitzStartupSound", function()
 
 					if v5734 ~= nil and v5734.Parent ~= nil then
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -50703,7 +50598,7 @@ do
 
 					if v5740 ~= nil and v5740.Parent ~= nil then
 						v5740:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -50819,7 +50714,7 @@ do
 						end
 					end)
 					clone.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 				else
 					local clone = Assets.Parts.Ring:Clone()
 
@@ -50839,7 +50734,7 @@ do
 						end
 					end)
 					clone.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 				end
 			end
 
@@ -50939,7 +50834,7 @@ do
 						end
 					end)
 					clone.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 				else
 					local clone = Assets.Parts.Ring:Clone()
 
@@ -50959,7 +50854,7 @@ do
 						end
 					end)
 					clone.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 				end
 			end
 
@@ -53619,7 +53514,7 @@ do
 					Transparency = 0.7
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 
 				local clone = Assets.Parts.MartialArtist.DragonBlitz.Ribcage:Clone()
 
@@ -54086,7 +53981,7 @@ do
 
 					if u5942 ~= nil and u5942.Parent ~= nil then
 						u5942:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -54733,7 +54628,7 @@ do
 
 					if v5955 ~= nil and v5955.Parent ~= nil then
 						v5955:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -54864,7 +54759,7 @@ do
 									task.delay(0.1, function()
 
 										if descendant ~= nil and descendant.Parent ~= nil then
-											tween:Play()
+											if tween then tween:Play() end
 										end
 									end)
 								end
@@ -55872,7 +55767,7 @@ do
 										child:Destroy()
 									end
 								end)
-								tween:Play()
+								if tween then tween:Play() end
 							else
 								child:Destroy()
 							end
@@ -56005,7 +55900,7 @@ do
 				clone.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone)
 				Debris.AddItem(clone)
-				tween:Play()
+				if tween then tween:Play() end
 				tween411:Play()
 				tween412:Play()
 
@@ -56063,7 +55958,7 @@ do
 				clone.Parent = VFX
 				clone594.Parent = VFX
 				VFXService.EmitParticlesInInstance(clone)
-				tween:Play()
+				if tween then tween:Play() end
 				tween413:Play()
 				tween414:Play()
 				Debris.AddItem(clone)
@@ -56648,7 +56543,7 @@ do
 					end
 				end)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				tween415:Play()
 				tween416:Play()
 			end
@@ -56933,7 +56828,7 @@ do
 					clone.Parent = VFX
 					clone595.Parent = VFX
 					clone596.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 					tween417:Play()
 					tween418:Play()
 					tween419:Play()
@@ -56953,7 +56848,7 @@ do
 			if Request == "PreloadAnimations" then
                 local List = Data.List
                 local PreloadAnimationsClient = workspace:FindFirstChild("PreloadAnimationsClient")
-                local Humanoid = PreloadAnimationsClient:WaitForChild("Humanoid")
+                local Humanoid = PreloadAnimationsClient and PreloadAnimationsClient:FindFirstChild("Humanoid") or nil
                 local Animator9 = Humanoid:WaitForChild("Animator")
                 local Animations = {}
                 
@@ -57028,7 +56923,7 @@ do
 
 					if v6227 ~= nil and v6227.Parent ~= nil then
 						v6227:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -57073,7 +56968,7 @@ do
 
 					if v6232 ~= nil and v6232.Parent ~= nil then
 						v6232:SetAttribute("DefaultVolume", nil)
-						tween:Play()
+						if tween then tween:Play() end
 					end
 				end)
 
@@ -57239,7 +57134,7 @@ do
 					end)
 					track.Priority = Enum.AnimationPriority.Action4
 					track:Play()
-					tween:Play()
+					if tween then tween:Play() end
 				end
 
 				Animation:Destroy()
@@ -57297,7 +57192,7 @@ do
 				Debris.AddItem(clone597, 3.5)
 				Debris.AddItem(clone598, 3.5)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				SoundUtil.PlaySoundInInstance(On.HumanoidRootPart, "TigerPalmHit")
 			end
 
@@ -58199,9 +58094,9 @@ do
 				local stateName = Data.Name
 				local p142Color = Data.Color
 
-				Bars:WaitForChild("Awakening"):WaitForChild("Bar").ImageColor3 = p142Color
-				Bars:WaitForChild("Awakening"):WaitForChild("SecondsBar").ImageColor3 = p142Color
-				Bars:WaitForChild("Awakening"):WaitForChild("Name").Text = stateName
+				if Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Bar") then Bars.Awakening.Bar.ImageColor3 = p142Color end
+				if Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("SecondsBar") then Bars.Awakening.SecondsBar.ImageColor3 = p142Color end
+				if Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Name") then Bars.Awakening.Name.Text = stateName end
 
 				local CharacterName = Data.CharacterName
 				local Configuration = Instance.new("Configuration")
@@ -58251,16 +58146,16 @@ do
 				Configuration6.Parent = SkillTextSignals
 				Configuration6:Destroy()
 			elseif Request == "SelectedCharacterOverhead" then
-				local Duels = PlayerGui:WaitForChild("Duels", 5)
+				local Duels = PlayerGui:FindFirstChild("Duels")
 
 				if Duels ~= nil and Duels.Parent ~= nil then
-					local SelectedCharacter = Duels:WaitForChild("SelectedCharacter", 5)
+					local SelectedCharacter = Duels and Duels:FindFirstChild("SelectedCharacter") or nil
 
 					if SelectedCharacter ~= nil and SelectedCharacter.Parent ~= nil then
 						local Glow = SelectedCharacter:WaitForChild("Glow", 5)
 
 						if Glow ~= nil and Glow.Parent ~= nil then
-							local Icon = Glow:WaitForChild("Icon")
+							local Icon = Glow and Glow:FindFirstChild("Icon") or nil
 
 							if Icon ~= nil and Icon.Parent ~= nil then
 								local N = Data.N
@@ -58295,11 +58190,11 @@ do
 			end
 
 			if Request == "InfiniteAwakening" then
-				local Seconds = Bars:WaitForChild("Awakening"):WaitForChild("Seconds")
-				local SecondsBar = Bars:WaitForChild("Awakening"):WaitForChild("SecondsBar")
+				local Seconds = (Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Seconds"))
+				local SecondsBar = (Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("SecondsBar"))
 
-				Bars:WaitForChild("Awakening"):WaitForChild("Percent").Visible = false
-				Bars:WaitForChild("Awakening"):WaitForChild("Bar").Visible = false
+				if Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Percent") then Bars.Awakening.Percent.Visible = false end
+				if Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Bar") then Bars.Awakening.Bar.Visible = false end
 				NumberValue2.Value = 100
 				Seconds.Visible = true
 				SecondsBar.Visible = true
@@ -58308,11 +58203,11 @@ do
 
 			if Request == "AwakenCountdown" then
 				local v6393 = Data.T or 60
-				local Seconds = Bars:WaitForChild("Awakening"):WaitForChild("Seconds")
-				local SecondsBar = Bars:WaitForChild("Awakening"):WaitForChild("SecondsBar")
+				local Seconds = (Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Seconds"))
+				local SecondsBar = (Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("SecondsBar"))
 
-				Bars:WaitForChild("Awakening"):WaitForChild("Percent").Visible = false
-				Bars:WaitForChild("Awakening"):WaitForChild("Bar").Visible = false
+				if Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Percent") then Bars.Awakening.Percent.Visible = false end
+				if Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Bar") then Bars.Awakening.Bar.Visible = false end
 				Seconds.Visible = true
 				SecondsBar.Visible = true
 
@@ -58334,7 +58229,7 @@ do
 						Value = 0
 					})
 
-					tween:Play()
+					if tween then tween:Play() end
 
 					for i = v6393, 0, -1 do
 						Seconds.Text = tostring(i) .. "s"
@@ -58360,23 +58255,23 @@ do
 			end
 
 			if Request == "AwakenEnd" then
-				local Seconds = Bars:WaitForChild("Awakening"):WaitForChild("Seconds")
-				local SecondsBar = Bars:WaitForChild("Awakening"):WaitForChild("SecondsBar")
+				local Seconds = (Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Seconds"))
+				local SecondsBar = (Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("SecondsBar"))
 
 				Seconds.Visible = false
 				SecondsBar.Visible = false
-				Bars:WaitForChild("Awakening"):WaitForChild("Percent").Visible = true
-				Bars:WaitForChild("Awakening"):WaitForChild("Bar").Visible = true
+				if Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Percent") then Bars.Awakening.Percent.Visible = true end
+				if Bars and Bars:FindFirstChild("Awakening") and Bars.Awakening:FindFirstChild("Bar") then Bars.Awakening.Bar.Visible = true end
 			end
 
 			if Request == "AwakenAnimationBeginInstant" then
 				local uDim2 = UDim2.new(0.5, 0, 1.3, 0)
 				local tweenInfo = TweenInfo.new(0, Enum.EasingStyle.Linear)
 
-				TweenService:Create(Bars:WaitForChild("Awakening"), tweenInfo, {
+				TweenService:Create((Bars and Bars:FindFirstChild("Awakening")), tweenInfo, {
 					Position = uDim2
 				}):Play()
-				TweenService:Create(Skills:WaitForChild("Container"), tweenInfo, {
+				TweenService:Create((Skills and Skills:FindFirstChild("Container")), tweenInfo, {
 					Position = uDim2
 				}):Play()
 				Bars.Awakening.Position = uDim2
@@ -58384,26 +58279,26 @@ do
 			end
 
 			if Request == "AwakenAnimationBegin" then
-				local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1.3, 0)
 				})
-				local tween421 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween421 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1.3, 0)
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween421:Play()
 			end
 
 			if Request == "AwakenAnimationEnd" then
-				local tween = TweenService:Create(Bars:WaitForChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween = (Bars and Bars:FindFirstChild("Awakening")) and TweenService:Create(Bars:FindFirstChild("Awakening"), TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -75)
 				})
-				local tween422 = TweenService:Create(Skills:WaitForChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+				local tween422 = (Skills and Skills:FindFirstChild("Container")) and TweenService:Create(Skills:FindFirstChild("Container"), TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 					Position = UDim2.new(0.5, 0, 1, -3)
 				})
 
-				tween:Play()
+				if tween then tween:Play() end
 				tween422:Play()
 			end
 
@@ -58428,7 +58323,7 @@ do
 					Percent.Text = tostring(v6410) .. "%"
 				end
 
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "SetClientGamePassOwnership" then
@@ -58553,7 +58448,7 @@ do
 					end
 					local function TweenDashOn()
 
-						tween:Play()
+						if tween then tween:Play() end
 						tween423:Play()
 						tween424:Play()
 					end
@@ -58642,7 +58537,7 @@ do
 									tween427:Play()
 								end
 							end)
-							tween:Play()
+							if tween then tween:Play() end
 							tween423:Play()
 							tween424:Play()
 						end
@@ -58749,7 +58644,7 @@ do
 					end
 				end)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "RingHitAt" then
@@ -58771,7 +58666,7 @@ do
 					end
 				end)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "FrontDashEffects" then
@@ -58796,7 +58691,7 @@ do
 				clone.CFrame = On.HumanoidRootPart.CFrame * CFrame.Angles(0, 1.5707963267948966, 1.5707963267948966)
 				clone.Size = Vector3.new(3.25, 0.8500000238418579, 3.25)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 				SoundUtil.PlaySoundInInstance(On.HumanoidRootPart, "FrontDashInitiate")
 
 				local thread = task.spawn(function()
@@ -59241,7 +59136,7 @@ do
 					end
 				end)
 				clone.Parent = VFX
-				tween:Play()
+				if tween then tween:Play() end
 			end
 
 			if Request == "M1Downslam" then
@@ -59342,7 +59237,7 @@ do
 						end
 					end)
 					clone.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 				else
 					local clone = Assets.Parts.Ring:Clone()
 
@@ -59362,7 +59257,7 @@ do
 						end
 					end)
 					clone.Parent = VFX
-					tween:Play()
+					if tween then tween:Play() end
 				end
 			end
 
@@ -60410,4 +60305,4 @@ _G.UniversalRendererReload = Reload
 print("[UniversalClientRenderer] Loaded - Universal version ready")
 print("[UniversalClientRenderer] Use _G.UniversalRendererReload() to reload")
 print("[UniversalClientRenderer] ImagePreload and TexturePreload created automatically")
-print("[UniversalClientRenderer] Safe workspace lookups enabled")
+print("[UniversalClientRenderer] Safe workspace lookups enabled
