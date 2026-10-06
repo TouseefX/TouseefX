@@ -115,6 +115,23 @@ local function resolveKeyframeSequence(cfg)
 	return result
 end
 
+-- Pose.EasingStyle / Pose.EasingDirection are the *PoseEasing* enums, but
+-- TweenService:GetValue requires the regular *Easing* enums — passing the
+-- pose ones errors with "Unable to cast PoseEasingStyle to EasingStyle".
+-- Their member names line up 1:1 (Cubic, Constant, Linear, In, Out, InOut…),
+-- so we convert by name (with a safe fallback for unknown future members).
+local function toTweenEasing(style, dir)
+	if typeof(style) == "EnumItem" then
+		local ok, v = pcall(function() return Enum.EasingStyle[style.Name] end)
+		style = (ok and v) or Enum.EasingStyle.Linear
+	end
+	if typeof(dir) == "EnumItem" then
+		local ok, v = pcall(function() return Enum.EasingDirection[dir.Name] end)
+		dir = (ok and v) or Enum.EasingDirection.InOut
+	end
+	return style, dir
+end
+
 -- Gather, for every tracked part, the sorted list of keyframe "points" that
 -- contain a pose for it: { t = seconds, cf = joint CFrame, style, dir }.
 local function collectTracks(seq, tracked)
@@ -134,6 +151,7 @@ local function collectTracks(seq, tracked)
 					if d.Weight < 1 then
 						cf = CFrame.new():Lerp(cf, d.Weight) -- fold pose weight in
 					end
+					local style, dir = toTweenEasing(d.EasingStyle, d.EasingDirection)
 					local track = tracks[d.Name]
 					if not track then
 						track = {}
@@ -142,8 +160,8 @@ local function collectTracks(seq, tracked)
 					table.insert(track, {
 						t     = kf.Time,
 						cf    = cf,
-						style = d.EasingStyle,
-						dir   = d.EasingDirection,
+						style = style,
+						dir   = dir,
 					})
 				end
 			end
@@ -182,7 +200,8 @@ end
 
 -- Interpolated joint CFrame of one limb at time t.
 -- Uses the EASING OF THE KEYFRAME YOU ARE MOVING TOWARDS — the same rule
--- Roblox's own Animator uses.
+-- Roblox's own Animator uses. (styles/dirs were converted to the Tween
+-- enums by toTweenEasing at collect time, so GetValue accepts them.)
 local function sampleTrack(track, t)
 	local n = #track
 	if n == 0 then return nil end
